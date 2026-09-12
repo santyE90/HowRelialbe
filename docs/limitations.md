@@ -10,6 +10,15 @@ reliability predictions. Future work must account for at least the following con
 - Owner reports may omit maintenance history, driving conditions, or verified diagnoses.
 - Predictions will contain uncertainty and may not generalize to underrepresented vehicles.
 - Historical associations do not necessarily identify causes or an individual vehicle's state.
+- Canonical component mapping is intentionally coarse and leaves many present values as
+  `OTHER`; missing component values remain `UNKNOWN`.
+- Event severity reflects explicit death, injury, crash, and fire indicators—not repair cost,
+  mechanical damage, or failure probability.
+- Missing mileage and dates remain common, and source zero values can have ambiguous meaning.
+- A complaint is an allegation or observation, not necessarily a verified mechanical failure.
+- Repeated ODI references across component rows remain separate when their row-level complaint
+  identifiers differ.
+- Canonical reliability events are observational evidence, not machine-learning ground truth.
 
 Any future output will be decision support, not a replacement for a qualified mechanical
 inspection, diagnosis, maintenance guidance, recall information, or safety advice.

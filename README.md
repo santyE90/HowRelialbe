@@ -13,9 +13,10 @@ roadmap phase calls for them.
 
 Phase 0 established the repository foundation, and Phase 1A added the canonical vehicle
 domain model. Phase 1B adds reproducible ingestion of the official NHTSA ODI Vehicle Owner
-Complaints flat file. There is currently no reliability-event model, cleaning, feature
+Complaints flat file. Phase 1C defines immutable, traceable reliability events and the
+conservative NHTSA complaint mapping boundary. There is currently no cleaning, EDA, feature
 engineering, trained model, inference API, infrastructure, or user interface. See the
-[roadmap](docs/roadmap.md) for planned work.
+[roadmap](docs/roadmap.md) and [event schema](docs/reliability-events.md) for details.
 
 ## NHTSA complaint ingestion
 

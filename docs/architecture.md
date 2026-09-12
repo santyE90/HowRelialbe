@@ -5,8 +5,9 @@
 The repository contains an installable Python package, reusable configuration and logging
 foundations, an immutable canonical vehicle domain model, and a source-specific NHTSA ODI
 complaint ingestion adapter. Tests and static-analysis configuration enforce these
-boundaries. No reliability-event, cleaning, feature-engineering, ML, API, deployment, or UI
-component is implemented.
+boundaries. A separate canonical reliability-event model and conservative NHTSA mapper now
+provide the source-to-domain boundary. No cleaning, EDA, feature-engineering, ML, API,
+deployment, or UI component is implemented.
 
 ### Vehicle identity decisions
 
@@ -43,6 +44,21 @@ artifact was processed completely.
 `NhtsaComplaintRecord` remains separate from `Vehicle`. A narrow mapping function constructs
 a canonical vehicle only when NHTSA explicitly supplies every Phase 1A required field; it
 never invents generation, trim, engine, transmission, or drivetrain.
+
+### Reliability event boundary
+
+```text
+immutable NHTSA artifact
+  -> NhtsaComplaintRecord (all 51 source fields)
+  -> explicit NHTSA mapper
+  -> ReliabilityEvent (canonical cross-source schema)
+```
+
+The mapper parses only structurally necessary mileage, dates, safety indicators, source
+identifiers, and basic vehicle identity. It conservatively maps the source component and
+derives evidence severity. Raw records are neither modified nor replaced. Events retain
+minimal source references and optional artifact checksum context while the complete evidence
+remains in the raw/interim source layer. Mapping failures are explicit and categorized.
 
 ## Planned system
 

@@ -7,10 +7,12 @@ implementation exists yet.
   centralized settings and logging, tests, and initial documentation.
 - **Phase 1A — Vehicle Data Model: complete** — immutable canonical vehicle
   representation, validation, normalization, serialization, and stable identities.
-- **Phase 1B — Structured Data Ingestion: complete (current phase)** — official NHTSA ODI
+- **Phase 1B — Structured Data Ingestion: complete** — official NHTSA ODI
   complaint retrieval, immutable raw artifacts, source-faithful parsing, deterministic JSON
   Lines output, and provenance.
-- **Phase 1C — Reliability Event Schema: planned**
+- **Phase 1C — Reliability Event Schema: complete (current phase)** — immutable canonical
+  events, cross-source taxonomies, source traceability, and conservative NHTSA complaint
+  mapping.
 - **Phase 2A — Exploratory Data Analysis: planned**
 - **Phase 2B — Data Cleaning: planned**
 - **Phase 2C — Feature Engineering: planned**

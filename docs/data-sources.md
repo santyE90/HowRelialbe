@@ -67,3 +67,15 @@ incomplete.
 Raw complaint counts must not be interpreted as reliability rankings or ground truth.
 Cleaning, deduplication policy, normalization, and analytical interpretation belong to later
 phases.
+
+### NHTSA-to-event mapping
+
+Phase 1C maps only vehicle products (`PROD_TYPE=V`) with valid `CMPLID`, `ODINO`, make, model,
+and model year. Missing transmission or drivetrain prevents a Phase 1A configuration link
+but does not discard the supported broad vehicle association. Dates and mileage are parsed
+only when blank or unambiguously valid; malformed values produce categorized mapping errors.
+
+Canonical component mapping uses explicit NHTSA component roots. Missing components become
+`UNKNOWN`; present but unmapped values become `OTHER`, and the original value remains in the
+event source reference. Severity uses only deaths, injuries, crash, and fire fields. Details
+and limitations are documented in [Reliability Events](reliability-events.md).
