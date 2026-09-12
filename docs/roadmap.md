@@ -3,9 +3,10 @@
 Status markers: **complete** means implemented and validated; **planned** means no
 implementation exists yet.
 
-- **Phase 0 — Foundation: complete (current phase)** — packaging, dependency configuration,
+- **Phase 0 — Foundation: complete** — packaging, dependency configuration,
   centralized settings and logging, tests, and initial documentation.
-- **Phase 1A — Vehicle Data Model: planned**
+- **Phase 1A — Vehicle Data Model: complete (current phase)** — immutable canonical vehicle
+  representation, validation, normalization, serialization, and stable identities.
 - **Phase 1B — Structured Data Ingestion: planned**
 - **Phase 1C — Reliability Event Schema: planned**
 - **Phase 2A — Exploratory Data Analysis: planned**

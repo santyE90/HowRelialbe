@@ -11,9 +11,10 @@ roadmap phase calls for them.
 
 ## Current status
 
-Phase 0 establishes packaging, configuration, logging, testing, and documentation. There is
-currently no data pipeline, trained model, inference API, infrastructure, or user interface.
-See the [roadmap](docs/roadmap.md) for planned work.
+Phase 0 established packaging, configuration, logging, testing, and documentation. Phase 1A
+adds the canonical vehicle domain model shared by future components. There is currently no
+data ingestion, reliability-event model, data pipeline, trained model, inference API,
+infrastructure, or user interface. See the [roadmap](docs/roadmap.md) for planned work.
 
 ## Local setup
 
@@ -39,4 +40,3 @@ python -m ruff check .
 python -m mypy
 python -c "import howreliable; print(howreliable.__version__)"
 ```
-
