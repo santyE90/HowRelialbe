@@ -3,9 +3,10 @@
 ## Current implementation
 
 The repository contains an installable Python package, reusable configuration and logging
-foundations, and an immutable canonical vehicle domain model. Tests and static-analysis
-configuration enforce these boundaries. No ingestion, reliability-event, data-processing,
-ML, API, deployment, or UI component is implemented.
+foundations, an immutable canonical vehicle domain model, and a source-specific NHTSA ODI
+complaint ingestion adapter. Tests and static-analysis configuration enforce these
+boundaries. No reliability-event, cleaning, feature-engineering, ML, API, deployment, or UI
+component is implemented.
 
 ### Vehicle identity decisions
 
@@ -23,6 +24,25 @@ Broad identity consists of make, model, year, and generation. Configuration iden
 trim, engine, transmission, and drivetrain. Each has a human-inspectable, sorted canonical
 JSON key and a SHA-256 identifier derived from that key. IDs are stable across processes and
 do not use Python's randomized object hash.
+
+### Structured ingestion boundary
+
+The NHTSA adapter isolates HTTPS retrieval, raw-artifact checksums, safe ZIP handling,
+51-column flat-file parsing, source-record representation, JSON Lines output, and provenance.
+Downloaded ZIP files are immutable raw inputs under `data/raw/nhtsa/complaints/`. Structured
+records and provenance sidecars belong under `data/interim/nhtsa/complaints/`; neither may
+replace raw data.
+
+All source columns remain strings, with empty columns represented as `null`. Dates, numbers,
+codes, narratives, and questionable values are not cleaned or interpreted during ingestion.
+The output uses UTF-8 JSON Lines in official column order, making it streamable and directly
+readable by Pandas in a later phase. Each run records its source URL, requested range,
+timestamps, filename, SHA-256 checksum, adapter/schema version, record count, and whether the
+artifact was processed completely.
+
+`NhtsaComplaintRecord` remains separate from `Vehicle`. A narrow mapping function constructs
+a canonical vehicle only when NHTSA explicitly supplies every Phase 1A required field; it
+never invents generation, trim, engine, transmission, or drivetrain.
 
 ## Planned system
 

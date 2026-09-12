@@ -5,9 +5,11 @@ implementation exists yet.
 
 - **Phase 0 — Foundation: complete** — packaging, dependency configuration,
   centralized settings and logging, tests, and initial documentation.
-- **Phase 1A — Vehicle Data Model: complete (current phase)** — immutable canonical vehicle
+- **Phase 1A — Vehicle Data Model: complete** — immutable canonical vehicle
   representation, validation, normalization, serialization, and stable identities.
-- **Phase 1B — Structured Data Ingestion: planned**
+- **Phase 1B — Structured Data Ingestion: complete (current phase)** — official NHTSA ODI
+  complaint retrieval, immutable raw artifacts, source-faithful parsing, deterministic JSON
+  Lines output, and provenance.
 - **Phase 1C — Reliability Event Schema: planned**
 - **Phase 2A — Exploratory Data Analysis: planned**
 - **Phase 2B — Data Cleaning: planned**

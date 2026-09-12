@@ -11,10 +11,34 @@ roadmap phase calls for them.
 
 ## Current status
 
-Phase 0 established packaging, configuration, logging, testing, and documentation. Phase 1A
-adds the canonical vehicle domain model shared by future components. There is currently no
-data ingestion, reliability-event model, data pipeline, trained model, inference API,
-infrastructure, or user interface. See the [roadmap](docs/roadmap.md) for planned work.
+Phase 0 established the repository foundation, and Phase 1A added the canonical vehicle
+domain model. Phase 1B adds reproducible ingestion of the official NHTSA ODI Vehicle Owner
+Complaints flat file. There is currently no reliability-event model, cleaning, feature
+engineering, trained model, inference API, infrastructure, or user interface. See the
+[roadmap](docs/roadmap.md) for planned work.
+
+## NHTSA complaint ingestion
+
+To ingest an already downloaded official artifact, supply its actual acquisition timestamp
+so provenance is not guessed:
+
+```console
+python -m howreliable.data.ingestion \
+  --artifact data/raw/nhtsa/complaints/COMPLAINTS_RECEIVED_2020-2024.zip \
+  --retrieved-at 2026-09-12T14:00:00Z \
+  --output data/interim/nhtsa/complaints/complaints.jsonl
+```
+
+To retrieve the configured official 2020–2024 artifact and ingest it:
+
+```console
+python -m howreliable.data.ingestion --download
+```
+
+The command never overwrites an existing raw, structured, or provenance artifact. `--limit`
+is available for bounded diagnostics; its provenance explicitly marks the output incomplete.
+Downloaded data and generated outputs are ignored by Git. See
+[data sources](docs/data-sources.md) for format and provenance details.
 
 ## Local setup
 

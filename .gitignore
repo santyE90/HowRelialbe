@@ -27,6 +27,7 @@ htmlcov/
 
 # Local data and model artifacts (never commit generated or downloaded assets)
 data/raw/
+data/interim/
 data/processed/
 artifacts/
 models/
@@ -36,4 +37,3 @@ models/
 .vscode/
 .DS_Store
 Thumbs.db
-

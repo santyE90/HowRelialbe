@@ -1,7 +1,7 @@
 # Limitations
 
-HowReliable? currently provides foundation code only and cannot make reliability predictions.
-Future work must account for at least the following constraints:
+HowReliable? currently provides foundational domain and ingestion code only and cannot make
+reliability predictions. Future work must account for at least the following constraints:
 
 - Public automotive reliability data may be sparse, inconsistent, duplicated, or inaccurate.
 - Complaints and voluntary owner reports introduce reporting and selection bias.
