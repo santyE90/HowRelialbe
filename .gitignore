@@ -1,0 +1,39 @@
+# Python caches and compiled files
+__pycache__/
+*.py[cod]
+
+# Virtual environments and local environment configuration
+.venv/
+venv/
+env/
+.env
+.env.*
+!.env.example
+
+# Packaging and build artifacts
+build/
+dist/
+*.egg-info/
+
+# Test, lint, and type-check caches
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+
+# Notebook checkpoints
+.ipynb_checkpoints/
+
+# Local data and model artifacts (never commit generated or downloaded assets)
+data/raw/
+data/processed/
+artifacts/
+models/
+
+# IDE and operating-system files
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+

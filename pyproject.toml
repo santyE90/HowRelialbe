@@ -1,0 +1,48 @@
+[build-system]
+requires = ["hatchling==1.27.0"]
+build-backend = "hatchling.build"
+
+[project]
+name = "howreliable"
+version = "0.1.0"
+description = "Foundation for an automotive reliability ML engineering platform."
+readme = "README.md"
+requires-python = ">=3.12"
+authors = [{ name = "HowReliable? contributors" }]
+dependencies = [
+    "fastapi==0.116.1",
+    "numpy==2.3.2",
+    "pandas==2.3.2",
+    "pydantic==2.11.7",
+    "scikit-learn==1.7.1",
+    "torch==2.8.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "mypy==1.17.1",
+    "pytest==8.4.1",
+    "ruff==0.12.11",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/howreliable"]
+
+[tool.pytest.ini_options]
+addopts = "--strict-config --strict-markers"
+testpaths = ["tests"]
+
+[tool.ruff]
+target-version = "py312"
+line-length = 100
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM", "RUF"]
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+files = ["src", "tests"]
+pretty = true
+show_error_codes = true
