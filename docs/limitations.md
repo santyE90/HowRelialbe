@@ -86,6 +86,14 @@ work must account for at least the following constraints:
   cohort exposure, and continued service are all unobserved.
 - Phase 2G supports cohort-level complaint-activity target design only. It does not support
   individual-vehicle prediction or major-repair/failure probability.
+- The Phase 3A binary zero means no accepted report was observed in a complete future
+  complaint-source window; it is not evidence that a cohort was healthy or issue-free.
+- Historical complaint volume is strongly associated with future reporting (2022/12m
+  Spearman 0.7513), so popularity, exposure, and persistence may dominate a baseline.
+- The selected target is not exposure-normalized. Available production denominators cover
+  fewer than half of eligible cohorts and may reflect later filing revisions.
+- The Phase 2G whole-history columns remain temporally unsafe for Phase 3B except for static
+  cohort identity. Complaint, communication, and recall aggregates require cutoff rebuilds.
 
 Any future output will be decision support, not a replacement for a qualified mechanical
 inspection, diagnosis, maintenance guidance, recall information, or safety advice.

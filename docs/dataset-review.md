@@ -262,3 +262,10 @@ reliability.
 
 These limitations do not prevent Phase 3A target design, but they materially constrain the
 prediction problem that Phase 3A may define.
+
+## Phase 3A resolution
+
+Phase 3A subsequently selected cohort-level `future_12m_complaint_activity` at the
+2022-12-31 cutoff with an at-least-one-report threshold. Its 8,416 eligible cohorts contain
+4,398 positives and 4,018 observed-zero rows. This is a complaint-reporting outcome, not a
+repair, failure, health, or reliability label. See [target definition](target-definition.md).

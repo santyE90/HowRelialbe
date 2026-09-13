@@ -144,6 +144,19 @@ Separate review diagnostics describe source support, complete-pair correlations,
 could have been known at calendar cutoffs. They do not turn the whole-history artifact into
 a training dataset. See [dataset review](dataset-review.md).
 
+### Target-definition boundary
+
+Phase 3A reads validated Phase 2C complaint events and Phase 2G cohort identities. It uses
+complaint `report_date` to separate history from a complete future source window and emits a
+separate target-only artifact for eligible cohorts. Target generation verifies input
+versions, schemas, checksums, identity accounting, cutoff boundaries, and censoring before
+writing; incomplete windows emit no labels.
+
+The selected target is observed 12-month complaint activity at cohort grain. It is not a
+repair, failure, health, safety, or reliability target. Whole-history integrated features
+are not joined into the target artifact and remain prohibited for modeling until Phase 3B
+rebuilds temporal features as of the cutoff. See [target definition](target-definition.md).
+
 ## Planned system
 
 The intended high-level flow is:

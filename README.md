@@ -11,13 +11,14 @@ roadmap phase calls for them.
 
 ## Current status
 
-Phases 0 through 2G now provide the repository foundation, canonical vehicle and reliability
+Phases 0 through 3A now provide the repository foundation, canonical vehicle and reliability
 event models, source-faithful NHTSA ingestion, reproducible full-corpus EDA, and a
 deterministic evidence-preserving cleaning boundary, target-agnostic event and vehicle
 cohort features, NHTSA production-exposure diagnostics, and official manufacturer-
 communication evidence, official recall campaign evidence, and a deterministic four-source
-cohort integration and dataset review. The project is ready for Phase 3A target design; there is no target
-definition, training dataset, trained model, inference API, infrastructure, or user interface.
+cohort integration and dataset review, plus a leakage-safe cohort target definition. The
+project is ready for Phase 3B baseline modeling; there is no training feature matrix, split,
+trained model, inference API, infrastructure, or user interface.
 See the [roadmap](docs/roadmap.md), [cleaning rules](docs/cleaning-rules.md), and
 [feature definitions](docs/feature-engineering.md) for details.
 
@@ -39,6 +40,11 @@ Phase 2G integrates all 10,670 complaint cohorts without imputation or source-ab
 The review finds that the data can support cohort-level future complaint-activity target
 design, but not major-repair probability or individual-vehicle risk. See the
 [dataset review](docs/dataset-review.md).
+
+Phase 3A selects `future_12m_complaint_activity`: whether an eligible cohort has at least one
+accepted complaint report during 2023 after a 2022-12-31 cutoff. The ignored target artifact
+is separate from features and represents reporting activity—not repair, failure, or
+reliability. See the [target definition](docs/target-definition.md).
 
 ## NHTSA complaint ingestion
 
