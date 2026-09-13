@@ -51,6 +51,14 @@ work must account for at least the following constraints:
 - Complaints are observational allegations rather than verified repairs or failures.
 - Phase 2C artifacts are not a training dataset: they contain no target, prediction window,
   split assignment, imputation, encoding, scaling, or model-specific preprocessing.
+- EWR production is only a production exposure proxy, not active fleet, registrations,
+  vehicle-years, mileage, or usage. Different model years have unequal time at risk.
+- The conservative Phase 2D match covers 44.7516% of complaint cohorts and 77.5753% of
+  complaint events. Missing matches are unknown production, never reported zero production.
+- EWR reporting scope, historical threshold changes, public filing revisions, and naming
+  differences prevent uniform manufacturer/model coverage.
+- `complaints_per_10k_produced` is a diagnostic reporting-volume ratio, not repair incidence,
+  failure probability, reliability, or risk.
 
 Any future output will be decision support, not a replacement for a qualified mechanical
 inspection, diagnosis, maintenance guidance, recall information, or safety advice.

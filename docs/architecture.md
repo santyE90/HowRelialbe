@@ -95,6 +95,18 @@ to a later prediction cutoff. They are explicitly not training-ready. Target con
 temporal cutoffs, splits, imputation, categorical encoding, scaling, and other model-specific
 preprocessing remain separate future boundaries.
 
+### Production-exposure boundary
+
+Phase 2D independently acquires exact JSON responses from NHTSA's public EWR API. Immutable
+raw responses and a checksummed manifest feed source-faithful production rows, immutable
+canonical exposure records, latest-filing configuration selection, and broad production
+cohorts. Cumulative quarterly filings are never summed. A separate diagnostic joins those
+cohorts to Phase 2C identities without mutating either Phase 2C artifact.
+
+Production exposure is not a `ReliabilityEvent`. Matching permits exact normalized identity
+and inspectable explicit aliases only; the validated alias table is empty. Missing and
+ambiguous exposure remain explicit nulls. See [exposure data](exposure-data.md).
+
 ## Planned system
 
 The intended high-level flow is:

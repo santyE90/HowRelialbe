@@ -21,6 +21,9 @@ implementation exists yet.
   versioned provenance, and full-corpus validation.
 - **Phase 2C — Feature Engineering: complete** — target-agnostic event and broad
   vehicle-cohort tables, stable schemas, versioned provenance, and full-corpus accounting.
+- **Phase 2D — NHTSA EWR Production Data Ingestion & Cohort Matching: complete** — official
+  public production snapshots, immutable provenance, cumulative-safe aggregation, and
+  conservative full-cohort exposure matching diagnostics.
 - **Current project state — DATASET REVIEW CHECKPOINT.** Review the engineered dataset before
   defining any prediction target. Phase 3A has not started.
 - **Phase 3A — Define ML Target: planned**

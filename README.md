@@ -11,13 +11,18 @@ roadmap phase calls for them.
 
 ## Current status
 
-Phases 0 through 2C now provide the repository foundation, canonical vehicle and reliability
+Phases 0 through 2D now provide the repository foundation, canonical vehicle and reliability
 event models, source-faithful NHTSA ingestion, reproducible full-corpus EDA, and a
-deterministic evidence-preserving cleaning boundary plus target-agnostic event and vehicle
-cohort features. The project is now at the dataset review checkpoint; there is no target
+deterministic evidence-preserving cleaning boundary, target-agnostic event and vehicle
+cohort features, and NHTSA production-exposure diagnostics. The project remains at the
+dataset review checkpoint; there is no target
 definition, training dataset, trained model, inference API, infrastructure, or user interface.
 See the [roadmap](docs/roadmap.md), [cleaning rules](docs/cleaning-rules.md), and
 [feature definitions](docs/feature-engineering.md) for details.
+
+Phase 2D keeps production exposure separate from complaint events and features. Its exact
+match covers 4,775 of 10,670 complaint cohorts and 77.58% of complaint events; unmatched
+production is never treated as zero. See [exposure data](docs/exposure-data.md).
 
 ## NHTSA complaint ingestion
 

@@ -162,6 +162,9 @@ maintenance-history, or verified-repair features because those sources are not i
 Fake zero columns are not created. Narrative NLP, categorical encoding, scaling, imputation,
 model-specific preprocessing, targets, and scores are also deferred.
 
+Phase 2D evaluates NHTSA EWR production in separate exposure artifacts. It does not append a
+denominator or diagnostic rate to either Phase 2C table. See [Exposure Data](exposure-data.md).
+
 ## Versioning, provenance, and execution
 
 Feature version `nhtsa-complaint-features-1.0` is recorded with the source cleaning and mapping

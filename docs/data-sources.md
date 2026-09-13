@@ -66,8 +66,8 @@ incomplete.
 
 Raw complaint counts must not be interpreted as reliability rankings or ground truth.
 Phase 2B's non-destructive normalization, quality flags, and explicit retention policy are
-documented in [Cleaning Rules](cleaning-rules.md). Exposure normalization and analytical
-interpretation remain future work.
+documented in [Cleaning Rules](cleaning-rules.md). Phase 2D's separate exposure evaluation is
+documented in [Exposure Data](exposure-data.md); it does not change the complaint source.
 
 ### NHTSA-to-event mapping
 
@@ -80,3 +80,12 @@ Canonical component mapping uses explicit NHTSA component roots. Missing compone
 `UNKNOWN`; present but unmapped values become `OTHER`, and the original value remains in the
 event source reference. Severity uses only deaths, injuries, crash, and fire fields. Details
 and limitations are documented in [Reliability Events](reliability-events.md).
+
+## NHTSA Early Warning Reporting light-vehicle production
+
+Phase 2D uses only NHTSA's official public EWR JSON API. The API exposes manufacturers,
+period-specific report descriptors, and paginated light-vehicle production rows rather than
+a single bulk file. Raw responses, official URLs, retrieval time, category and period,
+SHA-256 checksums, and the absence of a published API schema version are recorded in an
+immutable snapshot manifest. Full schema, cumulative-production semantics, bounded coverage,
+and match results are documented in [Exposure Data](exposure-data.md).
