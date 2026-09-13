@@ -1,8 +1,8 @@
 # Limitations
 
-HowReliable? currently provides domain, ingestion, EDA, mapping, and conservative cleaning
-code only; it cannot make reliability predictions. Future work must account for at least the
-following constraints:
+HowReliable? currently provides domain, ingestion, EDA, mapping, conservative cleaning, and
+target-agnostic descriptive features only; it cannot make reliability predictions. Future
+work must account for at least the following constraints:
 
 - Public automotive reliability data may be sparse, inconsistent, duplicated, or inaccurate.
 - Complaints and voluntary owner reports introduce reporting and selection bias.
@@ -37,6 +37,20 @@ following constraints:
 - The clean artifact excludes non-vehicle products and unknown model years with explicit
   reason records. It is therefore an in-scope analytical view, not a replacement for the
   immutable source-faithful artifact.
+- Complaint-volume exposure bias remains unresolved. Vehicle-population, registration,
+  sales, fleet-size, and usage denominators are unavailable, so cohort complaint counts are
+  not reliability or failure rates.
+- Full vehicle configuration remains unavailable for 99.6202% of clean events, making broad
+  make/model/model-year cohorts the best-supported current aggregation grain.
+- Mileage remains missing for 63.6693% of clean events. Cohort mileage summaries expose their
+  observed coverage and do not impute missing values.
+- Whole-corpus cohort aggregates may include information later than a future prediction
+  cutoff. They are descriptive and are not leakage-safe until a target and temporal
+  observation policy exist.
+- Canonical `OTHER` remains 36.5307% of accepted complaint events.
+- Complaints are observational allegations rather than verified repairs or failures.
+- Phase 2C artifacts are not a training dataset: they contain no target, prediction window,
+  split assignment, imputation, encoding, scaling, or model-specific preprocessing.
 
 Any future output will be decision support, not a replacement for a qualified mechanical
 inspection, diagnosis, maintenance guidance, recall information, or safety advice.

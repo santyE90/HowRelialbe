@@ -16,10 +16,13 @@ implementation exists yet.
 - **Phase 2A — Exploratory Data Analysis: complete** — reproducible full-corpus
   pandas/NumPy analysis, mapping diagnostics, data-quality visualizations, and documented
   findings without dataset mutation.
-- **Phase 2B — Data Cleaning: complete (current phase)** — deterministic clean JSON Lines,
+- **Phase 2B — Data Cleaning: complete** — deterministic clean JSON Lines,
   evidence-preserving quality flags, explicit exclusions and conservation accounting,
   versioned provenance, and full-corpus validation.
-- **Phase 2C — Feature Engineering: planned**
+- **Phase 2C — Feature Engineering: complete** — target-agnostic event and broad
+  vehicle-cohort tables, stable schemas, versioned provenance, and full-corpus accounting.
+- **Current project state — DATASET REVIEW CHECKPOINT.** Review the engineered dataset before
+  defining any prediction target. Phase 3A has not started.
 - **Phase 3A — Define ML Target: planned**
 - **Phase 3B — Baseline ML Models: planned**
 - **Phase 3C — PyTorch Dataset Pipeline: planned**

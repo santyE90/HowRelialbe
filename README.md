@@ -11,12 +11,13 @@ roadmap phase calls for them.
 
 ## Current status
 
-Phases 0 through 2B now provide the repository foundation, canonical vehicle and reliability
+Phases 0 through 2C now provide the repository foundation, canonical vehicle and reliability
 event models, source-faithful NHTSA ingestion, reproducible full-corpus EDA, and a
-deterministic evidence-preserving cleaning boundary. There is currently no feature
-engineering, target definition, trained model, inference API, infrastructure, or user
-interface. See the [roadmap](docs/roadmap.md), [event schema](docs/reliability-events.md), and
-[cleaning rules](docs/cleaning-rules.md) for details.
+deterministic evidence-preserving cleaning boundary plus target-agnostic event and vehicle
+cohort features. The project is now at the dataset review checkpoint; there is no target
+definition, training dataset, trained model, inference API, infrastructure, or user interface.
+See the [roadmap](docs/roadmap.md), [cleaning rules](docs/cleaning-rules.md), and
+[feature definitions](docs/feature-engineering.md) for details.
 
 ## NHTSA complaint ingestion
 
@@ -66,6 +67,18 @@ It writes clean JSON Lines, explicit exclusions, and provenance beneath
 `data/processed/nhtsa/complaints/`. It retains questionable values with named quality flags,
 accounts for every input row, and refuses to overwrite existing outputs. Generated data is
 ignored by Git. See [cleaning rules](docs/cleaning-rules.md) for schema and policy details.
+
+## Produce target-agnostic feature tables
+
+After Phase 2B cleaning, generate the event and broad vehicle-cohort tables with:
+
+```console
+python -m howreliable.data.features
+```
+
+Outputs are written beneath `data/processed/features/` with fixed schemas and versioned
+provenance. They are whole-corpus descriptive tables, not targets, reliability rates, or a
+leakage-safe training dataset. See [feature engineering](docs/feature-engineering.md).
 
 ## Local setup
 

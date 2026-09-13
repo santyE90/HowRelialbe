@@ -4,9 +4,9 @@
 
 The repository contains an installable Python package, reusable configuration and logging
 foundations, immutable canonical vehicle and reliability-event models, source-specific NHTSA
-ingestion and mapping, reproducible EDA, and a deterministic cleaning boundary. Tests and
-static-analysis configuration enforce these boundaries. No feature-engineering, ML, API,
-deployment, or UI component is implemented.
+ingestion and mapping, reproducible EDA, deterministic cleaning, and target-agnostic feature
+engineering. Tests and static-analysis configuration enforce these boundaries. No target
+definition, training dataset, ML model, API, deployment, or UI component is implemented.
 
 ### Vehicle identity decisions
 
@@ -80,6 +80,20 @@ exclusion artifact. Input conservation is checked against source provenance. Rep
 component rows remain separate, outputs never overwrite source or existing processed data,
 and cleaning/mapping versions plus count summaries are recorded in a provenance sidecar.
 Feature and label derivation remains outside this boundary.
+
+### Feature-engineering boundary
+
+Phase 2C reads only the Phase 2B clean artifact. It emits one fixed-schema table at event grain
+and another at normalized make/model/model-year cohort grain. Event rows retain traceability
+and derive calendar, nonnegative vehicle-age, evidence, mileage-coverage, and quality-status
+values. Cohort rows aggregate stable canonical components, severity evidence, mileage
+coverage, report-delay summaries, and quality composition. Repeated ODINO component events
+remain represented.
+
+Whole-corpus cohort aggregates are descriptive and may contain future information relative
+to a later prediction cutoff. They are explicitly not training-ready. Target construction,
+temporal cutoffs, splits, imputation, categorical encoding, scaling, and other model-specific
+preprocessing remain separate future boundaries.
 
 ## Planned system
 
