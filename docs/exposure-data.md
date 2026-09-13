@@ -141,3 +141,8 @@ cohort coverage, yet 22.42% of complaint events and 55.25% of cohorts lack a def
 denominator. It is strong enough to evaluate as an optional, coverage-gated future feature,
 but not as a universal denominator and not without match status and missingness. Phase 3A
 has not started.
+
+Phase 2E subsequently combines only Phase 2D match availability with manufacturer-
+communication availability in a separate coverage diagnostic. It does not change production
+records, production matches, or the interpretation of the exposure proxy. See
+[Manufacturer Communications](manufacturer-communications.md).

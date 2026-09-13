@@ -165,6 +165,11 @@ model-specific preprocessing, targets, and scores are also deferred.
 Phase 2D evaluates NHTSA EWR production in separate exposure artifacts. It does not append a
 denominator or diagnostic rate to either Phase 2C table. See [Exposure Data](exposure-data.md).
 
+Phase 2E likewise evaluates manufacturer communications in independent document,
+applicability, and cohort-diagnostic artifacts. Communication counts are not appended to the
+Phase 2C schemas and are not training-ready features. See
+[Manufacturer Communications](manufacturer-communications.md).
+
 ## Versioning, provenance, and execution
 
 Feature version `nhtsa-complaint-features-1.0` is recorded with the source cleaning and mapping

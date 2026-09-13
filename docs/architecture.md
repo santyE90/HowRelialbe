@@ -107,6 +107,19 @@ Production exposure is not a `ReliabilityEvent`. Matching permits exact normaliz
 and inspectable explicit aliases only; the validated alias table is empty. Missing and
 ambiguous exposure remain explicit nulls. See [exposure data](exposure-data.md).
 
+### Manufacturer-communication boundary
+
+Phase 2E treats NHTSA communications as documentary evidence, not `ReliabilityEvent`
+instances. The richer headerless TSV is canonical; the compact CSV is audited for overlap
+and never blindly unioned. Stable NHTSA communication identity remains separate from each
+make/model/model-year applicability identity, preventing component and model-year expansion
+from multiplying unique document counts.
+
+Structured communication type and source component fields may be mapped exactly. Summary
+text is preserved but never classified. A separate diagnostic matches applications to Phase
+2C cohorts and combines only coverage status with Phase 2D. It does not alter complaint,
+feature, or production artifacts. See [manufacturer communications](manufacturer-communications.md).
+
 ## Planned system
 
 The intended high-level flow is:

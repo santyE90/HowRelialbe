@@ -89,3 +89,13 @@ a single bulk file. Raw responses, official URLs, retrieval time, category and p
 SHA-256 checksums, and the absence of a published API schema version are recorded in an
 immutable snapshot manifest. Full schema, cumulative-production semantics, bounded coverage,
 and match results are documented in [Exposure Data](exposure-data.md).
+
+## NHTSA Manufacturer Communications
+
+Phase 2E uses NHTSA's official `TSBS_RECEIVED_2020-2024.zip` 14-field TSV as the canonical
+rich communication source and audits `MFR_COMMS_RECEIVED_2020-2024.zip` as its compact CSV
+view. They represent substantially overlapping views with different expansion grains and
+small synchronization differences, so they are not unioned. Raw ZIPs and the official
+`TSBS.txt` dictionary remain immutable with URLs, timestamps, SHA-256 checksums, archive
+members, schema information, and complete processing counts. See
+[Manufacturer Communications](manufacturer-communications.md).

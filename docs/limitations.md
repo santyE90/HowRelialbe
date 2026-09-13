@@ -59,6 +59,17 @@ work must account for at least the following constraints:
   differences prevent uniform manufacturer/model coverage.
 - `complaints_per_10k_produced` is a diagnostic reporting-volume ratio, not repair incidence,
   failure probability, reliability, or risk.
+- Manufacturer communications describe notices, procedures, campaigns, warranty policy,
+  software, and other manufacturer actions; their count is not a defect or failure count.
+- One communication can expand across many products, years, and components. Document and
+  applicability counts must remain separate.
+- Only 1.5799% of the selected communication documents contain structured manufacturer
+  component system/subsystem data, while 54.4% map at least one NHTSA component to the
+  existing broad `other` category.
+- Manufacturer document IDs repeat and the deprecated replacement field is empty, so Phase
+  2E does not infer duplicate, revision, or supersession relationships.
+- Exact communication matching covers 86.5417% of complaint cohorts and 98.5593% of
+  complaint events, but absence means no matched document in this snapshot—not no issue.
 
 Any future output will be decision support, not a replacement for a qualified mechanical
 inspection, diagnosis, maintenance guidance, recall information, or safety advice.

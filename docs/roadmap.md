@@ -24,6 +24,9 @@ implementation exists yet.
 - **Phase 2D — NHTSA EWR Production Data Ingestion & Cohort Matching: complete** — official
   public production snapshots, immutable provenance, cumulative-safe aggregation, and
   conservative full-cohort exposure matching diagnostics.
+- **Phase 2E — Manufacturer Communications / TSB Ingestion & Cohort Matching: complete** —
+  official rich-TSV ingestion, compact-view overlap audit, document/applicability identity,
+  structured-only classification, conservative cohort matching, and cross-source coverage.
 - **Current project state — DATASET REVIEW CHECKPOINT.** Review the engineered dataset before
   defining any prediction target. Phase 3A has not started.
 - **Phase 3A — Define ML Target: planned**
