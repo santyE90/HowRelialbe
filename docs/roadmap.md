@@ -10,10 +10,12 @@ implementation exists yet.
 - **Phase 1B — Structured Data Ingestion: complete** — official NHTSA ODI
   complaint retrieval, immutable raw artifacts, source-faithful parsing, deterministic JSON
   Lines output, and provenance.
-- **Phase 1C — Reliability Event Schema: complete (current phase)** — immutable canonical
+- **Phase 1C — Reliability Event Schema: complete** — immutable canonical
   events, cross-source taxonomies, source traceability, and conservative NHTSA complaint
   mapping.
-- **Phase 2A — Exploratory Data Analysis: planned**
+- **Phase 2A — Exploratory Data Analysis: complete (current phase)** — reproducible full-corpus
+  pandas/NumPy analysis, mapping diagnostics, data-quality visualizations, and documented
+  findings without dataset mutation.
 - **Phase 2B — Data Cleaning: planned**
 - **Phase 2C — Feature Engineering: planned**
 - **Phase 3A — Define ML Target: planned**

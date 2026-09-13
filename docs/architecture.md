@@ -60,6 +60,14 @@ derives evidence severity. Raw records are neither modified nor replaced. Events
 minimal source references and optional artifact checksum context while the complete evidence
 remains in the raw/interim source layer. Mapping failures are explicit and categorized.
 
+### Exploratory analysis boundary
+
+Phase 2A reads the immutable Phase 1B JSON Lines artifact into pandas and uses NumPy-backed
+diagnostic arrays plus the existing Phase 1C mapper. Analysis-only masks, parsed views,
+counts, and plots remain inside the reproducible notebook. No notebook result is written back
+to raw or interim source data, and no exploratory derivation is promoted to cleaning or
+feature-engineering code.
+
 ## Planned system
 
 The intended high-level flow is:

@@ -41,6 +41,19 @@ is available for bounded diagnostics; its provenance explicitly marks the output
 Downloaded data and generated outputs are ignored by Git. See
 [data sources](docs/data-sources.md) for format and provenance details.
 
+## Reproduce the EDA
+
+After producing the complete interim JSON Lines artifact at the default data location,
+install the project kernel and execute the notebook from the repository root:
+
+```console
+python -m ipykernel install --prefix .venv --name howreliable --display-name "HowReliable (.venv)"
+jupyter-execute --inplace --timeout=900 notebooks/01_data_exploration.ipynb
+```
+
+The notebook analyzes the complete artifact without modifying it. Its factual results are
+summarized in [EDA findings](docs/eda-findings.md).
+
 ## Local setup
 
 Python 3.12 or newer is required. From the repository root:
