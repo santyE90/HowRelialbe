@@ -11,12 +11,12 @@ roadmap phase calls for them.
 
 ## Current status
 
-Phase 0 established the repository foundation, and Phase 1A added the canonical vehicle
-domain model. Phase 1B adds reproducible ingestion of the official NHTSA ODI Vehicle Owner
-Complaints flat file. Phase 1C defines immutable, traceable reliability events and the
-conservative NHTSA complaint mapping boundary. There is currently no cleaning, EDA, feature
-engineering, trained model, inference API, infrastructure, or user interface. See the
-[roadmap](docs/roadmap.md) and [event schema](docs/reliability-events.md) for details.
+Phases 0 through 2B now provide the repository foundation, canonical vehicle and reliability
+event models, source-faithful NHTSA ingestion, reproducible full-corpus EDA, and a
+deterministic evidence-preserving cleaning boundary. There is currently no feature
+engineering, target definition, trained model, inference API, infrastructure, or user
+interface. See the [roadmap](docs/roadmap.md), [event schema](docs/reliability-events.md), and
+[cleaning rules](docs/cleaning-rules.md) for details.
 
 ## NHTSA complaint ingestion
 
@@ -53,6 +53,19 @@ jupyter-execute --inplace --timeout=900 notebooks/01_data_exploration.ipynb
 
 The notebook analyzes the complete artifact without modifying it. Its factual results are
 summarized in [EDA findings](docs/eda-findings.md).
+
+## Produce the cleaned analytical artifact
+
+After complete ingestion, run the deterministic Phase 2B cleaner:
+
+```console
+python -m howreliable.data.cleaning
+```
+
+It writes clean JSON Lines, explicit exclusions, and provenance beneath
+`data/processed/nhtsa/complaints/`. It retains questionable values with named quality flags,
+accounts for every input row, and refuses to overwrite existing outputs. Generated data is
+ignored by Git. See [cleaning rules](docs/cleaning-rules.md) for schema and policy details.
 
 ## Local setup
 

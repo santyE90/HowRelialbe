@@ -65,8 +65,9 @@ incomplete.
   character encoding.
 
 Raw complaint counts must not be interpreted as reliability rankings or ground truth.
-Cleaning, deduplication policy, normalization, and analytical interpretation belong to later
-phases.
+Phase 2B's non-destructive normalization, quality flags, and explicit retention policy are
+documented in [Cleaning Rules](cleaning-rules.md). Exposure normalization and analytical
+interpretation remain future work.
 
 ### NHTSA-to-event mapping
 

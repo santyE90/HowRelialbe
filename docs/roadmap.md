@@ -13,10 +13,12 @@ implementation exists yet.
 - **Phase 1C — Reliability Event Schema: complete** — immutable canonical
   events, cross-source taxonomies, source traceability, and conservative NHTSA complaint
   mapping.
-- **Phase 2A — Exploratory Data Analysis: complete (current phase)** — reproducible full-corpus
+- **Phase 2A — Exploratory Data Analysis: complete** — reproducible full-corpus
   pandas/NumPy analysis, mapping diagnostics, data-quality visualizations, and documented
   findings without dataset mutation.
-- **Phase 2B — Data Cleaning: planned**
+- **Phase 2B — Data Cleaning: complete (current phase)** — deterministic clean JSON Lines,
+  evidence-preserving quality flags, explicit exclusions and conservation accounting,
+  versioned provenance, and full-corpus validation.
 - **Phase 2C — Feature Engineering: planned**
 - **Phase 3A — Define ML Target: planned**
 - **Phase 3B — Baseline ML Models: planned**

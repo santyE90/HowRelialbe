@@ -105,3 +105,5 @@ The following are questions for later cleaning policy, not decisions made by EDA
 - Preserve explicit warnings that complaint volume lacks sales, fleet, age, mileage, and
   usage exposure denominators.
 
+Phase 2B adopted conservative policies for these candidates without changing the historical
+findings above; see [Cleaning Rules](cleaning-rules.md).

@@ -1,7 +1,8 @@
 # Limitations
 
-HowReliable? currently provides foundational domain and ingestion code only and cannot make
-reliability predictions. Future work must account for at least the following constraints:
+HowReliable? currently provides domain, ingestion, EDA, mapping, and conservative cleaning
+code only; it cannot make reliability predictions. Future work must account for at least the
+following constraints:
 
 - Public automotive reliability data may be sparse, inconsistent, duplicated, or inaccurate.
 - Complaints and voluntary owner reports introduce reporting and selection bias.
@@ -31,6 +32,11 @@ reliability predictions. Future work must account for at least the following con
   indicator rule.
 - Complaint narratives include 441 values longer than the documented 2,048-character field
   size, and preserved source bytes may still have uncertain intended encoding.
+- Phase 2B flags but does not resolve missing, zero, or extreme mileage; future model years;
+  anomalous delays; broad components; short/oversized narratives; or encoding control codes.
+- The clean artifact excludes non-vehicle products and unknown model years with explicit
+  reason records. It is therefore an in-scope analytical view, not a replacement for the
+  immutable source-faithful artifact.
 
 Any future output will be decision support, not a replacement for a qualified mechanical
 inspection, diagnosis, maintenance guidance, recall information, or safety advice.

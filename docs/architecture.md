@@ -3,10 +3,9 @@
 ## Current implementation
 
 The repository contains an installable Python package, reusable configuration and logging
-foundations, an immutable canonical vehicle domain model, and a source-specific NHTSA ODI
-complaint ingestion adapter. Tests and static-analysis configuration enforce these
-boundaries. A separate canonical reliability-event model and conservative NHTSA mapper now
-provide the source-to-domain boundary. No cleaning, EDA, feature-engineering, ML, API,
+foundations, immutable canonical vehicle and reliability-event models, source-specific NHTSA
+ingestion and mapping, reproducible EDA, and a deterministic cleaning boundary. Tests and
+static-analysis configuration enforce these boundaries. No feature-engineering, ML, API,
 deployment, or UI component is implemented.
 
 ### Vehicle identity decisions
@@ -68,6 +67,20 @@ counts, and plots remain inside the reproducible notebook. No notebook result is
 to raw or interim source data, and no exploratory derivation is promoted to cleaning or
 feature-engineering code.
 
+### Cleaning boundary
+
+Phase 2B streams the validated Phase 1B JSON Lines artifact through the Phase 1C mapper and
+emits fixed-schema clean records under `data/processed/`. Original make/model labels,
+component labels, source IDs, dates, mileage, narratives, and provenance remain traceable.
+Canonical/normalized values are added without replacing the originals. Deterministic quality
+flags expose EDA-backed anomalies without correction, imputation, or row deletion.
+
+Rows outside vehicle scope or unable to form a canonical event are written to an explicit
+exclusion artifact. Input conservation is checked against source provenance. Repeated ODINO
+component rows remain separate, outputs never overwrite source or existing processed data,
+and cleaning/mapping versions plus count summaries are recorded in a provenance sidecar.
+Feature and label derivation remains outside this boundary.
+
 ## Planned system
 
 The intended high-level flow is:
@@ -85,8 +98,8 @@ raw automotive data
   -> minimal UI (later)
 ```
 
-Each arrow represents a planned boundary, not current functionality. Data processing,
-training, evaluation, and online inference will remain separable so they can be tested and
-operated independently. Artifact metadata and data provenance will connect the stages rather
-than hidden shared state. Concrete storage, service, and deployment designs will be selected
-in their respective phases once requirements are known.
+Implemented ingestion and cleaning boundaries already follow this separation; later arrows
+remain planned. Training, evaluation, and online inference will remain separable so they can
+be tested and operated independently. Artifact metadata and data provenance connect stages
+rather than hidden shared state. Concrete storage, service, and deployment designs will be
+selected in their respective phases once requirements are known.
