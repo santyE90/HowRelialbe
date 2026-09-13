@@ -1,5 +1,13 @@
 # Data Sources
 
+## NHTSA Recalls
+
+Phase 2F uses official `FLAT_RCL_PRE_2010.zip` and `FLAT_RCL_POST_2010.zip` with the
+current `RCL.txt` dictionary. These complete 29-field flat files preserve campaign,
+applicability, regulatory, population, component, date, remedy, and lineage fields.
+Date-bounded recall-document indexes and the lookup API were inspected but are not the
+canonical bulk corpus. See [recalls](recalls.md).
+
 ## NHTSA ODI Vehicle Owner Complaints
 
 The first source is the official National Highway Traffic Safety Administration (NHTSA)

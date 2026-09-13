@@ -181,7 +181,8 @@ Every row remains a complaint cohort; the categories indicate coverage only:
 
 Manufacturer communication counts are defensible future descriptive features only when
 document identity, observation cutoff, application grain, type/component metadata, and
-missingness are retained. They should not become targets or severity proxies. Recalls remain
-necessary before Phase 3A because they provide a distinct, safety-regulatory action signal
-that communications do not. The combined sources support a stronger future target-design
-discussion, but Phase 2F/recall review should occur first. Phase 3A has not started.
+missingness are retained. They should not become targets or severity proxies. Phase 2F now
+confirms that recalls provide a distinct safety-regulatory signal: 7,649 complaint cohorts
+have both sources, 880 have recalls without communications, and 1,585 have communications
+without recalls. The combined sources move next to Phase 2G integration review; Phase 3A has
+not started. See [recalls](recalls.md).

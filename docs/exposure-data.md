@@ -146,3 +146,8 @@ Phase 2E subsequently combines only Phase 2D match availability with manufacture
 communication availability in a separate coverage diagnostic. It does not change production
 records, production matches, or the interpretation of the exposure proxy. See
 [Manufacturer Communications](manufacturer-communications.md).
+
+Phase 2F's four-source diagnostic likewise reads Phase 2D availability without modifying
+the production match table. Production remains an exposure proxy and recall presence remains
+regulatory evidence; their coexistence is not a rate or composite score. See
+[recalls](recalls.md).

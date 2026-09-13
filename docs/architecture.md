@@ -120,6 +120,18 @@ text is preserved but never classified. A separate diagnostic matches applicatio
 2C cohorts and combines only coverage status with Phase 2D. It does not alter complaint,
 feature, or production artifacts. See [manufacturer communications](manufacturer-communications.md).
 
+### Recall boundary
+
+Phase 2F treats NHTSA recalls as formal safety-defect/noncompliance actions, not
+`ReliabilityEvent` instances. Exact NHTSA campaign identity remains separate from each
+official vehicle application. Campaign-wide affected population is retained once and is
+never summed or allocated across applications.
+
+Only structured product, date, component, FMVSS, and advisory fields are interpreted.
+Recall text remains preserved evidence. Exact normalized matching emits separate cohort and
+four-source coverage diagnostics without changing Phase 2C–2E artifacts. See
+[recalls](recalls.md).
+
 ## Planned system
 
 The intended high-level flow is:

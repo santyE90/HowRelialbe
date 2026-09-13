@@ -206,3 +206,7 @@ Among cohorts, complaint count has minimum 1, median 5, 75th percentile 22, 95th
 180, and maximum 2,884. There are 2,321 one-record cohorts (21.7526%). Mileage coverage has
 median 36.3636%; 2,832 cohorts (26.5417%) have no observed mileage. These are corpus
 diagnostics, not vehicle reliability comparisons.
+
+Phase 2F recall outputs follow the same boundary. Cohort recall counts preserve unique
+campaign grain, are not appended to the Phase 2C tables, and are not training-ready until a
+future observation cutoff is defined. See [recalls](recalls.md).

@@ -70,6 +70,14 @@ work must account for at least the following constraints:
   2E does not infer duplicate, revision, or supersession relationships.
 - Exact communication matching covers 86.5417% of complaint cohorts and 98.5593% of
   complaint events, but absence means no matched document in this snapshot—not no issue.
+- Recall campaigns are formal safety-defect or noncompliance actions, not observed failures,
+  completed repairs, or evidence that every potentially affected unit failed.
+- Recall matching covers 79.9344% of complaint cohorts and 95.5697% of complaint events;
+  absence means no exact vehicle application in this snapshot, not no defect.
+- Campaign-wide potentially affected population cannot be allocated safely to individual
+  cohorts and is never summed across repeated application rows.
+- Whole-history recall counts include campaigns after hypothetical prediction cutoffs and
+  remain descriptive until future temporal feature generation applies those cutoffs.
 
 Any future output will be decision support, not a replacement for a qualified mechanical
 inspection, diagnosis, maintenance guidance, recall information, or safety advice.

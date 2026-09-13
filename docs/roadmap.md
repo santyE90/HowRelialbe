@@ -27,8 +27,11 @@ implementation exists yet.
 - **Phase 2E — Manufacturer Communications / TSB Ingestion & Cohort Matching: complete** —
   official rich-TSV ingestion, compact-view overlap audit, document/applicability identity,
   structured-only classification, conservative cohort matching, and cross-source coverage.
-- **Current project state — DATASET REVIEW CHECKPOINT.** Review the engineered dataset before
-  defining any prediction target. Phase 3A has not started.
+- **Phase 2F — NHTSA Recall Ingestion & Cohort Matching: complete** — official complete flat
+  corpus ingestion, campaign/applicability identity, product-aware filtering, conservative
+  cohort matching, and four-source coverage diagnostics.
+- **Phase 2G — Multi-Source Integration & Dataset Review: planned**
+- **Current project state — PHASE 2F COMPLETE.** Phase 2G and Phase 3A have not started.
 - **Phase 3A — Define ML Target: planned**
 - **Phase 3B — Baseline ML Models: planned**
 - **Phase 3C — PyTorch Dataset Pipeline: planned**
