@@ -30,8 +30,11 @@ implementation exists yet.
 - **Phase 2F — NHTSA Recall Ingestion & Cohort Matching: complete** — official complete flat
   corpus ingestion, campaign/applicability identity, product-aware filtering, conservative
   cohort matching, and four-source coverage diagnostics.
-- **Phase 2G — Multi-Source Integration & Dataset Review: planned**
-- **Current project state — PHASE 2F COMPLETE.** Phase 2G and Phase 3A have not started.
+- **Phase 2G — Multi-Source Integration & Dataset Review: complete** — deterministic
+  10,670-row four-source cohort artifact, explicit missingness, cross-source diagnostics,
+  temporal feasibility analysis, and evidence-based Phase 3A direction.
+- **Current project state — FINAL DATASET CHECKPOINT COMPLETE.** Phase 3A target definition
+  is next and has not started.
 - **Phase 3A — Define ML Target: planned**
 - **Phase 3B — Baseline ML Models: planned**
 - **Phase 3C — PyTorch Dataset Pipeline: planned**

@@ -210,3 +210,7 @@ diagnostics, not vehicle reliability comparisons.
 Phase 2F recall outputs follow the same boundary. Cohort recall counts preserve unique
 campaign grain, are not appended to the Phase 2C tables, and are not training-ready until a
 future observation cutoff is defined. See [recalls](recalls.md).
+
+Phase 2G now copies these validated complaint columns into a source-prefixed integrated
+analytical view and joins source-specific summaries without changing Phase 2C. The integrated
+view is still not a feature matrix or training dataset. See [dataset review](dataset-review.md).

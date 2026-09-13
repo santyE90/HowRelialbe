@@ -151,3 +151,8 @@ Phase 2F's four-source diagnostic likewise reads Phase 2D availability without m
 the production match table. Production remains an exposure proxy and recall presence remains
 regulatory evidence; their coexistence is not a rate or composite score. See
 [recalls](recalls.md).
+
+Phase 2G preserves unmatched production as null and retains the validated reporting periods,
+lineage, and complaints-per-10k-production diagnostic. Production availability is never an
+eligibility requirement or a healthy-vehicle denominator. Historical revision state cannot
+be reconstructed from the current snapshot. See [dataset review](dataset-review.md).

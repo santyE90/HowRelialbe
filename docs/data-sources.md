@@ -1,5 +1,11 @@
 # Data Sources
 
+## Integrated analytical cohort view
+
+Phase 2G joins the four validated processed evidence sources at normalized make/model/model-
+year grain. It does not acquire or reprocess source data. Explicit match indicators preserve
+unavailable sources as null rather than zero. See [dataset review](dataset-review.md).
+
 ## NHTSA Recalls
 
 Phase 2F uses official `FLAT_RCL_PRE_2010.zip` and `FLAT_RCL_POST_2010.zip` with the

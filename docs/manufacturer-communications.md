@@ -186,3 +186,8 @@ confirms that recalls provide a distinct safety-regulatory signal: 7,649 complai
 have both sources, 880 have recalls without communications, and 1,585 have communications
 without recalls. The combined sources move next to Phase 2G integration review; Phase 3A has
 not started. See [recalls](recalls.md).
+
+Phase 2G integrates these cohort summaries with null values when communication coverage is
+unmatched and genuine zeros only within matched structured categories. Historical feasibility
+uses NHTSA `date_added`, not whole-history document counts. See
+[dataset review](dataset-review.md).

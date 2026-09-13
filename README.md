@@ -11,12 +11,12 @@ roadmap phase calls for them.
 
 ## Current status
 
-Phases 0 through 2F now provide the repository foundation, canonical vehicle and reliability
+Phases 0 through 2G now provide the repository foundation, canonical vehicle and reliability
 event models, source-faithful NHTSA ingestion, reproducible full-corpus EDA, and a
 deterministic evidence-preserving cleaning boundary, target-agnostic event and vehicle
 cohort features, NHTSA production-exposure diagnostics, and official manufacturer-
-communication evidence, and official recall campaign evidence. The project is ready for the
-Phase 2G multi-source integration and dataset-review checkpoint; there is no target
+communication evidence, official recall campaign evidence, and a deterministic four-source
+cohort integration and dataset review. The project is ready for Phase 3A target design; there is no target
 definition, training dataset, trained model, inference API, infrastructure, or user interface.
 See the [roadmap](docs/roadmap.md), [cleaning rules](docs/cleaning-rules.md), and
 [feature definitions](docs/feature-engineering.md) for details.
@@ -34,6 +34,11 @@ Phase 2F preserves 30,300 NHTSA recall campaigns separately from 286,158 vehicle
 applications. Exact matching covers 8,529 complaint cohorts and 95.57% of complaint events;
 campaign-wide population is never summed across application rows. See
 [recalls](docs/recalls.md).
+
+Phase 2G integrates all 10,670 complaint cohorts without imputation or source-absence zeros.
+The review finds that the data can support cohort-level future complaint-activity target
+design, but not major-repair probability or individual-vehicle risk. See the
+[dataset review](docs/dataset-review.md).
 
 ## NHTSA complaint ingestion
 

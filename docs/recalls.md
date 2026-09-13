@@ -143,3 +143,8 @@ unknown revision/supersession semantics, and inability to allocate campaign-wide
 to a cohort. No matched recall is not proof of no defect. Whole-history counts are temporally
 leaky: future feature generation must exclude campaigns after each prediction cutoff. Phase
 2F creates no temporal slices, target, integrated matrix, or model.
+
+Phase 2G subsequently integrates cohort-level recall diagnostics without allocating affected
+population. Unmatched recall counts become null, while zero structured subtype counts remain
+valid only for matched recall cohorts. Historical feasibility uses the Part 573 report-
+received date. See [dataset review](dataset-review.md).

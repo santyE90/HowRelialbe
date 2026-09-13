@@ -132,6 +132,18 @@ Recall text remains preserved evidence. Exact normalized matching emits separate
 four-source coverage diagnostics without changing Phase 2C–2E artifacts. See
 [recalls](recalls.md).
 
+### Multi-source integration boundary
+
+Phase 2G consumes only validated Phase 2C–2F processed artifacts and verifies their schemas,
+versions, and checksums. Phase 2C is the 10,670-row base, so no complaint cohort is dropped.
+Unmatched source values are null while genuine zeros require a matched source. The integrated
+artifact remains descriptive and human-readable; it contains no target, label, imputation,
+encoding, split, or score.
+
+Separate review diagnostics describe source support, complete-pair correlations, and what
+could have been known at calendar cutoffs. They do not turn the whole-history artifact into
+a training dataset. See [dataset review](dataset-review.md).
+
 ## Planned system
 
 The intended high-level flow is:

@@ -78,6 +78,14 @@ work must account for at least the following constraints:
   cohorts and is never summed across repeated application rows.
 - Whole-history recall counts include campaigns after hypothetical prediction cutoffs and
   remain descriptive until future temporal feature generation applies those cutoffs.
+- The Phase 2G integrated artifact is descriptive, not training-ready. Its whole-history
+  source counts must be reconstructed at each future prediction cutoff.
+- The 2020–2024 complaint window supports temporal future-report analysis but cannot supply
+  complete early-life histories for older vehicle cohorts.
+- No-report future windows are not verified healthy examples; issue occurrence, reporting,
+  cohort exposure, and continued service are all unobserved.
+- Phase 2G supports cohort-level complaint-activity target design only. It does not support
+  individual-vehicle prediction or major-repair/failure probability.
 
 Any future output will be decision support, not a replacement for a qualified mechanical
 inspection, diagnosis, maintenance guidance, recall information, or safety advice.
