@@ -157,6 +157,20 @@ repair, failure, health, safety, or reliability target. Whole-history integrated
 are not joined into the target artifact and remain prohibited for modeling until Phase 3B
 rebuilds temporal features as of the cutoff. See [target definition](target-definition.md).
 
+### Baseline-model boundary
+
+Phase 3B reads the validated target plus Phase 2C complaint events, Phase 2E communication
+documents/applications, and Phase 2F recall campaigns/applications. It verifies checksums and
+rebuilds one separate feature row per eligible cohort using only evidence observable by
+2022-12-31. It does not consume non-static Phase 2G integrated columns; production is omitted
+because historical revision state cannot be recovered.
+
+The deterministic split artifact contains identity and assignment only. Learned imputation,
+missing indicators, scaling, and optional one-hot encoding live inside sklearn pipelines fit
+on training rows. Serialized baseline models and their machine-readable metrics are ignored
+research artifacts, not production deployments or a model registry. See
+[baseline models](baseline-models.md).
+
 ## Planned system
 
 The intended high-level flow is:

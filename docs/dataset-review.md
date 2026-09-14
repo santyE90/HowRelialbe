@@ -269,3 +269,11 @@ Phase 3A subsequently selected cohort-level `future_12m_complaint_activity` at t
 2022-12-31 cutoff with an at-least-one-report threshold. Its 8,416 eligible cohorts contain
 4,398 positives and 4,018 observed-zero rows. This is a complaint-reporting outcome, not a
 repair, failure, health, or reliability label. See [target definition](target-definition.md).
+
+## Phase 3B resolution
+
+Phase 3B does not train on this integrated artifact. It reconstructs complaint,
+communication, and recall aggregates as of 2022-12-31 and excludes production because its
+historical filing/revision state is not reconstructable. Baseline ablations confirm that
+historical complaint persistence supplies most signal; communications and recalls provide
+small incremental gains. See [baseline models](baseline-models.md).

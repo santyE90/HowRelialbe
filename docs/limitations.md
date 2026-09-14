@@ -94,6 +94,18 @@ work must account for at least the following constraints:
   fewer than half of eligible cohorts and may reflect later filing revisions.
 - The Phase 2G whole-history columns remain temporally unsafe for Phase 3B except for static
   cohort identity. Complaint, communication, and recall aggregates require cutoff rebuilds.
+- Phase 3B uses one random cohort split at a shared 2022 cutoff. It does not demonstrate
+  temporal generalization to another reporting era.
+- The validation-selected forest is strongly stratified by historical support: test F1 is
+  zero for one-complaint cohorts and .3030 for two-to-four-complaint cohorts.
+- Test performance degrades for cohorts aged 21+ (ROC-AUC .7087, F1 .3030), and older
+  cohorts have incomplete early-life history in the available complaint window.
+- Communication and recall ablations add only modest signal beyond complaint history;
+  source presence and matching coverage must not be interpreted as causal evidence.
+- Make/model one-hot identity modestly improves held-out metrics but has a larger train-to-
+  validation gap, consistent with some cohort-popularity memorization.
+- Saved sklearn probabilities estimate only observed future complaint activity under this
+  dataset and cutoff. They are not calibrated real-world failure or reliability risks.
 
 Any future output will be decision support, not a replacement for a qualified mechanical
 inspection, diagnosis, maintenance guidance, recall information, or safety advice.

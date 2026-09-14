@@ -221,3 +221,11 @@ Repair/failure targets remain unobservable.
 
 Phase 3B may build leakage-safe features and baseline models. It must preserve the neutral
 target semantics and must not reinterpret observed-zero rows as verified healthy cohorts.
+
+## Phase 3B resolution
+
+Phase 3B preserves this target contract exactly and aligns all 8,416 target identities to a
+separate as-of-cutoff feature artifact. No target field enters a model pipeline. The frozen
+split contains 5,891 train, 1,262 validation, and 1,263 test cohorts. Baseline probabilities
+refer only to the defined observed complaint target. See
+[baseline models](baseline-models.md) for the leakage rules, results, and limitations.

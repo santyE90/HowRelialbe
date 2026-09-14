@@ -12,9 +12,15 @@ vehicle risk, or reliability.
 
 The rule yields 8,416 eligible cohorts, 4,398 positives, and 4,018 observed-zero rows. Zero
 means no future report was observed; it is not a healthy or no-failure label. The target,
-eligibility, alternatives, and Phase 3B leakage contract are defined in
-[target definition](target-definition.md). No split, feature matrix, or model exists yet.
+eligibility, alternatives, and the leakage contract are defined in
+[target definition](target-definition.md).
 
-Traditional baseline models will be developed and evaluated before a PyTorch model. This
-will establish an interpretable reference point and determine whether added model complexity
-is justified. No model currently exists.
+Phase 3B implements the traditional baselines before any PyTorch work. It uses a separate
+as-of-2022-12-31 feature matrix and frozen seed-20220913 split. The validation-selected
+random forest reaches validation ROC-AUC .9060 and test ROC-AUC .8928. Logistic ablations
+show only modest incremental signal from communications, recalls, and make/model identity;
+performance is weak for old and sparse cohorts. See [baseline models](baseline-models.md).
+
+Phase 3C may proceed only as a controlled comparison using the identical split. Neural
+complexity is not presumed useful: it must beat the frozen forest and improve subgroup
+behavior without changing the target or exploiting whole-history inputs.

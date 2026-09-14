@@ -36,9 +36,12 @@ implementation exists yet.
 - **Phase 3A — Define ML Target: complete** — versioned cohort-level future complaint-
   activity targets, explicit eligibility/censoring, full cutoff/horizon diagnostics, leakage
   audit, and a selected 2022 year-end/12-month/at-least-one-report target.
-- **Current project state — TARGET DEFINITION COMPLETE.** Phase 3B baseline models are next
-  and have not started.
-- **Phase 3B — Baseline ML Models: planned**
+- **Phase 3B — Baseline ML Models: complete** — leakage-safe cutoff reconstruction,
+  frozen stratified split, trivial rules, traditional sklearn models, family/identity
+  ablations, persisted artifacts, and age/support/source diagnostics.
+- **Current project state — BASELINE MODELS COMPLETE.** Phase 3C is the next checkpoint,
+  but is justified only as a controlled comparison against the frozen random-forest baseline;
+  sparse and old-cohort behavior must improve rather than being hidden by aggregate metrics.
 - **Phase 3C — PyTorch Dataset Pipeline: planned**
 - **Phase 3D — First Neural Network: planned**
 - **Phase 3E — Training Infrastructure: planned**

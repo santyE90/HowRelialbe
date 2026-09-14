@@ -11,14 +11,14 @@ roadmap phase calls for them.
 
 ## Current status
 
-Phases 0 through 3A now provide the repository foundation, canonical vehicle and reliability
+Phases 0 through 3B now provide the repository foundation, canonical vehicle and reliability
 event models, source-faithful NHTSA ingestion, reproducible full-corpus EDA, and a
 deterministic evidence-preserving cleaning boundary, target-agnostic event and vehicle
 cohort features, NHTSA production-exposure diagnostics, and official manufacturer-
 communication evidence, official recall campaign evidence, and a deterministic four-source
-cohort integration and dataset review, plus a leakage-safe cohort target definition. The
-project is ready for Phase 3B baseline modeling; there is no training feature matrix, split,
-trained model, inference API, infrastructure, or user interface.
+cohort integration and dataset review, a leakage-safe cohort target definition, and
+traditional baseline models on a separate as-of-cutoff feature matrix. There is no PyTorch
+pipeline, neural model, inference API, infrastructure, or user interface.
 See the [roadmap](docs/roadmap.md), [cleaning rules](docs/cleaning-rules.md), and
 [feature definitions](docs/feature-engineering.md) for details.
 
@@ -45,6 +45,27 @@ Phase 3A selects `future_12m_complaint_activity`: whether an eligible cohort has
 accepted complaint report during 2023 after a 2022-12-31 cutoff. The ignored target artifact
 is separate from features and represents reporting activity—not repair, failure, or
 reliability. See the [target definition](docs/target-definition.md).
+
+Phase 3B reconstructs 8,416 feature rows using only evidence observable by 2022-12-31,
+freezes a stratified 70/15/15 cohort split, and compares trivial rules, logistic regression,
+random forest, and histogram gradient boosting. The validation-selected random forest has
+test ROC-AUC .8928 and PR-AUC .9173, but performance degrades for old and sparse cohorts.
+See [baseline models](docs/baseline-models.md).
+
+## Reproduce Phase 3B baselines
+
+With the validated Phase 2C, 2E, 2F, and 3A artifacts present, run each overwrite-protected
+stage once:
+
+```console
+python -m howreliable.modeling features
+python -m howreliable.modeling split
+python -m howreliable.modeling run
+```
+
+The commands write ignored feature/split artifacts beneath `data/processed/modeling/` and
+ignored sklearn pipelines/results beneath `artifacts/models/`. They do not read the leaky
+Phase 2G whole-history feature columns and do not use PyTorch.
 
 ## NHTSA complaint ingestion
 
