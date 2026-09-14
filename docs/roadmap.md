@@ -45,9 +45,13 @@ implementation exists yet.
 - **Phase 3C — PyTorch Dataset Pipeline: complete** — exact Phase 3B input validation,
   training-only preprocessing, deterministic feature manifest, float32 Dataset objects,
   portable seeded DataLoaders, and reproducible metadata without model training.
-- **Current project state — PYTORCH DATA PIPELINE COMPLETE.** Phase 3D is next but has not
-  started; it must reuse this pipeline and the frozen Phase 3B comparison contract.
-- **Phase 3D — First Neural Network: planned**
+- **Phase 3D — First Neural Network: complete** — bounded small-MLP comparison,
+  validation-only selection, early stopping, deterministic checkpoint/history/results,
+  five-seed robustness, calibration, and subgroup diagnostics. The selected MLP did not
+  meaningfully improve upon the random forest.
+- **Current project state — FIRST NEURAL NETWORK COMPLETE.** Phase 3E is next but has not
+  started. It should improve training reproducibility without presuming a predictive neural
+  advantage and must preserve the frozen forest benchmark and Phase 3D evaluation rules.
 - **Phase 3E — Training Infrastructure: planned**
 - **Phase 3F — Evaluation: planned**
 - **Phase 4A — Explainability: planned**

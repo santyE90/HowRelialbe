@@ -21,12 +21,14 @@ random forest reaches validation ROC-AUC .9060 and test ROC-AUC .8928. Logistic 
 show only modest incremental signal from communications, recalls, and make/model identity;
 performance is weak for old and sparse cohorts. See [baseline models](baseline-models.md).
 
-Phase 3C may proceed only as a controlled comparison using the identical split. Neural
-complexity is not presumed useful: it must beat the frozen forest and improve subgroup
-behavior without changing the target or exploiting whole-history inputs.
-
 Phase 3C now supplies that data boundary: 87 selected source inputs plus three missing
 indicators form a 90-dimensional float32 tensor. Count-like fields use `log1p`; learned
 medians and standardization statistics use training rows only. Raw make/model identity stays
 outside the tensor, and no model or loss is implemented. See
 [PyTorch data pipeline](pytorch-data-pipeline.md).
+
+Phase 3D uses that boundary for three small ReLU/dropout MLPs. Validation-only selection
+chooses `90 -> 64 -> 32 -> 1`, but its ranking and Brier metrics are slightly worse than the
+forest and its old/lowest-support cohorts do not improve. The experiment therefore supports
+the forest as the predictive benchmark, not further neural complexity as an assumed route to
+better predictions. See [first neural network](first-neural-network.md).

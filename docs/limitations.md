@@ -113,6 +113,12 @@ work must account for at least the following constraints:
   training-only audit rather than reusing current parameters.
 - Deterministic loader order requires the explicit generator seed and zero-worker policy;
   exact behavior across materially different PyTorch/platform versions is not guaranteed.
+- Phase 3D's selected MLP is stable across five seeds but slightly trails the random forest
+  on ROC-AUC, PR-AUC, and Brier score. Its small F1 gains do not justify added complexity.
+- The MLP still predicts no positives among test cohorts with exactly one historical
+  complaint; age-21+ ROC-AUC falls to .6496. It does not resolve sparse or old-cohort bias.
+- Ten-bin calibration shows local overprediction, while one-pass permutation sensitivity is
+  affected by correlated feature families and must not be interpreted causally.
 
 Any future output will be decision support, not a replacement for a qualified mechanical
 inspection, diagnosis, maintenance guidance, recall information, or safety advice.

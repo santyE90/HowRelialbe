@@ -148,8 +148,9 @@ skew but do not remove outliers. Train-fitted quality removal may need reassessm
 future cutoff, and exact model reproducibility still depends on compatible PyTorch/platform
 versions.
 
-Phase 3D must select models using validation only. Its comparison floor is validation
+Phase 3D selected models using validation only. Its comparison floor was validation
 ROC-AUC .905985, PR-AUC .929263, and F1 .827751. Only after selection may final test metrics
 be compared with ROC-AUC .892844, PR-AUC .917283, and F1 .820673. Aggregate improvement is
-insufficient if age-21+ or low-support performance worsens. No Phase 3D model or training
-code exists in Phase 3C.
+insufficient if age-21+ or low-support performance worsens. The completed Phase 3D MLP did
+not clear that floor; the Phase 3C preprocessing and split remain unchanged. See
+[first neural network](first-neural-network.md).

@@ -11,15 +11,15 @@ roadmap phase calls for them.
 
 ## Current status
 
-Phases 0 through 3C now provide the repository foundation, canonical vehicle and reliability
+Phases 0 through 3D now provide the repository foundation, canonical vehicle and reliability
 event models, source-faithful NHTSA ingestion, reproducible full-corpus EDA, and a
 deterministic evidence-preserving cleaning boundary, target-agnostic event and vehicle
 cohort features, NHTSA production-exposure diagnostics, and official manufacturer-
 communication evidence, official recall campaign evidence, and a deterministic four-source
 cohort integration and dataset review, a leakage-safe cohort target definition, and
-traditional baseline models on a separate as-of-cutoff feature matrix, and a deterministic
-PyTorch Dataset/DataLoader pipeline. There is no neural model, training loop, inference API,
-infrastructure, or user interface.
+traditional baseline models on a separate as-of-cutoff feature matrix, a deterministic
+PyTorch Dataset/DataLoader pipeline, and a first small validation-selected PyTorch MLP.
+There is no training platform, inference API, infrastructure, or user interface.
 See the [roadmap](docs/roadmap.md), [cleaning rules](docs/cleaning-rules.md), and
 [feature definitions](docs/feature-engineering.md) for details.
 
@@ -53,6 +53,11 @@ random forest, and histogram gradient boosting. The validation-selected random f
 test ROC-AUC .8928 and PR-AUC .9173, but performance degrades for old and sparse cohorts.
 See [baseline models](docs/baseline-models.md).
 
+Phase 3D trains three bounded MLP candidates and selects `90 -> 64 -> 32 -> 1` using
+validation metrics only. Its test ROC-AUC .8915 and PR-AUC .9171 do not improve upon the
+random forest, and old/one-complaint cohorts remain weak. Neural complexity is therefore not
+justified by predictive performance. See [first neural network](docs/first-neural-network.md).
+
 ## Reproduce Phase 3B baselines
 
 With the validated Phase 2C, 2E, 2F, and 3A artifacts present, run each overwrite-protected
@@ -80,6 +85,18 @@ python -m howreliable.modeling.pytorch
 The pipeline reuses the frozen Phase 3B split, fits preprocessing on training rows only, and
 constructs float32 Dataset/DataLoader objects without training a neural model. See the
 [PyTorch data pipeline](docs/pytorch-data-pipeline.md).
+
+## Run the bounded Phase 3D experiment
+
+After the Phase 3C artifacts exist, train the three approved candidates, perform the selected
+configuration's five-seed validation robustness check, and persist the primary checkpoint:
+
+```console
+python -m howreliable.modeling.pytorch.train
+```
+
+The command refuses to overwrite `artifacts/models/pytorch/`. It selects without test data,
+then evaluates only the frozen selected checkpoint on test.
 
 ## NHTSA complaint ingestion
 

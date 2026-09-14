@@ -9,6 +9,11 @@ accepted historical complaint; 4,398 are positive and 4,018 are observed-zero. T
 model of observed future complaint reporting, not repair, failure, safety, individual-
 vehicle risk, health, or reliability.
 
+Phase 3D preserves this artifact and comparison unchanged. Its selected small MLP reaches
+validation/test ROC-AUC .904271/.891474 versus .905985/.892844 here, with slightly worse
+Brier scores and no broad sparse/old-cohort improvement. The random forest therefore remains
+the predictive benchmark; see [first neural network](first-neural-network.md).
+
 ## Leakage-safe reconstruction
 
 The canonical 114-column feature artifact is rebuilt independently of the Phase 2G

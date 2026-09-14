@@ -233,3 +233,9 @@ refer only to the defined observed complaint target. See
 Phase 3C consumes this target only after verifying its exact checksum and cohort alignment.
 The label is emitted as a separate float32 tensor of shape `[1]`; it never enters the feature
 manifest or preprocessing fit. See [PyTorch data pipeline](pytorch-data-pipeline.md).
+
+Phase 3D trains its first small MLP against the same target without changing its meaning,
+eligibility, cutoff, horizon, identities, or split. The result remains a probability of
+observed future complaint activity—not a reliability score—and does not outperform the
+frozen random forest on ranking or calibration metrics. See
+[first neural network](first-neural-network.md).

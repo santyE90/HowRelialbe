@@ -4,9 +4,10 @@
 
 The repository contains an installable Python package, reusable configuration and logging
 foundations, immutable canonical vehicle and reliability-event models, source-specific NHTSA
-ingestion and mapping, reproducible EDA, deterministic cleaning, and target-agnostic feature
-engineering. Tests and static-analysis configuration enforce these boundaries. No target
-definition, training dataset, ML model, API, deployment, or UI component is implemented.
+ingestion and mapping, reproducible EDA, deterministic cleaning, target/feature generation,
+traditional baselines, and one bounded neural experiment. Tests and static-analysis
+configuration enforce these boundaries. No generic training infrastructure, API, deployment,
+or UI component is implemented.
 
 ### Vehicle identity decisions
 
@@ -184,6 +185,19 @@ identity and age/support/source metadata remain outside the model tensor. This b
 no neural architecture, loss, optimizer, training loop, prediction, or checkpoint. See
 [PyTorch data pipeline](pytorch-data-pipeline.md).
 
+### First-neural-network boundary
+
+Phase 3D adds one readable `HowReliableMLP`, an explicit BCE-with-logits/AdamW training loop,
+validation ROC-AUC early stopping, validation-only bounded candidate selection, metrics,
+calibration, subgroup diagnostics, and a deterministic five-seed robustness check. Only the
+selected primary-seed state is evaluated on test and persisted.
+
+The checkpoint contains a `state_dict` and explicit contract metadata rather than a pickled
+module. Epoch history and complete results are separate machine-readable, overwrite-protected,
+Git-ignored artifacts. This is a single experiment, not a trainer framework, registry,
+scheduler system, or Phase 3E implementation. See
+[first neural network](first-neural-network.md).
+
 ## Planned system
 
 The intended high-level flow is:
@@ -201,8 +215,9 @@ raw automotive data
   -> minimal UI (later)
 ```
 
-Implemented ingestion and cleaning boundaries already follow this separation; later arrows
-remain planned. Training, evaluation, and online inference will remain separable so they can
-be tested and operated independently. Artifact metadata and data provenance connect stages
-rather than hidden shared state. Concrete storage, service, and deployment designs will be
-selected in their respective phases once requirements are known.
+Implemented ingestion, cleaning, feature, and initial training/evaluation boundaries already
+follow this separation; registry, online inference, packaging, and deployment remain planned.
+Training, evaluation, and online inference will remain separable so they can be tested and
+operated independently. Artifact metadata and data provenance connect stages rather than
+hidden shared state. Concrete storage, service, and deployment designs will be selected in
+their respective phases once requirements are known.

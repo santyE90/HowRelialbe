@@ -332,7 +332,7 @@ def test_artifacts_reload_determinism_overwrite_and_checksum_guards(tmp_path: Pa
         )
 
 
-def test_full_corpus_contract_and_no_phase_3d_code(tmp_path: Path) -> None:
+def test_full_corpus_contract_and_phase_3c_modules_do_not_train(tmp_path: Path) -> None:
     repository_root = Path(__file__).parents[1]
     if not all(
         (repository_root / path).is_file()
@@ -359,5 +359,8 @@ def test_full_corpus_contract_and_no_phase_3d_code(tmp_path: Path) -> None:
     assert bundle.metadata["inputs"]["features"]["sha256"] == EXPECTED_INPUT_CHECKSUMS["features"]
     package = repository_root / "src/howreliable/modeling/pytorch"
     forbidden = ("nn.Module", "BCEWithLogitsLoss", "torch.optim", "optimizer.step")
-    source = "\n".join(path.read_text(encoding="utf-8") for path in package.glob("*.py"))
+    phase_3c_modules = ("preprocessing.py", "dataset.py", "loaders.py", "pipeline.py")
+    source = "\n".join(
+        (package / name).read_text(encoding="utf-8") for name in phase_3c_modules
+    )
     assert not any(token in source for token in forbidden)
