@@ -154,3 +154,7 @@ be compared with ROC-AUC .892844, PR-AUC .917283, and F1 .820673. Aggregate impr
 insufficient if age-21+ or low-support performance worsens. The completed Phase 3D MLP did
 not clear that floor; the Phase 3C preprocessing and split remain unchanged. See
 [first neural network](first-neural-network.md).
+
+Phase 3E reloads and hashes these same manifest, preprocessing, dataset-metadata, target,
+feature, and split contracts into each deterministic run identity. Resume and evaluation
+reject changed lineage. See [training infrastructure](training-infrastructure.md).

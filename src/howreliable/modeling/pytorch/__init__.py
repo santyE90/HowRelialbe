@@ -10,6 +10,13 @@ from howreliable.modeling.pytorch.pipeline import (
 )
 from howreliable.modeling.pytorch.preprocessing import CohortPreprocessor
 from howreliable.modeling.pytorch.training import run_first_mlp_experiment
+from howreliable.modeling.pytorch.training_config import TrainingConfig
+from howreliable.modeling.pytorch.training_infrastructure import (
+    create_training_run,
+    evaluate_training_run,
+    inspect_training_run,
+    resume_training_run,
+)
 
 __all__ = [
     "CohortDataLoaders",
@@ -18,8 +25,13 @@ __all__ = [
     "HowReliableMLP",
     "MLPConfig",
     "PyTorchPipelineBundle",
+    "TrainingConfig",
     "create_dataloaders",
+    "create_training_run",
+    "evaluate_training_run",
     "generate_pytorch_pipeline",
+    "inspect_training_run",
     "load_pytorch_pipeline",
+    "resume_training_run",
     "run_first_mlp_experiment",
 ]

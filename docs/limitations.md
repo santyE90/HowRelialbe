@@ -119,6 +119,11 @@ work must account for at least the following constraints:
   complaint; age-21+ ROC-AUC falls to .6496. It does not resolve sparse or old-cohort bias.
 - Ten-bin calibration shows local overprediction, while one-pass permutation sensitivity is
   affected by correlated feature families and must not be interpreted causally.
+- Phase 3E resume occurs only at completed epoch boundaries and uses local files; it does not
+  recover a partially completed batch or coordinate concurrent writers.
+- Atomic replacement protects individual artifacts, not the entire multi-file run as one
+  transaction. Cross-platform/device bitwise reproducibility remains outside PyTorch's
+  guarantee even though pinned CPU reruns match exactly here.
 
 Any future output will be decision support, not a replacement for a qualified mechanical
 inspection, diagnosis, maintenance guidance, recall information, or safety advice.

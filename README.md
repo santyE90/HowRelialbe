@@ -11,15 +11,16 @@ roadmap phase calls for them.
 
 ## Current status
 
-Phases 0 through 3D now provide the repository foundation, canonical vehicle and reliability
+Phases 0 through 3E now provide the repository foundation, canonical vehicle and reliability
 event models, source-faithful NHTSA ingestion, reproducible full-corpus EDA, and a
 deterministic evidence-preserving cleaning boundary, target-agnostic event and vehicle
 cohort features, NHTSA production-exposure diagnostics, and official manufacturer-
 communication evidence, official recall campaign evidence, and a deterministic four-source
 cohort integration and dataset review, a leakage-safe cohort target definition, and
 traditional baseline models on a separate as-of-cutoff feature matrix, a deterministic
-PyTorch Dataset/DataLoader pipeline, and a first small validation-selected PyTorch MLP.
-There is no training platform, inference API, infrastructure, or user interface.
+PyTorch Dataset/DataLoader pipeline, a first small validation-selected PyTorch MLP, and
+minimal reproducible/resumable training infrastructure. There is no inference API, cloud
+training, deployment infrastructure, or user interface.
 See the [roadmap](docs/roadmap.md), [cleaning rules](docs/cleaning-rules.md), and
 [feature definitions](docs/feature-engineering.md) for details.
 
@@ -97,6 +98,22 @@ python -m howreliable.modeling.pytorch.train
 
 The command refuses to overwrite `artifacts/models/pytorch/`. It selects without test data,
 then evaluates only the frozen selected checkpoint on test.
+
+## Use the Phase 3E training infrastructure
+
+The Phase 3D reference configuration can now be trained, resumed, inspected, and deliberately
+evaluated through separate commands:
+
+```console
+python -m howreliable.modeling.pytorch.training_cli train
+python -m howreliable.modeling.pytorch.training_cli resume artifacts/training/runs/<run_id>
+python -m howreliable.modeling.pytorch.training_cli evaluate artifacts/training/runs/<run_id>
+python -m howreliable.modeling.pytorch.training_cli evaluate artifacts/training/runs/<run_id> --split test
+python -m howreliable.modeling.pytorch.training_cli inspect artifacts/training/runs/<run_id>
+```
+
+Training uses only TRAIN/VALIDATION; TEST requires the explicit flag. See
+[training infrastructure](docs/training-infrastructure.md).
 
 ## NHTSA complaint ingestion
 

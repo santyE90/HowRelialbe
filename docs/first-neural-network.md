@@ -171,3 +171,7 @@ infrastructure must retain validation-only selection, single final test evaluati
 reporting, and age/support/source diagnostics. It should not imply that a more elaborate
 neural trainer will improve prediction; new neural work needs material, stable aggregate and
 sparse/old-cohort gains before displacing the forest.
+
+Phase 3E subsequently reproduced this exact primary-seed history, checkpoint state, validation
+result, and explicit test result through the configuration-driven infrastructure. It did not
+change the model or conclusion. See [training infrastructure](training-infrastructure.md).

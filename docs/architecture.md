@@ -198,6 +198,19 @@ Git-ignored artifacts. This is a single experiment, not a trainer framework, reg
 scheduler system, or Phase 3E implementation. See
 [first neural network](first-neural-network.md).
 
+### Training-infrastructure boundary
+
+Phase 3E wraps the fixed Phase 3D configuration in deterministic content-addressed run
+directories. Atomic artifacts separate immutable configuration, mutable status, epoch
+history, resumable latest state, best validation checkpoint, and explicit split evaluation.
+Model/optimizer/early-stop/RNG restoration supports exact epoch-boundary resume while strict
+configuration and lineage checks reject incompatible state.
+
+Training never evaluates TEST. A separate CLI operation must explicitly request TEST from a
+completed best checkpoint. The layer is local and intentionally small: it contains no sweep,
+trainer framework, registry, database, cloud execution, or distributed system. See
+[training infrastructure](training-infrastructure.md).
+
 ## Planned system
 
 The intended high-level flow is:

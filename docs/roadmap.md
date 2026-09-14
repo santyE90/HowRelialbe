@@ -49,10 +49,12 @@ implementation exists yet.
   validation-only selection, early stopping, deterministic checkpoint/history/results,
   five-seed robustness, calibration, and subgroup diagnostics. The selected MLP did not
   meaningfully improve upon the random forest.
-- **Current project state — FIRST NEURAL NETWORK COMPLETE.** Phase 3E is next but has not
-  started. It should improve training reproducibility without presuming a predictive neural
-  advantage and must preserve the frozen forest benchmark and Phase 3D evaluation rules.
-- **Phase 3E — Training Infrastructure: planned**
+- **Phase 3E — Training Infrastructure: complete** — immutable validated configuration,
+  lineage-derived run IDs, atomic run artifacts, exact epoch-boundary resume, explicit
+  train/evaluate separation, reproducibility manifests, and automatic forest comparison.
+- **Current project state — TRAINING INFRASTRUCTURE COMPLETE.** Phase 3F is next but has not
+  started. It must consume completed lineage-validated artifacts without retroactive test
+  selection and preserve the random forest as the predictive benchmark.
 - **Phase 3F — Evaluation: planned**
 - **Phase 4A — Explainability: planned**
 - **Phase 4B — Risk Scoring: planned**

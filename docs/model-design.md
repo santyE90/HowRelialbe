@@ -32,3 +32,8 @@ chooses `90 -> 64 -> 32 -> 1`, but its ranking and Brier metrics are slightly wo
 forest and its old/lowest-support cohorts do not improve. The experiment therefore supports
 the forest as the predictive benchmark, not further neural complexity as an assumed route to
 better predictions. See [first neural network](first-neural-network.md).
+
+Phase 3E packages only that validated configuration into deterministic, lineage-derived run
+directories with atomic artifacts and exact epoch-boundary resume. Training remains separate
+from explicit final evaluation, and the forest remains preferred. See
+[training infrastructure](training-infrastructure.md).
