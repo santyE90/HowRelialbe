@@ -39,10 +39,14 @@ implementation exists yet.
 - **Phase 3B — Baseline ML Models: complete** — leakage-safe cutoff reconstruction,
   frozen stratified split, trivial rules, traditional sklearn models, family/identity
   ablations, persisted artifacts, and age/support/source diagnostics.
-- **Current project state — BASELINE MODELS COMPLETE.** Phase 3C is the next checkpoint,
-  but is justified only as a controlled comparison against the frozen random-forest baseline;
-  sparse and old-cohort behavior must improve rather than being hidden by aggregate metrics.
-- **Phase 3C — PyTorch Dataset Pipeline: planned**
+- **Phase 3B checkpoint decision.** Phase 3C was justified only as a controlled comparison
+  against the frozen random-forest baseline; sparse and old-cohort behavior must improve
+  rather than being hidden by aggregate metrics.
+- **Phase 3C — PyTorch Dataset Pipeline: complete** — exact Phase 3B input validation,
+  training-only preprocessing, deterministic feature manifest, float32 Dataset objects,
+  portable seeded DataLoaders, and reproducible metadata without model training.
+- **Current project state — PYTORCH DATA PIPELINE COMPLETE.** Phase 3D is next but has not
+  started; it must reuse this pipeline and the frozen Phase 3B comparison contract.
 - **Phase 3D — First Neural Network: planned**
 - **Phase 3E — Training Infrastructure: planned**
 - **Phase 3F — Evaluation: planned**

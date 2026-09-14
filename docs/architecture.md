@@ -171,6 +171,19 @@ on training rows. Serialized baseline models and their machine-readable metrics 
 research artifacts, not production deployments or a model registry. See
 [baseline models](baseline-models.md).
 
+### PyTorch data-pipeline boundary
+
+Phase 3C verifies the exact Phase 3A/3B checksums and frozen cohort assignments, then fits a
+small serializable preprocessor using training rows only. It emits a deterministic tensor
+manifest, preprocessing parameters, and dataset metadata; canonical JSON Lines remain the
+source of truth, so no duplicate tensor artifact is stored.
+
+`HowReliableCohortDataset` holds precomputed CPU float32 tensors and separate targets.
+Seeded training DataLoaders shuffle, while validation/test loaders preserve order. Cohort
+identity and age/support/source metadata remain outside the model tensor. This boundary has
+no neural architecture, loss, optimizer, training loop, prediction, or checkpoint. See
+[PyTorch data pipeline](pytorch-data-pipeline.md).
+
 ## Planned system
 
 The intended high-level flow is:

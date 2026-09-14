@@ -106,6 +106,13 @@ work must account for at least the following constraints:
   validation gap, consistent with some cohort-popularity memorization.
 - Saved sklearn probabilities estimate only observed future complaint activity under this
   dataset and cutoff. They are not calibrated real-world failure or reliability risks.
+- Phase 3C's `log1p` count transformation reduces skew but does not clip, winsorize, or
+  resolve extreme or popularity-driven values.
+- The PyTorch feature-quality audit is fitted to the frozen training split. Columns constant
+  or duplicate at this cutoff may behave differently at another cutoff and require a new
+  training-only audit rather than reusing current parameters.
+- Deterministic loader order requires the explicit generator seed and zero-worker policy;
+  exact behavior across materially different PyTorch/platform versions is not guaranteed.
 
 Any future output will be decision support, not a replacement for a qualified mechanical
 inspection, diagnosis, maintenance guidance, recall information, or safety advice.

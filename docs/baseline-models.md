@@ -194,4 +194,9 @@ Proceed to Phase 3C only as a controlled engineering benchmark using the frozen 
 because Phase 3B demonstrates a need for neural complexity. A neural model must beat the
 validation-selected forest at validation ROC-AUC .905985, PR-AUC .929263, and F1 .827751,
 then exceed its untouched-test ROC-AUC .892844, PR-AUC .917283, and F1 .820673 without
-worsening sparse and old-cohort behavior. Phase 3C is not implemented here.
+worsening sparse and old-cohort behavior. At the Phase 3B checkpoint, Phase 3C was not yet
+implemented.
+
+Phase 3C subsequently implemented the frozen-input Dataset/DataLoader boundary without
+training a model. It preserves this comparison floor and the subgroup metadata needed for
+an honest Phase 3D evaluation. See [PyTorch data pipeline](pytorch-data-pipeline.md).

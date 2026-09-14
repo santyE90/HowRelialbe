@@ -11,14 +11,15 @@ roadmap phase calls for them.
 
 ## Current status
 
-Phases 0 through 3B now provide the repository foundation, canonical vehicle and reliability
+Phases 0 through 3C now provide the repository foundation, canonical vehicle and reliability
 event models, source-faithful NHTSA ingestion, reproducible full-corpus EDA, and a
 deterministic evidence-preserving cleaning boundary, target-agnostic event and vehicle
 cohort features, NHTSA production-exposure diagnostics, and official manufacturer-
 communication evidence, official recall campaign evidence, and a deterministic four-source
 cohort integration and dataset review, a leakage-safe cohort target definition, and
-traditional baseline models on a separate as-of-cutoff feature matrix. There is no PyTorch
-pipeline, neural model, inference API, infrastructure, or user interface.
+traditional baseline models on a separate as-of-cutoff feature matrix, and a deterministic
+PyTorch Dataset/DataLoader pipeline. There is no neural model, training loop, inference API,
+infrastructure, or user interface.
 See the [roadmap](docs/roadmap.md), [cleaning rules](docs/cleaning-rules.md), and
 [feature definitions](docs/feature-engineering.md) for details.
 
@@ -66,6 +67,19 @@ python -m howreliable.modeling run
 The commands write ignored feature/split artifacts beneath `data/processed/modeling/` and
 ignored sklearn pipelines/results beneath `artifacts/models/`. They do not read the leaky
 Phase 2G whole-history feature columns and do not use PyTorch.
+
+## Generate the PyTorch data pipeline
+
+After the exact Phase 3B artifacts exist, generate the overwrite-protected Phase 3C
+manifest, preprocessing parameters, and dataset metadata with:
+
+```console
+python -m howreliable.modeling.pytorch
+```
+
+The pipeline reuses the frozen Phase 3B split, fits preprocessing on training rows only, and
+constructs float32 Dataset/DataLoader objects without training a neural model. See the
+[PyTorch data pipeline](docs/pytorch-data-pipeline.md).
 
 ## NHTSA complaint ingestion
 

@@ -24,3 +24,9 @@ performance is weak for old and sparse cohorts. See [baseline models](baseline-m
 Phase 3C may proceed only as a controlled comparison using the identical split. Neural
 complexity is not presumed useful: it must beat the frozen forest and improve subgroup
 behavior without changing the target or exploiting whole-history inputs.
+
+Phase 3C now supplies that data boundary: 87 selected source inputs plus three missing
+indicators form a 90-dimensional float32 tensor. Count-like fields use `log1p`; learned
+medians and standardization statistics use training rows only. Raw make/model identity stays
+outside the tensor, and no model or loss is implemented. See
+[PyTorch data pipeline](pytorch-data-pipeline.md).

@@ -229,3 +229,7 @@ separate as-of-cutoff feature artifact. No target field enters a model pipeline.
 split contains 5,891 train, 1,262 validation, and 1,263 test cohorts. Baseline probabilities
 refer only to the defined observed complaint target. See
 [baseline models](baseline-models.md) for the leakage rules, results, and limitations.
+
+Phase 3C consumes this target only after verifying its exact checksum and cohort alignment.
+The label is emitted as a separate float32 tensor of shape `[1]`; it never enters the feature
+manifest or preprocessing fit. See [PyTorch data pipeline](pytorch-data-pipeline.md).
