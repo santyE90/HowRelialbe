@@ -41,7 +41,8 @@ Artifacts under `artifacts/explainability/` are Git ignored: feature manifest
 `ce0bf893…ef9`, global importance `a4c89ad…13bf`, representative explanations
 `11c8e56d…d183`, and report `ce1bc690…5b95`.
 
-Phase 4B should be renamed or reframed from “Risk Scoring” to something like “Complaint-
-Activity Presentation and Decision Contract.” It must consume the frozen forest, threshold,
-evaluation report, explanation manifest/method, limitation flags, and supported/prohibited
-language. It must not invent a reliability/risk/confidence score. Phase 4B is not implemented.
+Phase 4B is formally renamed from the planned “Risk Scoring” milestone to “Complaint-Activity
+Presentation and Decision Contract.” It reuses this exact local algorithm, exposes five
+positive and five negative drivers plus complete family/source sums, and preserves the
+reconstruction check. It does not implement a second explanation or invent a score. See
+[complaint-activity presentation](complaint-activity-presentation.md).

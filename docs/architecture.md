@@ -228,6 +228,19 @@ aggregates by family/source, and cross-checks with validation permutation import
 not train, score reliability, infer causes, or generate user-facing risk output. See
 [model explainability](model-explainability.md).
 
+### Presentation-contract boundary
+
+Phase 4B validates the Phase 3F preferred-model and Phase 4A explanation contracts, performs
+frozen inference for an existing Phase 3B cohort, and returns one immutable
+`ComplaintActivityResult`. Identity, literal complaint-activity probability and binary label,
+compact explanation, factual evidence, limitation flags, general limitation, and provenance
+are serialized deterministically. Evaluation ground truth is optional and separate.
+
+The ignored presentation artifacts include the JSON schema, six representative results, and
+the exact Phase 5A handoff. This boundary does not train, recalibrate, tune thresholds, score
+risk or confidence, recommend actions, ingest unseen vehicles, or implement HTTP/API code.
+See [complaint-activity presentation](complaint-activity-presentation.md).
+
 ## Planned system
 
 The intended high-level flow is:

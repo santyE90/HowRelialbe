@@ -41,3 +41,9 @@ from explicit final evaluation, and the forest remains preferred. See
 Phase 3F freezes inference outputs before applying one authoritative evaluation contract.
 Paired uncertainty and diagnostic evidence retain the forest as `PREFERRED` and the MLP as
 `COMPARISON`. See [model evaluation](model-evaluation.md).
+
+Phase 4B formally replaces the originally planned Risk Scoring milestone with a complaint-
+activity presentation contract. It exposes the frozen probability and `.5` binary-target
+interpretation, reuses Phase 4A contributions, and attaches evidence, limitations, and
+lineage. It adds no model, calibration, threshold, band, confidence metric, or recommendation.
+See [complaint-activity presentation](complaint-activity-presentation.md).

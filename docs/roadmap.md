@@ -58,9 +58,15 @@ implementation exists yet.
 - **Phase 4A — Explainability: complete** — deterministic feature mapping, exact local
   tree-path probability contributions, global family/source summaries, validation permutation
   cross-check, representative explanations, reconstruction and terminology guards.
-- **Current project state — EXPLAINABILITY COMPLETE.** Phase 4B is next but has not started;
-  it requires reframing away from reliability/risk scoring toward complaint-activity output.
-- **Phase 4B — Risk Scoring: planned**
+- **Phase 4B — Complaint-Activity Presentation and Decision Contract: complete** — immutable
+  versioned result schema, literal probability/classification labels, compact Phase 4A
+  explanations, factual evidence profiles, evaluated limitation flags, deterministic
+  serialization, representative results, and a constrained Phase 5A handoff.
+- **Phase 4B rename history.** The original planned milestone was **Phase 4B — Risk
+  Scoring**. It was formally reframed after target/evaluation validation because observed
+  future complaint activity cannot support a reliability or repair-risk score.
+- **Current project state — PRESENTATION CONTRACT COMPLETE.** Phase 5A is next and has not
+  started; it must consume `complaint-activity-result-1.0` without semantic expansion.
 - **Phase 5A — FastAPI Inference Service: planned**
 - **Phase 5B — Model Registry / Loading: planned**
 - **Phase 6A — AWS S3: planned**

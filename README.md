@@ -11,7 +11,7 @@ roadmap phase calls for them.
 
 ## Current status
 
-Phases 0 through 4A now provide the repository foundation, canonical vehicle and reliability
+Phases 0 through 4B now provide the repository foundation, canonical vehicle and reliability
 event models, source-faithful NHTSA ingestion, reproducible full-corpus EDA, and a
 deterministic evidence-preserving cleaning boundary, target-agnostic event and vehicle
 cohort features, NHTSA production-exposure diagnostics, and official manufacturer-
@@ -29,6 +29,11 @@ The random forest remains preferred; neither model is production-ready. See
 
 Phase 4A explains the frozen forest with exact tree-path probability contributions and a
 validation permutation cross-check. See [model explainability](docs/model-explainability.md).
+Phase 4B packages that probability, binary target interpretation, compact explanation,
+factual evidence, limitation flags, and lineage into the immutable
+`complaint-activity-result-1.0` contract. It was reframed from the historically planned Risk
+Scoring milestone because the target cannot support such a score. See
+[complaint-activity presentation](docs/complaint-activity-presentation.md).
 See the [roadmap](docs/roadmap.md), [cleaning rules](docs/cleaning-rules.md), and
 [feature definitions](docs/feature-engineering.md) for details.
 

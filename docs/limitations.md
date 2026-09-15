@@ -131,6 +131,12 @@ work must account for at least the following constraints:
 - Phase 4A tree-path contributions exactly explain the forest computation but are not causal;
   correlated features redistribute importance, and sparse/old-cohort explanations inherit
   their weak evaluation performance.
+- Phase 4B presents the same cohort-level reporting estimate; its percentage and binary label
+  do not make it a mechanical boundary, reliability measure, or individual-vehicle claim.
+- Phase 4B evidence availability is factual metadata, not confidence. Its two flags describe
+  weak evaluated support=1 and age-21+ subgroups without quantifying certainty.
+- The result contract supports only cohorts in the frozen Phase 3B feature artifact. Arbitrary
+  user vehicle ingestion, temporal refresh, and API behavior remain outside this phase.
 
 Any future output will be decision support, not a replacement for a qualified mechanical
 inspection, diagnosis, maintenance guidance, recall information, or safety advice.

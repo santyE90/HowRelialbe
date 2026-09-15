@@ -103,10 +103,11 @@ performance, and weak sparse-cohort performance. Unsupported claims include repa
 probability, individual risk, healthy/unhealthy status, reliability/safety probability,
 causal recall/communication effects, and universal exposure-normalized risk.
 
-Phase 4A must use the frozen preferred forest artifact, its serialized sklearn preprocessing,
-the Phase 3B feature contract, target/split contract, threshold .5, and this evaluation report.
-It may explain the model but must not rewrite evaluation or claim causal/reliability meaning.
-No Phase 4A explainability is implemented here.
+Phase 4B consumes the frozen preferred forest, serialized preprocessing, Phase 3B feature
+contract, threshold `.5`, this evaluation report, and the Phase 4A explanation contract. Its
+`SPARSE_HISTORICAL_SUPPORT` and `OLD_COHORT_WEAK_EVALUATION` flags preserve the two weakest
+validated subgroup findings without inventing a confidence score. See
+[complaint-activity presentation](complaint-activity-presentation.md).
 
 | Artifact | SHA-256 |
 |---|---|

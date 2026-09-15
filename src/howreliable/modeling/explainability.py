@@ -127,7 +127,7 @@ def _aggregate(values: np.ndarray, manifest: list[dict[str, Any]], key: str) -> 
     return dict(sorted(out.items(), key=lambda x: -abs(x[1])))
 
 
-def _local(
+def local_explanation(
     row: dict[str, Any],
     matrix_row: np.ndarray,
     probability: float,
@@ -163,11 +163,10 @@ def _local(
             "Historical evaluation is weak for age-21+ cohorts; drivers do not imply "
             "prediction confidence."
         )
-    return {
-        "cohort_id": row["cohort_id"],
+    result = {
+        "cohort_id": row["cohort_id"] if "cohort_id" in row else row["broad_vehicle_id"],
         "predicted_future_complaint_probability": probability,
         "predicted_class": int(probability >= 0.5),
-        "target": row["target"],
         "method": "mean random-forest tree-path probability contribution",
         "baseline_probability": float(baseline),
         "reconstructed_probability": float(baseline + contributions.sum()),
@@ -182,6 +181,9 @@ def _local(
             "failure, repair, safety, or reliability."
         ),
     }
+    if "target" in row:
+        result["target"] = row["target"]
+    return result
 
 
 def generate_explainability(
@@ -279,7 +281,7 @@ def generate_explainability(
     locals_ = [
         {
             "selection_rule": name,
-            **_local(
+            **local_explanation(
                 row,
                 test_matrix[i],
                 row["predicted_future_complaint_probability"],
