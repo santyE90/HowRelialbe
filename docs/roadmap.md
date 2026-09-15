@@ -52,11 +52,14 @@ implementation exists yet.
 - **Phase 3E — Training Infrastructure: complete** — immutable validated configuration,
   lineage-derived run IDs, atomic run artifacts, exact epoch-boundary resume, explicit
   train/evaluate separation, reproducibility manifests, and automatic forest comparison.
-- **Current project state — TRAINING INFRASTRUCTURE COMPLETE.** Phase 3F is next but has not
-  started. It must consume completed lineage-validated artifacts without retroactive test
-  selection and preserve the random forest as the predictive benchmark.
-- **Phase 3F — Evaluation: planned**
-- **Phase 4A — Explainability: planned**
+- **Phase 3F — Evaluation: complete** — aligned frozen prediction artifacts, deterministic
+  aggregate and paired bootstrap intervals, calibration, fixed-threshold sensitivity,
+  subgroup uncertainty, error/agreement analysis, and preferred-model handoff.
+- **Phase 4A — Explainability: complete** — deterministic feature mapping, exact local
+  tree-path probability contributions, global family/source summaries, validation permutation
+  cross-check, representative explanations, reconstruction and terminology guards.
+- **Current project state — EXPLAINABILITY COMPLETE.** Phase 4B is next but has not started;
+  it requires reframing away from reliability/risk scoring toward complaint-activity output.
 - **Phase 4B — Risk Scoring: planned**
 - **Phase 5A — FastAPI Inference Service: planned**
 - **Phase 5B — Model Registry / Loading: planned**

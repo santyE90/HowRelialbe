@@ -124,6 +124,13 @@ work must account for at least the following constraints:
 - Atomic replacement protects individual artifacts, not the entire multi-file run as one
   transaction. Cross-platform/device bitwise reproducibility remains outside PyTorch's
   guarantee even though pinned CPU reruns match exactly here.
+- Phase 3F percentile intervals quantify sampling variability of the frozen cohort test set,
+  not target-label noise, reporting bias, temporal transport, or causal uncertainty.
+- Critical subgroup intervals are wide, and high-confidence errors remain errors against an
+  observed-report target rather than verified evidence about mechanical condition.
+- Phase 4A tree-path contributions exactly explain the forest computation but are not causal;
+  correlated features redistribute importance, and sparse/old-cohort explanations inherit
+  their weak evaluation performance.
 
 Any future output will be decision support, not a replacement for a qualified mechanical
 inspection, diagnosis, maintenance guidance, recall information, or safety advice.

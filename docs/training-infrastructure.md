@@ -142,3 +142,6 @@ Phase 3F should consume completed, lineage-validated evaluation artifacts to dee
 evaluation without changing the target or retroactively selecting on TEST. It must preserve
 the forest benchmark, explicit subgroup/calibration reporting, and the MLP's status as a
 reproducibility fixture. Phase 3E does not implement Phase 3F.
+
+Phase 3F now consumes the completed frozen run without retraining it. See
+[model evaluation](model-evaluation.md) for the authoritative paired result.

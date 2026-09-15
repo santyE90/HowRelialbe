@@ -211,6 +211,23 @@ completed best checkpoint. The layer is local and intentionally small: it contai
 trainer framework, registry, database, cloud execution, or distributed system. See
 [training infrastructure](training-infrastructure.md).
 
+### Evaluation boundary
+
+Phase 3F writes deterministic row-aligned frozen prediction artifacts before evaluation. One
+authoritative module validates alignment and computes aggregate metrics, paired bootstrap
+uncertainty, calibration, fixed-threshold sensitivity, established subgroups, error patterns,
+and model agreement. A separate handoff binds the preferred frozen forest and serialized
+preprocessing to the evaluation/feature/target/split contracts. No training or explainability
+occurs in this boundary. See [model evaluation](model-evaluation.md).
+
+### Explainability boundary
+
+Phase 4A validates the preferred-model handoff and decomposes frozen forest predictions into
+exact tree-path probability contributions. It maps transformed inputs to evidence semantics,
+aggregates by family/source, and cross-checks with validation permutation importance. It does
+not train, score reliability, infer causes, or generate user-facing risk output. See
+[model explainability](model-explainability.md).
+
 ## Planned system
 
 The intended high-level flow is:

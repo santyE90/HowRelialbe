@@ -14,6 +14,10 @@ validation/test ROC-AUC .904271/.891474 versus .905985/.892844 here, with slight
 Brier scores and no broad sparse/old-cohort improvement. The random forest therefore remains
 the predictive benchmark; see [first neural network](first-neural-network.md).
 
+Phase 3F independently reproduces this frozen TEST result and confirms the forest as the
+preferred model after paired bootstrap, calibration, subgroup, error, and agreement analysis.
+See [model evaluation](model-evaluation.md).
+
 ## Leakage-safe reconstruction
 
 The canonical 114-column feature artifact is rebuilt independently of the Phase 2G

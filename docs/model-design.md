@@ -37,3 +37,7 @@ Phase 3E packages only that validated configuration into deterministic, lineage-
 directories with atomic artifacts and exact epoch-boundary resume. Training remains separate
 from explicit final evaluation, and the forest remains preferred. See
 [training infrastructure](training-infrastructure.md).
+
+Phase 3F freezes inference outputs before applying one authoritative evaluation contract.
+Paired uncertainty and diagnostic evidence retain the forest as `PREFERRED` and the MLP as
+`COMPARISON`. See [model evaluation](model-evaluation.md).

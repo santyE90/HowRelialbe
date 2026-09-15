@@ -175,3 +175,6 @@ sparse/old-cohort gains before displacing the forest.
 Phase 3E subsequently reproduced this exact primary-seed history, checkpoint state, validation
 result, and explicit test result through the configuration-driven infrastructure. It did not
 change the model or conclusion. See [training infrastructure](training-infrastructure.md).
+
+Phase 3F's paired evaluation finds no meaningful MLP advantage and assigns it `COMPARISON`
+status. See [model evaluation](model-evaluation.md).

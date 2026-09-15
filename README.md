@@ -11,7 +11,7 @@ roadmap phase calls for them.
 
 ## Current status
 
-Phases 0 through 3E now provide the repository foundation, canonical vehicle and reliability
+Phases 0 through 4A now provide the repository foundation, canonical vehicle and reliability
 event models, source-faithful NHTSA ingestion, reproducible full-corpus EDA, and a
 deterministic evidence-preserving cleaning boundary, target-agnostic event and vehicle
 cohort features, NHTSA production-exposure diagnostics, and official manufacturer-
@@ -21,6 +21,14 @@ traditional baseline models on a separate as-of-cutoff feature matrix, a determi
 PyTorch Dataset/DataLoader pipeline, a first small validation-selected PyTorch MLP, and
 minimal reproducible/resumable training infrastructure. There is no inference API, cloud
 training, deployment infrastructure, or user interface.
+
+Phase 3F evaluates the frozen forest and MLP on aligned TEST predictions with deterministic
+bootstrap uncertainty, calibration, threshold sensitivity, subgroups, errors, and agreement.
+The random forest remains preferred; neither model is production-ready. See
+[model evaluation](docs/model-evaluation.md).
+
+Phase 4A explains the frozen forest with exact tree-path probability contributions and a
+validation permutation cross-check. See [model explainability](docs/model-explainability.md).
 See the [roadmap](docs/roadmap.md), [cleaning rules](docs/cleaning-rules.md), and
 [feature definitions](docs/feature-engineering.md) for details.
 

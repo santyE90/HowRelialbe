@@ -517,7 +517,9 @@ def test_overwrite_checksum_network_and_no_torch_guards(
 
     monkeypatch.setattr(socket, "create_connection", blocked)
     modeling_directory = Path(__file__).parents[1] / "src/howreliable/modeling"
-    for module in modeling_directory.glob("*.py"):
+    phase_3b_modules = ("features.py", "splits.py", "baselines.py", "__main__.py")
+    for name in phase_3b_modules:
+        module = modeling_directory / name
         source = module.read_text(encoding="utf-8")
         assert "import torch" not in source
         assert "from torch" not in source
