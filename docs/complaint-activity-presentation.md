@@ -105,3 +105,7 @@ prohibited terminology, representative artifact checksum, absence of a future-gr
 requirement, and `PREFERRED`—not production-ready—status. Phase 5A may serialize this result;
 it may not rename its probability, add bands/scores/recommendations, accept unsupported input
 grain, or omit its limitation. No API is implemented in Phase 4B.
+
+Phase 5A now implements that handoff through `howreliable-api-1.0`. It returns this result
+directly for exact supported cohort IDs, omits evaluation context, and keeps model resources
+loaded once per application. See [API documentation](api.md).

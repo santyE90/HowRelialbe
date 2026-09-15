@@ -3,10 +3,12 @@
 from __future__ import annotations
 
 import json
-from collections.abc import Callable
+from collections.abc import Callable, Mapping
+from dataclasses import dataclass
 from datetime import UTC, datetime
 from enum import StrEnum
 from pathlib import Path
+from types import MappingProxyType
 from typing import Any, Final, Literal, cast
 
 import joblib  # type: ignore[import-untyped]
@@ -261,13 +263,8 @@ def _validate_contracts(root: Path) -> tuple[dict[str, Any], dict[str, Any]]:
     feature_path = root / "data/processed/modeling/cohort-features-asof-2022-12-31.jsonl"
     split_path = root / "data/processed/modeling/cohort-split-2022-12-31.jsonl"
     manifest_path = root / "artifacts/explainability/feature-manifest.json"
-    target_path = (
-        root
-        / "data/processed/targets/future-complaint-activity-2022-12-31-12m.jsonl"
-    )
-    target_provenance = _read_object(
-        target_path.with_name(f"{target_path.stem}.provenance.json")
-    )
+    target_path = root / "data/processed/targets/future-complaint-activity-2022-12-31-12m.jsonl"
+    target_provenance = _read_object(target_path.with_name(f"{target_path.stem}.provenance.json"))
     checks = (
         (handoff.get("preferred_model_identifier"), MODEL_IDENTIFIER, "model identifier"),
         (handoff.get("preferred_model_checksum"), MODEL_CHECKSUM, "model checksum"),
@@ -367,14 +364,18 @@ def _flags(row: dict[str, Any]) -> tuple[LimitationFlag, ...]:
     return tuple(result)
 
 
-def build_complaint_activity_result(
-    root: Path,
-    cohort_id: str,
-    *,
-    generation_utc: datetime | None = None,
-    evaluation_context: EvaluationContext | None = None,
-) -> ComplaintActivityResult:
-    """Build the sole authoritative result for one supported frozen-feature cohort."""
+@dataclass(frozen=True, slots=True)
+class PresentationResources:
+    """Validated read-only resources reusable for multiple result builds."""
+
+    handoff: Mapping[str, Any]
+    model: Any
+    rows_by_id: Mapping[str, dict[str, Any]]
+    manifest: tuple[dict[str, Any], ...]
+
+
+def load_presentation_resources(root: Path) -> PresentationResources:
+    """Validate and load the frozen Phase 4B resources exactly once for a service."""
     handoff, _ = _validate_contracts(root)
     model_path = root / cast(str, handoff["preferred_model_artifact"])
     model = joblib.load(model_path)
@@ -382,10 +383,32 @@ def build_complaint_activity_result(
         root / "data/processed/modeling/cohort-features-asof-2022-12-31.jsonl",
         FEATURE_SCHEMA,
     )
-    matches = [row for row in rows if row["broad_vehicle_id"] == cohort_id]
-    if len(matches) != 1:
+    rows_by_id = {cast(str, row["broad_vehicle_id"]): row for row in rows}
+    if len(rows_by_id) != len(rows):
+        raise ModelingDataError("feature artifact contains duplicate cohort identities")
+    return PresentationResources(
+        handoff=MappingProxyType(handoff),
+        model=model,
+        rows_by_id=MappingProxyType(rows_by_id),
+        manifest=tuple(feature_manifest(model)),
+    )
+
+
+def build_complaint_activity_result(
+    root: Path,
+    cohort_id: str,
+    *,
+    generation_utc: datetime | None = None,
+    evaluation_context: EvaluationContext | None = None,
+    resources: PresentationResources | None = None,
+) -> ComplaintActivityResult:
+    """Build the sole authoritative result for one supported frozen-feature cohort."""
+    loaded = resources or load_presentation_resources(root)
+    handoff = loaded.handoff
+    model = loaded.model
+    row = loaded.rows_by_id.get(cohort_id)
+    if row is None:
         raise ModelingDataError(f"expected one supported cohort row: {cohort_id}")
-    row = matches[0]
     frame = pd.DataFrame([row])
     probability = float(model.predict_proba(frame[ALL_EVIDENCE_MODEL])[0, 1])
     matrix = np.asarray(model.named_steps["preprocess"].transform(frame[ALL_EVIDENCE_MODEL]))
@@ -396,7 +419,7 @@ def build_complaint_activity_result(
         probability,
         baseline[0],
         contributions[0],
-        feature_manifest(model),
+        list(loaded.manifest),
     )
     classification, label = classify_probability(probability)
     generated = generation_utc or datetime.now(UTC)
@@ -485,6 +508,7 @@ def generate_presentation_artifacts(
     source = _read_object(root / "artifacts/explainability/representative-local-explanations.json")[
         "examples"
     ]
+    resources = load_presentation_resources(root)
     examples = []
     for item in source:
         context = EvaluationContext(
@@ -497,6 +521,7 @@ def generate_presentation_artifacts(
                 cast(str, item["cohort_id"]),
                 generation_utc=generated,
                 evaluation_context=context,
+                resources=resources,
             ).model_dump(mode="json")
         )
     contract = {

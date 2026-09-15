@@ -11,7 +11,7 @@ roadmap phase calls for them.
 
 ## Current status
 
-Phases 0 through 4B now provide the repository foundation, canonical vehicle and reliability
+Phases 0 through 5A now provide the repository foundation, canonical vehicle and reliability
 event models, source-faithful NHTSA ingestion, reproducible full-corpus EDA, and a
 deterministic evidence-preserving cleaning boundary, target-agnostic event and vehicle
 cohort features, NHTSA production-exposure diagnostics, and official manufacturer-
@@ -19,8 +19,8 @@ communication evidence, official recall campaign evidence, and a deterministic f
 cohort integration and dataset review, a leakage-safe cohort target definition, and
 traditional baseline models on a separate as-of-cutoff feature matrix, a deterministic
 PyTorch Dataset/DataLoader pipeline, a first small validation-selected PyTorch MLP, and
-minimal reproducible/resumable training infrastructure. There is no inference API, cloud
-training, deployment infrastructure, or user interface.
+minimal reproducible/resumable training infrastructure and a local typed FastAPI boundary.
+There is no cloud training, deployment infrastructure, or user interface.
 
 Phase 3F evaluates the frozen forest and MLP on aligned TEST predictions with deterministic
 bootstrap uncertainty, calibration, threshold sensitivity, subgroups, errors, and agreement.
@@ -34,6 +34,9 @@ factual evidence, limitation flags, and lineage into the immutable
 `complaint-activity-result-1.0` contract. It was reframed from the historically planned Risk
 Scoring milestone because the target cannot support such a score. See
 [complaint-activity presentation](docs/complaint-activity-presentation.md).
+Phase 5A exposes that exact result for the 8,416 frozen cohorts through four read-only routes,
+with fail-fast artifact validation and application-lifetime resource reuse. See the
+[API documentation](docs/api.md).
 See the [roadmap](docs/roadmap.md), [cleaning rules](docs/cleaning-rules.md), and
 [feature definitions](docs/feature-engineering.md) for details.
 
@@ -213,3 +216,13 @@ python -m ruff check .
 python -m mypy
 python -c "import howreliable; print(howreliable.__version__)"
 ```
+
+## Run the local API
+
+With all validated ignored artifacts available from the repository root:
+
+```console
+uvicorn howreliable.api.app:create_app --factory
+```
+
+OpenAPI is available at `/openapi.json`, Swagger UI at `/docs`, and ReDoc at `/redoc`.

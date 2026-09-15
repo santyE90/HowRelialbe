@@ -233,8 +233,7 @@ def test_representative_artifacts_and_api_handoff(
     )
 
 
-def test_phase_does_not_implement_training_or_api() -> None:
+def test_presentation_module_does_not_implement_training_or_http() -> None:
     source = Path("src/howreliable/modeling/presentation.py").read_text().casefold()
     assert ".fit(" not in source
     assert "fastapi" not in source
-    assert not Path("src/howreliable/api").exists()

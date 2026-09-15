@@ -47,3 +47,8 @@ activity presentation contract. It exposes the frozen probability and `.5` binar
 interpretation, reuses Phase 4A contributions, and attaches evidence, limitations, and
 lineage. It adds no model, calibration, threshold, band, confidence metric, or recommendation.
 See [complaint-activity presentation](complaint-activity-presentation.md).
+
+Phase 5A adds no modeling decisions. Its API service calls the same Phase 4B builder with a
+validated application-lifetime resource bundle, so HTTP responses preserve the frozen forest
+probability, `.5` classification, exact explanation, limitations, and provenance. See
+[API documentation](api.md).

@@ -241,6 +241,18 @@ the exact Phase 5A handoff. This boundary does not train, recalibrate, tune thre
 risk or confidence, recommend actions, ingest unseen vehicles, or implement HTTP/API code.
 See [complaint-activity presentation](complaint-activity-presentation.md).
 
+### Local API boundary
+
+Phase 5A's application factory validates the Phase 4B handoff before constructing a service.
+The service owns one deserialized frozen forest, one indexed immutable feature-row mapping,
+and one explanation manifest for its lifetime. Thin synchronous GET routes expose health,
+safe metadata, paginated supported identities, and the unchanged `ComplaintActivityResult`.
+
+Importing the package performs no resource loading. Factory failure prevents service startup;
+requests never trigger training, artifact reloading, fuzzy matching, or field reconstruction.
+The boundary has no database, CORS default, authentication, registry, remote storage, Docker,
+or cloud deployment. See [API documentation](api.md).
+
 ## Planned system
 
 The intended high-level flow is:

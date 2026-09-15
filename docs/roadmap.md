@@ -65,9 +65,11 @@ implementation exists yet.
 - **Phase 4B rename history.** The original planned milestone was **Phase 4B — Risk
   Scoring**. It was formally reframed after target/evaluation validation because observed
   future complaint activity cannot support a reliability or repair-risk score.
-- **Current project state — PRESENTATION CONTRACT COMPLETE.** Phase 5A is next and has not
-  started; it must consume `complaint-activity-result-1.0` without semantic expansion.
-- **Phase 5A — FastAPI Inference Service: planned**
+- **Phase 5A — FastAPI: complete** — explicit application factory, fail-fast frozen-artifact
+  validation, application-lifetime resource loading, indexed deterministic cohort discovery,
+  typed complaint-activity retrieval, structured errors, OpenAPI, and versioned API artifact.
+- **Current project state — LOCAL API COMPLETE.** Phase 5B is next and has not started; it
+  may formalize artifact loading/registry concerns without changing the validated result.
 - **Phase 5B — Model Registry / Loading: planned**
 - **Phase 6A — AWS S3: planned**
 - **Phase 6B — AWS Deployment: planned**

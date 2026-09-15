@@ -137,6 +137,10 @@ work must account for at least the following constraints:
   weak evaluated support=1 and age-21+ subgroups without quantifying certainty.
 - The result contract supports only cohorts in the frozen Phase 3B feature artifact. Arbitrary
   user vehicle ingestion, temporal refresh, and API behavior remain outside this phase.
+- Phase 5A exposes only exact frozen cohort IDs. It has no fuzzy or arbitrary-vehicle
+  inference, database, authentication, remote artifact source, or deployment availability.
+- Phase 5A factory creation requires every local contract artifact and checksum to validate;
+  missing ignored artifacts prevent startup rather than degrading to partial predictions.
 
 Any future output will be decision support, not a replacement for a qualified mechanical
 inspection, diagnosis, maintenance guidance, recall information, or safety advice.
