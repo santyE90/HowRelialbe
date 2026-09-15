@@ -21,7 +21,13 @@ from howreliable.api.service import (
 )
 from howreliable.modeling.presentation import (
     ComplaintActivityResult,
-    load_presentation_resources,
+)
+from howreliable.modeling.registry import (
+    ModelRegistry,
+    RegistryError,
+)
+from howreliable.modeling.registry import (
+    load_inference_bundle as real_load_inference_bundle,
 )
 
 ROOT = Path(".")
@@ -48,10 +54,10 @@ def examples() -> dict[str, dict[str, Any]]:
 
 
 def test_import_has_no_eager_resource_loading(monkeypatch: pytest.MonkeyPatch) -> None:
-    def fail(_root: Path) -> None:
+    def fail(_registry: ModelRegistry, _bundle_id: str) -> None:
         raise AssertionError("API import attempted heavy resource loading")
 
-    monkeypatch.setattr(api_service, "load_presentation_resources", fail)
+    monkeypatch.setattr(api_service, "load_inference_bundle", fail)
     importlib.reload(api_app)
 
 
@@ -66,6 +72,8 @@ def test_model_metadata(client: TestClient) -> None:
     assert response.status_code == 200
     value = response.json()
     assert value["api_contract_version"] == API_CONTRACT_VERSION
+    assert value["registry_contract_version"] == "howreliable-model-registry-1.0"
+    assert value["bundle_id"] == "howreliable-rf-2022-cutoff-v1"
     assert value["result_contract_version"] == "complaint-activity-result-1.0"
     assert value["model_identifier"] == "phase-3b-random-forest"
     assert value["model_status"] == "PREFERRED"
@@ -157,8 +165,11 @@ def test_unknown_cohort_has_stable_404_without_fuzzy_fallback(client: TestClient
 def test_artifact_contract_failure_prevents_factory_readiness(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
-    monkeypatch.setattr(api_service, "API_HANDOFF_CHECKSUM", "0" * 64)
-    with pytest.raises(ArtifactContractError, match="handoff checksum"):
+    def fail(_registry: ModelRegistry, _bundle_id: str) -> None:
+        raise RegistryError("registry failure")
+
+    monkeypatch.setattr(api_service, "load_inference_bundle", fail)
+    with pytest.raises(ArtifactContractError, match="artifact contract validation"):
         PredictionService.load(ROOT)
     with pytest.raises(ArtifactContractError):
         create_app(root=ROOT)
@@ -178,12 +189,12 @@ def test_resources_remain_identical_across_predictions(
 def test_factory_loads_resources_exactly_once(monkeypatch: pytest.MonkeyPatch) -> None:
     calls = 0
 
-    def counted(root: Path) -> Any:
+    def counted(registry: ModelRegistry, bundle_id: str) -> Any:
         nonlocal calls
         calls += 1
-        return load_presentation_resources(root)
+        return real_load_inference_bundle(registry, bundle_id)
 
-    monkeypatch.setattr(api_service, "load_presentation_resources", counted)
+    monkeypatch.setattr(api_service, "load_inference_bundle", counted)
     local_client = TestClient(create_app(root=ROOT))
     assert local_client.get("/health").status_code == 200
     assert local_client.get("/api/v1/model").status_code == 200

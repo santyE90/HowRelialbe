@@ -10,8 +10,9 @@ target or model semantics.
 
 `create_app()` is an explicit application factory. Importing `howreliable.api` defines code
 only: it does not read feature data, deserialize the forest, or run inference. Factory
-creation validates the Phase 4B API handoff and its checksum, validates all downstream
-model/evaluation/explanation/feature/target contracts, loads the forest once, builds an
+creation loads the explicit Phase 5B inference bundle, whose registry validates the Phase 4B
+API handoff and all downstream model/evaluation/explanation/feature/target contracts. It loads
+the forest once, builds an
 8,416-entry cohort index once, and derives the transformed-feature manifest once. Requests
 reuse those read-only resources.
 
@@ -70,6 +71,9 @@ request failures are logged server-side and return stable `INTERNAL_ERROR` text 
 exception details. Internal paths, feature vectors, secrets, and large metadata documents are
 not exposed.
 
+Model metadata additionally exposes `howreliable-model-registry-1.0` and the explicit bundle
+ID `howreliable-rf-2022-cutoff-v1`. The API remains backward-compatible with Phase 5A.
+
 ## Schema and documentation
 
 All successful responses use typed Pydantic models. Cohort retrieval directly uses
@@ -94,3 +98,6 @@ dynamic promotion, arbitrary-vehicle feature construction, deployment, or availa
 guarantee. Phase 5B may introduce a loading/registry boundary, but it must preserve
 `howreliable-api-1.0`, `complaint-activity-result-1.0`, the frozen model checksum, and all
 semantic restrictions unless a separately validated versioned contract replaces them.
+
+Phase 5B now supplies that loading boundary through the typed local registry described in
+[model registry](model-registry.md); no remote registry or dynamic promotion was added.

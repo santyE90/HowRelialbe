@@ -18,6 +18,8 @@ class HealthResponse(APIModel):
 
 class ModelMetadataResponse(APIModel):
     api_contract_version: str
+    registry_contract_version: str
+    bundle_id: str
     result_contract_version: str
     model_identifier: str
     model_status: Literal["PREFERRED"]

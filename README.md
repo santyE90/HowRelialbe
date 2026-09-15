@@ -11,7 +11,7 @@ roadmap phase calls for them.
 
 ## Current status
 
-Phases 0 through 5A now provide the repository foundation, canonical vehicle and reliability
+Phases 0 through 5B now provide the repository foundation, canonical vehicle and reliability
 event models, source-faithful NHTSA ingestion, reproducible full-corpus EDA, and a
 deterministic evidence-preserving cleaning boundary, target-agnostic event and vehicle
 cohort features, NHTSA production-exposure diagnostics, and official manufacturer-
@@ -37,6 +37,9 @@ Scoring milestone because the target cannot support such a score. See
 Phase 5A exposes that exact result for the 8,416 frozen cohorts through four read-only routes,
 with fail-fast artifact validation and application-lifetime resource reuse. See the
 [API documentation](docs/api.md).
+Phase 5B moves artifact paths, checksums, compatibility validation, and trusted model loading
+behind an explicit local registry and typed inference bundle. See the
+[model registry](docs/model-registry.md).
 See the [roadmap](docs/roadmap.md), [cleaning rules](docs/cleaning-rules.md), and
 [feature definitions](docs/feature-engineering.md) for details.
 
@@ -226,3 +229,9 @@ uvicorn howreliable.api.app:create_app --factory
 ```
 
 OpenAPI is available at `/openapi.json`, Swagger UI at `/docs`, and ReDoc at `/redoc`.
+
+Validate the explicitly selected local inference bundle with:
+
+```console
+python -m howreliable.modeling.registry validate howreliable-rf-2022-cutoff-v1
+```

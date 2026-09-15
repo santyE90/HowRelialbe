@@ -253,6 +253,19 @@ requests never trigger training, artifact reloading, fuzzy matching, or field re
 The boundary has no database, CORS default, authentication, registry, remote storage, Docker,
 or cloud deployment. See [API documentation](api.md).
 
+### Model-registry and loading boundary
+
+Phase 5B places a strict portable manifest and `ArtifactStore` abstraction between local
+files and `PredictionService`. The local store rejects unsafe references. `ModelRegistry`
+requires an explicit bundle ID; `load_inference_bundle` checks the manifest and every artifact
+before parsing or trusted joblib deserialization, validates cross-contract semantics, and
+returns an immutable typed bundle.
+
+The API now knows the selected bundle ID and bundle object, not individual filesystem paths
+or checksum rules. Resources still load once during factory construction. There is no latest
+alias, registry database, promotion workflow, remote access, S3 client, or model change. See
+[model registry](model-registry.md).
+
 ## Planned system
 
 The intended high-level flow is:

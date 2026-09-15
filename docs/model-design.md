@@ -52,3 +52,8 @@ Phase 5A adds no modeling decisions. Its API service calls the same Phase 4B bui
 validated application-lifetime resource bundle, so HTTP responses preserve the frozen forest
 probability, `.5` classification, exact explanation, limitations, and provenance. See
 [API documentation](api.md).
+
+Phase 5B changes loading, not modeling: one explicit manifest binds the exact forest,
+preprocessing, features, target lineage, evaluation, explanation, presentation, and API
+contracts. Checksum-valid but semantically incompatible combinations fail before inference.
+See [model registry](model-registry.md).

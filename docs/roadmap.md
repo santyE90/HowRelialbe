@@ -68,9 +68,11 @@ implementation exists yet.
 - **Phase 5A — FastAPI: complete** — explicit application factory, fail-fast frozen-artifact
   validation, application-lifetime resource loading, indexed deterministic cohort discovery,
   typed complaint-activity retrieval, structured errors, OpenAPI, and versioned API artifact.
-- **Current project state — LOCAL API COMPLETE.** Phase 5B is next and has not started; it
-  may formalize artifact loading/registry concerns without changing the validated result.
-- **Phase 5B — Model Registry / Loading: planned**
+- **Phase 5B — Model Registry / Loading: complete** — immutable portable manifest, explicit
+  bundle selection, path-safe local artifact store, checksum-first loading, cross-artifact
+  compatibility validation, typed read-only inference bundle, and unchanged API behavior.
+- **Current project state — LOCAL REGISTRY COMPLETE.** Phase 6A is next and has not started;
+  it may implement object storage behind the validated artifact-store interface.
 - **Phase 6A — AWS S3: planned**
 - **Phase 6B — AWS Deployment: planned**
 - **Phase 6C — Monitoring: planned**

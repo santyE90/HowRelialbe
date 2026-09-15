@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import json
 from collections.abc import Callable
 from datetime import UTC, datetime
 from pathlib import Path
@@ -12,26 +11,33 @@ from howreliable.api.schemas import CohortPage, CohortSummary, ModelMetadataResp
 from howreliable.data.ingestion.nhtsa_complaints import ArtifactExistsError, sha256_file
 from howreliable.modeling.evaluation_report import EVALUATION_VERSION
 from howreliable.modeling.explainability import EXPLAINABILITY_VERSION
-from howreliable.modeling.features import ModelingDataError
 from howreliable.modeling.presentation import (
     EVALUATION_REPORT_CHECKSUM,
     EXPLAINABILITY_REPORT_CHECKSUM,
     GENERAL_LIMITATION,
     MODEL_CHECKSUM,
     MODEL_IDENTIFIER,
-    MODEL_STATUS,
     PROHIBITED_TERMINOLOGY,
     RESULT_CONTRACT_VERSION,
     THRESHOLD,
     ComplaintActivityResult,
-    PresentationResources,
     build_complaint_activity_result,
-    load_presentation_resources,
 )
 from howreliable.modeling.pytorch.training_infrastructure import atomic_write_json
+from howreliable.modeling.registry import (
+    API_COMPATIBILITY_VERSION,
+    DEFAULT_BUNDLE_ID,
+    PRESENTATION_HANDOFF_CHECKSUM,
+    REGISTRY_CONTRACT_VERSION,
+    InferenceBundle,
+    LocalArtifactStore,
+    ModelRegistry,
+    RegistryError,
+    load_inference_bundle,
+)
 
-API_CONTRACT_VERSION: Final = "howreliable-api-1.0"
-API_HANDOFF_CHECKSUM: Final = "e473214b25616886a02585d9689c06f0b852cd3bb84676301f42328f6e9e7047"
+API_CONTRACT_VERSION: Final = API_COMPATIBILITY_VERSION
+API_HANDOFF_CHECKSUM: Final = PRESENTATION_HANDOFF_CHECKSUM
 SUPPORTED_COHORT_COUNT: Final = 8_416
 
 
@@ -49,12 +55,12 @@ class PredictionService:
     def __init__(
         self,
         root: Path,
-        resources: PresentationResources,
-        api_handoff: dict[str, Any],
+        bundle: InferenceBundle,
     ) -> None:
         self._root = root
-        self._resources = resources
-        self._api_handoff = api_handoff
+        self._bundle = bundle
+        self._resources = bundle.resources
+        self._api_handoff = bundle.presentation_handoff
         self._cohorts = tuple(
             CohortSummary(
                 cohort_id=identifier,
@@ -63,7 +69,7 @@ class PredictionService:
                 model_year=cast(int, row["model_year"]),
             )
             for identifier, row in sorted(
-                resources.rows_by_id.items(),
+                self._resources.rows_by_id.items(),
                 key=lambda item: (
                     item[1]["normalized_make"],
                     item[1]["normalized_model"],
@@ -76,38 +82,15 @@ class PredictionService:
             raise ArtifactContractError("supported cohort count does not match the API contract")
 
     @classmethod
-    def load(cls, root: Path) -> PredictionService:
-        """Fail fast while validating the Phase 4B handoff and loading resources once."""
-        path = root / "artifacts/presentation/api-handoff.json"
+    def load(cls, root: Path, *, bundle_id: str = DEFAULT_BUNDLE_ID) -> PredictionService:
+        """Fail fast while loading one explicit validated inference bundle."""
         try:
-            if sha256_file(path) != API_HANDOFF_CHECKSUM:
-                raise ArtifactContractError("Phase 4B API handoff checksum mismatch")
-            value = json.loads(path.read_text(encoding="utf-8"))
-            if not isinstance(value, dict):
-                raise ArtifactContractError("Phase 4B API handoff must be an object")
-            handoff = cast(dict[str, Any], value)
-            expected = {
-                "result_contract_version": RESULT_CONTRACT_VERSION,
-                "canonical_schema_identifier": "ComplaintActivityResult",
-                "supported_input_grain": "make_model_model_year_cohort",
-                "threshold": THRESHOLD,
-                "model_status": MODEL_STATUS,
-                "future_ground_truth_required": False,
-            }
-            for key, expected_value in expected.items():
-                if handoff.get(key) != expected_value:
-                    raise ArtifactContractError(f"Phase 4B API handoff field mismatch: {key}")
-            preferred = handoff.get("preferred_model", {})
-            if preferred != {"identifier": MODEL_IDENTIFIER, "checksum": MODEL_CHECKSUM}:
-                raise ArtifactContractError("Phase 4B preferred-model handoff mismatch")
-            resources = load_presentation_resources(root)
-        except ArtifactContractError:
-            raise
-        except (OSError, json.JSONDecodeError, ModelingDataError) as error:
+            bundle = load_inference_bundle(ModelRegistry(LocalArtifactStore(root)), bundle_id)
+        except RegistryError as error:
             raise ArtifactContractError(
                 "required frozen artifact contract validation failed"
             ) from error
-        return cls(root, resources, handoff)
+        return cls(root, bundle)
 
     @property
     def resource_identity(self) -> tuple[int, int, int]:
@@ -121,6 +104,8 @@ class PredictionService:
     def metadata(self) -> ModelMetadataResponse:
         return ModelMetadataResponse(
             api_contract_version=API_CONTRACT_VERSION,
+            registry_contract_version=REGISTRY_CONTRACT_VERSION,
+            bundle_id=self._bundle.manifest.bundle_id,
             result_contract_version=RESULT_CONTRACT_VERSION,
             model_identifier=MODEL_IDENTIFIER,
             model_status="PREFERRED",
