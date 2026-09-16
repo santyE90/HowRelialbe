@@ -119,19 +119,28 @@ class ArtifactReference(RegistryModel):
     @field_validator("location")
     @classmethod
     def validate_location(cls, value: str) -> str:
+        return validate_artifact_location(value)
+
+
+def validate_artifact_location(value: str) -> str:
+    """Validate a backend-neutral relative logical artifact key."""
+    try:
         posix = PurePosixPath(value)
         windows = PureWindowsPath(value)
         if (
-            posix.is_absolute()
+            not value
+            or posix.is_absolute()
             or windows.is_absolute()
             or "\\" in value
+            or value.casefold().startswith("s3://")
             or any(part == ".." for part in posix.parts)
             or value.startswith("/")
+            or any(part in {"", "."} for part in value.split("/"))
         ):
             raise ValueError("artifact location must be a safe relative POSIX path")
-        if any(part in {"", "."} for part in posix.parts):
-            raise ValueError("artifact location contains an unsafe path segment")
         return value
+    except TypeError as error:
+        raise ValueError("artifact location must be text") from error
 
 
 class InferenceBundleManifest(RegistryModel):
@@ -194,7 +203,7 @@ class ArtifactStore(ABC):
     """Narrow artifact access boundary suitable for a later remote implementation."""
 
     @abstractmethod
-    def resolve(self, location: str) -> Path:
+    def resolve(self, location: str) -> object:
         raise NotImplementedError
 
     @abstractmethod
@@ -222,7 +231,7 @@ class LocalArtifactStore(ArtifactStore):
 
     def resolve(self, location: str) -> Path:
         try:
-            ArtifactReference(role=ArtifactRole.MODEL, location=location, sha256="0" * 64)
+            validate_artifact_location(location)
         except ValueError as error:
             raise UnsafeArtifactReferenceError("unsafe artifact reference") from error
         resolved = (self._root / Path(*PurePosixPath(location).parts)).resolve()

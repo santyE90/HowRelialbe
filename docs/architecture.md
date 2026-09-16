@@ -5,9 +5,9 @@
 The repository contains an installable Python package, reusable configuration and logging
 foundations, immutable canonical vehicle and reliability-event models, source-specific NHTSA
 ingestion and mapping, reproducible EDA, deterministic cleaning, target/feature generation,
-traditional baselines, and one bounded neural experiment. Tests and static-analysis
-configuration enforce these boundaries. No generic training infrastructure, API, deployment,
-or UI component is implemented.
+traditional baselines, bounded neural training/evaluation, a typed API, a checksum-first
+registry, and local/S3 artifact stores. Tests and static-analysis configuration enforce these
+boundaries. No deployment or UI component is implemented.
 
 ### Vehicle identity decisions
 
@@ -250,8 +250,8 @@ safe metadata, paginated supported identities, and the unchanged `ComplaintActiv
 
 Importing the package performs no resource loading. Factory failure prevents service startup;
 requests never trigger training, artifact reloading, fuzzy matching, or field reconstruction.
-The boundary has no database, CORS default, authentication, registry, remote storage, Docker,
-or cloud deployment. See [API documentation](api.md).
+The boundary has no database, CORS default, authentication, Docker, or cloud deployment. See
+[API documentation](api.md).
 
 ### Model-registry and loading boundary
 
@@ -263,8 +263,18 @@ returns an immutable typed bundle.
 
 The API now knows the selected bundle ID and bundle object, not individual filesystem paths
 or checksum rules. Resources still load once during factory construction. There is no latest
-alias, registry database, promotion workflow, remote access, S3 client, or model change. See
+alias, registry database, promotion workflow, or model change. See
 [model registry](model-registry.md).
+
+### S3 artifact-storage boundary
+
+Phase 6A maps the same relative manifest keys through `S3ArtifactStore`. Configuration
+explicitly chooses local or S3; S3 adds a private bucket and optional normalized prefix.
+Downloaded bytes, not ETags, are SHA-256 checked through the shared checksum-first loader.
+Startup fails closed and retains the validated typed bundle, so requests have no storage
+dependency. Separate publication tooling validates locally, uploads artifacts before the
+manifest/checksum marker, refuses conflicting bytes, and validates remotely. See
+[AWS S3 artifact storage](aws-s3.md).
 
 ## Planned system
 
@@ -283,8 +293,8 @@ raw automotive data
   -> minimal UI (later)
 ```
 
-Implemented ingestion, cleaning, feature, and initial training/evaluation boundaries already
-follow this separation; registry, online inference, packaging, and deployment remain planned.
+Implemented ingestion, cleaning, training/evaluation, registry, API, and S3 storage boundaries
+already follow this separation; packaging and deployment remain planned.
 Training, evaluation, and online inference will remain separable so they can be tested and
 operated independently. Artifact metadata and data provenance connect stages rather than
 hidden shared state. Concrete storage, service, and deployment designs will be selected in

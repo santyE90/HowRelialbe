@@ -10,6 +10,7 @@ readme = "README.md"
 requires-python = ">=3.12"
 authors = [{ name = "HowReliable? contributors" }]
 dependencies = [
+    "boto3==1.43.95",
     "fastapi==0.116.1",
     "numpy==2.3.2",
     "pandas==2.3.2",

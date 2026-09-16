@@ -40,9 +40,9 @@ Manifest locations use portable forward-slash relative keys. Absolute POSIX/Wind
 backslashes, `..` traversal, empty/dot segments, and resolved paths outside the root are
 rejected. Moving the same relative layout under another root preserves resolution.
 
-This interface is the Phase 6A storage seam. A future implementation may map the same logical
-keys to object storage, but Phase 5B contains no S3 implementation, AWS SDK, download, or
-network behavior.
+Phase 6A implements this seam with `S3ArtifactStore`, mapping each unchanged logical key
+under an explicit bucket/prefix. S3 resolution returns a backend-specific bucket/key identity,
+not a fake local path or public URL. See [AWS S3 artifact storage](aws-s3.md).
 
 ## Checksum-first loading and trust
 
@@ -70,9 +70,9 @@ dictionary. It contains the validated manifest, read-only Phase 4B resources (mo
 feature rows, transformed-feature manifest, preferred-model handoff), and read-only
 presentation handoff. Request processing does not mutate these structures.
 
-`PredictionService.load` constructs a local store and registry, loads the explicit default
-bundle once, and then depends only on the typed bundle. Routes retain the Phase 5A external
-contract. `GET /api/v1/model` adds bundle ID and registry version; all prior fields remain.
+`PredictionService.load` explicitly selects a local or S3 store from settings, loads the
+configured explicit bundle once, and then depends only on the typed bundle. S3 failure never
+falls back to local files. Routes retain the Phase 5A external contract.
 
 ## Validation and inspection
 
@@ -83,19 +83,14 @@ python -m howreliable.modeling.registry validate howreliable-rf-2022-cutoff-v1
 python -m howreliable.modeling.registry inspect howreliable-rf-2022-cutoff-v1
 ```
 
-Both operations perform the same full load and print a compact validation summary. There are
-no mutation, registration, promotion, rollback, automatic version-selection, or remote-fetch
-commands.
+Both local operations perform the same full load and print a compact validation summary.
+Phase 6A adds separate S3 publish/validate/inspect commands; there is still no registration,
+promotion, rollback, or automatic version selection.
 
-## Limitations and Phase 6A handoff
+## Limitations and Phase 6A implementation
 
-The filesystem registry contains one research-checkpoint bundle, requires the complete local
-artifact layout, and offers no concurrency protocol, remote availability, credentials,
-encryption policy, lifecycle management, or production approval. Its manifest includes some
-evaluation lineage artifacts needed to prove compatibility even though they are not retained
-as large in-memory objects after validation.
-
-Phase 6A receives the `ArtifactStore` operations, relative-key manifest format, explicit
-bundle ID, twelve roles, sidecar manifest integrity rule, checksum-before-use policy, and
-`load_inference_bundle` integration point. An object-store implementation must preserve those
-semantics without changing `PredictionService` or the public API. Phase 6A has not started.
+The registry still contains one research-checkpoint bundle and no promotion lifecycle or
+production approval. S3 improves location portability but does not create availability,
+retention, locking, or deployment guarantees. The same relative-key manifest, explicit ID,
+twelve roles, sidecar integrity rule, checksum-before-use policy, and typed loader are used
+by both storage backends.

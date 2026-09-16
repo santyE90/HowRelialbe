@@ -11,7 +11,7 @@ roadmap phase calls for them.
 
 ## Current status
 
-Phases 0 through 5B now provide the repository foundation, canonical vehicle and reliability
+Phases 0 through 6A now provide the repository foundation, canonical vehicle and reliability
 event models, source-faithful NHTSA ingestion, reproducible full-corpus EDA, and a
 deterministic evidence-preserving cleaning boundary, target-agnostic event and vehicle
 cohort features, NHTSA production-exposure diagnostics, and official manufacturer-
@@ -40,6 +40,9 @@ with fail-fast artifact validation and application-lifetime resource reuse. See 
 Phase 5B moves artifact paths, checksums, compatibility validation, and trusted model loading
 behind an explicit local registry and typed inference bundle. See the
 [model registry](docs/model-registry.md).
+Phase 6A adds explicit private-S3 storage and deterministic publication behind that unchanged
+registry, with downloaded-byte SHA-256 validation and local/S3 inference equivalence. See
+[AWS S3 artifact storage](docs/aws-s3.md). No AWS compute or deployment was added.
 See the [roadmap](docs/roadmap.md), [cleaning rules](docs/cleaning-rules.md), and
 [feature definitions](docs/feature-engineering.md) for details.
 
@@ -234,4 +237,12 @@ Validate the explicitly selected local inference bundle with:
 
 ```console
 python -m howreliable.modeling.registry validate howreliable-rf-2022-cutoff-v1
+```
+
+To use S3, explicitly set `HOWRELIABLE_ARTIFACT_BACKEND=s3` plus bucket/prefix/region and
+the bundle ID shown in `.env.example`. Publishing and remote validation are separate tools:
+
+```console
+python -m howreliable.cloud.s3 publish-bundle howreliable-rf-2022-cutoff-v1 --bucket <bucket> --prefix <prefix>
+python -m howreliable.cloud.s3 validate-bundle howreliable-rf-2022-cutoff-v1 --bucket <bucket> --prefix <prefix>
 ```

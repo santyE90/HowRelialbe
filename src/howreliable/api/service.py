@@ -2,12 +2,15 @@
 
 from __future__ import annotations
 
+import logging
 from collections.abc import Callable
 from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any, Final, cast
 
 from howreliable.api.schemas import CohortPage, CohortSummary, ModelMetadataResponse
+from howreliable.config.artifacts import artifact_store_from_settings
+from howreliable.config.settings import Settings
 from howreliable.data.ingestion.nhtsa_complaints import ArtifactExistsError, sha256_file
 from howreliable.modeling.evaluation_report import EVALUATION_VERSION
 from howreliable.modeling.explainability import EXPLAINABILITY_VERSION
@@ -26,11 +29,10 @@ from howreliable.modeling.presentation import (
 from howreliable.modeling.pytorch.training_infrastructure import atomic_write_json
 from howreliable.modeling.registry import (
     API_COMPATIBILITY_VERSION,
-    DEFAULT_BUNDLE_ID,
     PRESENTATION_HANDOFF_CHECKSUM,
     REGISTRY_CONTRACT_VERSION,
+    ArtifactStore,
     InferenceBundle,
-    LocalArtifactStore,
     ModelRegistry,
     RegistryError,
     load_inference_bundle,
@@ -39,6 +41,7 @@ from howreliable.modeling.registry import (
 API_CONTRACT_VERSION: Final = API_COMPATIBILITY_VERSION
 API_HANDOFF_CHECKSUM: Final = PRESENTATION_HANDOFF_CHECKSUM
 SUPPORTED_COHORT_COUNT: Final = 8_416
+LOGGER = logging.getLogger("howreliable.api.service")
 
 
 class ArtifactContractError(RuntimeError):
@@ -82,14 +85,32 @@ class PredictionService:
             raise ArtifactContractError("supported cohort count does not match the API contract")
 
     @classmethod
-    def load(cls, root: Path, *, bundle_id: str = DEFAULT_BUNDLE_ID) -> PredictionService:
+    def load(
+        cls,
+        root: Path,
+        *,
+        bundle_id: str | None = None,
+        settings: Settings | None = None,
+        store: ArtifactStore | None = None,
+    ) -> PredictionService:
         """Fail fast while loading one explicit validated inference bundle."""
+        resolved_settings = settings or Settings.from_env()
+        selected_bundle_id = bundle_id or resolved_settings.model_bundle_id
+        selected_store = store or artifact_store_from_settings(root, resolved_settings)
+        LOGGER.info(
+            "Artifact backend selected; bundle load started",
+            extra={
+                "artifact_backend": resolved_settings.artifact_backend,
+                "bundle_id": selected_bundle_id,
+            },
+        )
         try:
-            bundle = load_inference_bundle(ModelRegistry(LocalArtifactStore(root)), bundle_id)
+            bundle = load_inference_bundle(ModelRegistry(selected_store), selected_bundle_id)
         except RegistryError as error:
             raise ArtifactContractError(
                 "required frozen artifact contract validation failed"
             ) from error
+        LOGGER.info("Validated inference bundle loaded", extra={"bundle_id": selected_bundle_id})
         return cls(root, bundle)
 
     @property

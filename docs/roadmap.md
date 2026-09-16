@@ -71,9 +71,11 @@ implementation exists yet.
 - **Phase 5B — Model Registry / Loading: complete** — immutable portable manifest, explicit
   bundle selection, path-safe local artifact store, checksum-first loading, cross-artifact
   compatibility validation, typed read-only inference bundle, and unchanged API behavior.
-- **Current project state — LOCAL REGISTRY COMPLETE.** Phase 6A is next and has not started;
-  it may implement object storage behind the validated artifact-store interface.
-- **Phase 6A — AWS S3: planned**
+- **Phase 6A — AWS S3: complete** — explicit local/S3 backend selection, safe relative-key
+  object mapping, downloaded-byte checksum validation, deterministic fail-closed/idempotent
+  publication, least-privilege reader policy, and validated local/S3 inference equivalence.
+- **Current project state — S3 ARTIFACT STORAGE COMPLETE.** Phase 6B is next; no compute or
+  deployment platform has been selected or implemented.
 - **Phase 6B — AWS Deployment: planned**
 - **Phase 6C — Monitoring: planned**
 - **Phase 7A — CI: planned**

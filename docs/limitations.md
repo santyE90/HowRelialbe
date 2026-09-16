@@ -145,6 +145,11 @@ work must account for at least the following constraints:
   safety of arbitrary pickle/joblib data. Only trusted project model bytes may be loaded.
 - The Phase 5B registry is local and contains one explicit frozen bundle. It has no remote
   durability, promotion lifecycle, automatic latest selection, or production-readiness claim.
+- Phase 6A S3 storage does not provide a deployment, availability SLA, cross-object
+  transaction, concurrent-publisher lock, lifecycle/retention policy, replication guarantee,
+  promotion alias, or production-readiness approval.
+- Remote integrity depends on the frozen manifest and SHA-256 of downloaded bytes. It does
+  not trust ETags and does not make hostile pickle/joblib safe.
 
 Any future output will be decision support, not a replacement for a qualified mechanical
 inspection, diagnosis, maintenance guidance, recall information, or safety advice.

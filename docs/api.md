@@ -16,11 +16,11 @@ the forest once, builds an
 8,416-entry cohort index once, and derives the transformed-feature manifest once. Requests
 reuse those read-only resources.
 
-The service requires the validated local ignored artifacts documented in the Phase 4B
-[presentation contract](complaint-activity-presentation.md). A missing, malformed, or
+The service requires the validated bundle documented in the Phase 5B registry, selected from
+the local default or explicit Phase 6A S3 backend. A missing, malformed, inaccessible, or
 checksum-mismatched artifact raises `ArtifactContractError` during factory creation; no
-partially ready application serves predictions. Phase 5A does not download or dynamically
-swap artifacts.
+partially ready application serves predictions and S3 never falls back to local. Resources
+load once at startup, so requests do not download or dynamically swap artifacts.
 
 Run locally from the repository root after installing the project and restoring its validated
 artifacts:
@@ -92,12 +92,9 @@ preferred model identity/checksum, cohort grain/count, target, threshold, evalua
 explainability lineage, Phase 4B handoff checksum, required limitation, prohibited language,
 and UTC generation time. Generation is byte-identical for the same timestamp and inputs.
 
-Phase 5A remains a local research application boundary. It supports only the 8,416 frozen
-cohorts and current cutoff/window; it has no database, remote artifact store, model registry,
+The API supports only the 8,416 frozen cohorts and current cutoff/window; it has no database,
 dynamic promotion, arbitrary-vehicle feature construction, deployment, or availability
-guarantee. Phase 5B may introduce a loading/registry boundary, but it must preserve
-`howreliable-api-1.0`, `complaint-activity-result-1.0`, the frozen model checksum, and all
-semantic restrictions unless a separately validated versioned contract replaces them.
-
-Phase 5B now supplies that loading boundary through the typed local registry described in
-[model registry](model-registry.md); no remote registry or dynamic promotion was added.
+guarantee. Phase 5B supplies the typed registry described in
+[model registry](model-registry.md), and Phase 6A supplies optional S3 storage behind it.
+Neither changes `howreliable-api-1.0`, `complaint-activity-result-1.0`, the frozen model, or
+the scientific restrictions.
