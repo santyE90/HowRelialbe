@@ -11,7 +11,7 @@ roadmap phase calls for them.
 
 ## Current status
 
-Phases 0 through 6A now provide the repository foundation, canonical vehicle and reliability
+Phases 0 through 6B now provide the repository foundation, canonical vehicle and reliability
 event models, source-faithful NHTSA ingestion, reproducible full-corpus EDA, and a
 deterministic evidence-preserving cleaning boundary, target-agnostic event and vehicle
 cohort features, NHTSA production-exposure diagnostics, and official manufacturer-
@@ -20,7 +20,8 @@ cohort integration and dataset review, a leakage-safe cohort target definition, 
 traditional baseline models on a separate as-of-cutoff feature matrix, a deterministic
 PyTorch Dataset/DataLoader pipeline, a first small validation-selected PyTorch MLP, and
 minimal reproducible/resumable training infrastructure and a local typed FastAPI boundary.
-There is no cloud training, deployment infrastructure, or user interface.
+The API now has a locally validated S3 and ECS Fargate deployment implementation, but no
+live AWS deployment, cloud training, monitoring phase, or user interface.
 
 Phase 3F evaluates the frozen forest and MLP on aligned TEST predictions with deterministic
 bootstrap uncertainty, calibration, threshold sensitivity, subgroups, errors, and agreement.
@@ -42,7 +43,11 @@ behind an explicit local registry and typed inference bundle. See the
 [model registry](docs/model-registry.md).
 Phase 6A adds explicit private-S3 storage and deterministic publication behind that unchanged
 registry, with downloaded-byte SHA-256 validation and local/S3 inference equivalence. See
-[AWS S3 artifact storage](docs/aws-s3.md). No AWS compute or deployment was added.
+[AWS S3 artifact storage](docs/aws-s3.md).
+Phase 6B packages the unchanged API as a non-root container and defines a minimal ECR, ECS
+Fargate, ALB, IAM, and private-S3 deployment contract. The implementation is locally and
+statically validated; no live AWS deployment has been executed. See
+[AWS deployment](docs/aws-deployment.md).
 See the [roadmap](docs/roadmap.md), [cleaning rules](docs/cleaning-rules.md), and
 [feature definitions](docs/feature-engineering.md) for details.
 
@@ -246,3 +251,13 @@ the bundle ID shown in `.env.example`. Publishing and remote validation are sepa
 python -m howreliable.cloud.s3 publish-bundle howreliable-rf-2022-cutoff-v1 --bucket <bucket> --prefix <prefix>
 python -m howreliable.cloud.s3 validate-bundle howreliable-rf-2022-cutoff-v1 --bucket <bucket> --prefix <prefix>
 ```
+
+Build the Phase 6B image with its explicit tag where Docker is available:
+
+```console
+docker build --pull --tag howreliable-api:1.0.0 .
+```
+
+The image contains application code and runtime dependencies only. The frozen bundle is
+loaded from private S3 at startup in Fargate. Deployment remains a documented manual process;
+see the deployment guide before substituting AWS resource placeholders.

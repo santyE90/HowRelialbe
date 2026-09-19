@@ -7,7 +7,8 @@ foundations, immutable canonical vehicle and reliability-event models, source-sp
 ingestion and mapping, reproducible EDA, deterministic cleaning, target/feature generation,
 traditional baselines, bounded neural training/evaluation, a typed API, a checksum-first
 registry, and local/S3 artifact stores. Tests and static-analysis configuration enforce these
-boundaries. No deployment or UI component is implemented.
+boundaries. A container/ECS Fargate deployment boundary is defined, but no live AWS service
+or UI component is implemented.
 
 ### Vehicle identity decisions
 
@@ -250,8 +251,8 @@ safe metadata, paginated supported identities, and the unchanged `ComplaintActiv
 
 Importing the package performs no resource loading. Factory failure prevents service startup;
 requests never trigger training, artifact reloading, fuzzy matching, or field reconstruction.
-The boundary has no database, CORS default, authentication, Docker, or cloud deployment. See
-[API documentation](api.md).
+Phase 5A itself added no database, CORS default, authentication, Docker, or cloud deployment;
+later phases wrap the unchanged boundary. See [API documentation](api.md).
 
 ### Model-registry and loading boundary
 
@@ -276,6 +277,16 @@ dependency. Separate publication tooling validates locally, uploads artifacts be
 manifest/checksum marker, refuses conflicting bytes, and validates remotely. See
 [AWS S3 artifact storage](aws-s3.md).
 
+### ECS Fargate deployment boundary
+
+Phase 6B packages the same application factory in a pinned, non-root container without model
+or data artifacts. An explicitly tagged ECR image feeds one 0.5-vCPU/1-GiB Fargate task
+behind one ALB target group. The application task role reads only the configured private S3
+prefix; the distinct execution role pulls the image. Startup must validate S3 before the
+service becomes healthy, and request handling remains in-memory. Deterministic JSON templates
+define the task and service without Terraform or live resource creation. See
+[AWS deployment](aws-deployment.md).
+
 ## Planned system
 
 The intended high-level flow is:
@@ -293,9 +304,10 @@ raw automotive data
   -> minimal UI (later)
 ```
 
-Implemented ingestion, cleaning, training/evaluation, registry, API, and S3 storage boundaries
-already follow this separation; packaging and deployment remain planned.
+Implemented ingestion, cleaning, training/evaluation, registry, API, S3 storage, container,
+and Fargate deployment boundaries follow this separation. Live deployment remains a manual,
+not-yet-executed operation.
 Training, evaluation, and online inference will remain separable so they can be tested and
 operated independently. Artifact metadata and data provenance connect stages rather than
 hidden shared state. Concrete storage, service, and deployment designs will be selected in
-their respective phases once requirements are known.
+their respective phases; Phase 6A selected S3 and Phase 6B selected ECS Fargate.

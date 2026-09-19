@@ -126,7 +126,7 @@ local/S3 equivalence contract. It does not provide S3 availability guarantees, r
 retention/lifecycle policy, concurrent publisher locking, automatic rollback, key rotation,
 promotion aliases, model approval, or deployment.
 
-Phase 6B receives `S3ArtifactStore`, `howreliable-s3-1.0`, the private bucket/prefix layout,
+Phase 6B received `S3ArtifactStore`, `howreliable-s3-1.0`, the private bucket/prefix layout,
 explicit bundle ID, IAM reader boundary, startup fail-closed/load-once behavior, the S3
-contract artifact/checksum, and equivalence evidence. Selection of EC2, ECS, Fargate, or any
-other compute platform belongs exclusively to Phase 6B.
+contract artifact/checksum, and equivalence evidence. It selected ECS Fargate without
+changing this storage contract; see [AWS deployment](aws-deployment.md).

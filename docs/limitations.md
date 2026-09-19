@@ -150,6 +150,15 @@ work must account for at least the following constraints:
   promotion alias, or production-readiness approval.
 - Remote integrity depends on the frozen manifest and SHA-256 of downloaded bytes. It does
   not trust ETags and does not make hostile pickle/joblib safe.
+- Phase 6B defines a one-task ECS Fargate deployment with no autoscaling or multi-task
+  redundancy. Task replacement, an Availability Zone failure, or an unhealthy target can
+  make the research API unavailable.
+- The initial public-network design uses public subnets and task egress rather than private
+  subnets, NAT gateways, or an S3 VPC endpoint. HTTP is acceptable only for a temporary smoke;
+  public use requires a real domain, ACM certificate, and HTTPS ALB listener.
+- Docker and live AWS were unavailable during Phase 6B validation. The image/task/service
+  definitions were statically validated, but no live availability or cloud behavior is
+  claimed. Monitoring, log retention, alarms, and operational validation belong to Phase 6C.
 
 Any future output will be decision support, not a replacement for a qualified mechanical
 inspection, diagnosis, maintenance guidance, recall information, or safety advice.

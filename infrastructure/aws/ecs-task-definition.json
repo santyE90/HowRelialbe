@@ -1,0 +1,75 @@
+{
+  "family": "howreliable-api",
+  "taskRoleArn": "<TASK_ROLE_ARN>",
+  "executionRoleArn": "<EXECUTION_ROLE_ARN>",
+  "networkMode": "awsvpc",
+  "requiresCompatibilities": [
+    "FARGATE"
+  ],
+  "cpu": "512",
+  "memory": "1024",
+  "runtimePlatform": {
+    "cpuArchitecture": "X86_64",
+    "operatingSystemFamily": "LINUX"
+  },
+  "containerDefinitions": [
+    {
+      "name": "howreliable-api",
+      "image": "<AWS_ACCOUNT_ID>.dkr.ecr.<AWS_REGION>.amazonaws.com/howreliable-api:1.0.0",
+      "essential": true,
+      "portMappings": [
+        {
+          "name": "http-8000",
+          "containerPort": 8000,
+          "hostPort": 8000,
+          "protocol": "tcp",
+          "appProtocol": "http"
+        }
+      ],
+      "environment": [
+        {
+          "name": "HOWRELIABLE_ENVIRONMENT",
+          "value": "aws"
+        },
+        {
+          "name": "HOWRELIABLE_LOG_LEVEL",
+          "value": "INFO"
+        },
+        {
+          "name": "HOWRELIABLE_ARTIFACT_BACKEND",
+          "value": "s3"
+        },
+        {
+          "name": "HOWRELIABLE_S3_BUCKET",
+          "value": "<S3_BUCKET>"
+        },
+        {
+          "name": "HOWRELIABLE_S3_PREFIX",
+          "value": "<S3_PREFIX>"
+        },
+        {
+          "name": "HOWRELIABLE_AWS_REGION",
+          "value": "<AWS_REGION>"
+        },
+        {
+          "name": "HOWRELIABLE_MODEL_BUNDLE_ID",
+          "value": "howreliable-rf-2022-cutoff-v1"
+        }
+      ],
+      "healthCheck": {
+        "command": [
+          "CMD-SHELL",
+          "python -c \"import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health', timeout=4)\" || exit 1"
+        ],
+        "interval": 30,
+        "timeout": 5,
+        "retries": 3,
+        "startPeriod": 120
+      },
+      "readonlyRootFilesystem": true,
+      "linuxParameters": {
+        "initProcessEnabled": true
+      }
+    }
+  ]
+}

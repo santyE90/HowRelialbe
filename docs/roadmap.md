@@ -74,9 +74,12 @@ implementation exists yet.
 - **Phase 6A — AWS S3: complete** — explicit local/S3 backend selection, safe relative-key
   object mapping, downloaded-byte checksum validation, deterministic fail-closed/idempotent
   publication, least-privilege reader policy, and validated local/S3 inference equivalence.
-- **Current project state — S3 ARTIFACT STORAGE COMPLETE.** Phase 6B is next; no compute or
-  deployment platform has been selected or implemented.
-- **Phase 6B — AWS Deployment: planned**
+- **Phase 6B — AWS Deployment: complete** — non-root versioned container, ECR image contract,
+  ECS Fargate task/service definitions, distinct least-privilege roles, ALB health/network
+  design, and deterministic deployment contract. Implementation and local/static validation
+  are complete; live AWS deployment was not executed.
+- **Current project state — FARGATE DEPLOYMENT IMPLEMENTATION COMPLETE.** Phase 6C is next;
+  there is no claim that a live AWS service currently exists.
 - **Phase 6C — Monitoring: planned**
 - **Phase 7A — CI: planned**
 - **Phase 7B — CD: planned**

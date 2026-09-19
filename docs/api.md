@@ -22,6 +22,10 @@ checksum-mismatched artifact raises `ArtifactContractError` during factory creat
 partially ready application serves predictions and S3 never falls back to local. Resources
 load once at startup, so requests do not download or dynamically swap artifacts.
 
+Phase 6B runs this same factory in one non-root container on port 8000. ECS and Docker health
+checks call the existing `/health` route only after fail-closed bundle startup; no endpoint or
+response schema changes were introduced. See [AWS deployment](aws-deployment.md).
+
 Run locally from the repository root after installing the project and restoring its validated
 artifacts:
 
@@ -97,4 +101,5 @@ dynamic promotion, arbitrary-vehicle feature construction, deployment, or availa
 guarantee. Phase 5B supplies the typed registry described in
 [model registry](model-registry.md), and Phase 6A supplies optional S3 storage behind it.
 Neither changes `howreliable-api-1.0`, `complaint-activity-result-1.0`, the frozen model, or
-the scientific restrictions.
+the scientific restrictions. Phase 6B packages this boundary but does not claim a live AWS
+service or production availability.

@@ -1,0 +1,33 @@
+{
+  "cluster": "<ECS_CLUSTER_NAME>",
+  "serviceName": "howreliable-api",
+  "taskDefinition": "howreliable-api:<TASK_DEFINITION_REVISION>",
+  "desiredCount": 1,
+  "launchType": "FARGATE",
+  "platformVersion": "LATEST",
+  "deploymentConfiguration": {
+    "minimumHealthyPercent": 100,
+    "maximumPercent": 200
+  },
+  "healthCheckGracePeriodSeconds": 180,
+  "networkConfiguration": {
+    "awsvpcConfiguration": {
+      "subnets": [
+        "<PUBLIC_SUBNET_ID_A>",
+        "<PUBLIC_SUBNET_ID_B>"
+      ],
+      "securityGroups": [
+        "<ECS_TASK_SECURITY_GROUP_ID>"
+      ],
+      "assignPublicIp": "ENABLED"
+    }
+  },
+  "loadBalancers": [
+    {
+      "targetGroupArn": "<ALB_TARGET_GROUP_ARN>",
+      "containerName": "howreliable-api",
+      "containerPort": 8000
+    }
+  ],
+  "enableExecuteCommand": false
+}
