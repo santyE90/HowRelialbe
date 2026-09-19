@@ -78,9 +78,13 @@ implementation exists yet.
   ECS Fargate task/service definitions, distinct least-privilege roles, ALB health/network
   design, and deterministic deployment contract. Implementation and local/static validation
   are complete; live AWS deployment was not executed.
-- **Current project state — FARGATE DEPLOYMENT IMPLEMENTATION COMPLETE.** Phase 6C is next;
-  there is no claim that a live AWS service currently exists.
-- **Phase 6C — Monitoring: planned**
+- **Phase 6C — Monitoring: complete** — structured local/container logging, bounded request
+  correlation, lifecycle/request events, ECS CloudWatch Logs routing with finite retention,
+  four native-metric alarm specifications, and a deterministic monitoring contract.
+  Implementation and local/static validation are complete; live CloudWatch validation was
+  not executed.
+- **Current project state — MONITORING IMPLEMENTATION COMPLETE.** Phase 7A is next; there is
+  no claim that a live AWS service or CloudWatch telemetry currently exists.
 - **Phase 7A — CI: planned**
 - **Phase 7B — CD: planned**
 - **Phase 7C — Terraform: planned**

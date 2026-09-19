@@ -1,0 +1,4 @@
+{
+  "logGroupName": "/howreliable/api",
+  "retentionInDays": 14
+}

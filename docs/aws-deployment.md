@@ -182,10 +182,10 @@ executed. These statuses must not be interpreted as a running service.
 
 Phase 6B does not provide autoscaling, multi-task availability, private-subnet/NAT design,
 VPC endpoints, domain/TLS certificate, deployment automation, image scanning policy,
-rollback automation, secrets management, log routing/retention, dashboards, metrics, traces,
-alarms, or alerts. The container writes ordinary application logs only to stdout/stderr.
+rollback automation, secrets management, dashboards, traces, or alerts.
 
-Phase 6C receives the ECS service/task identity, container stdout/stderr contract, `/health`
-endpoint, startup duration/memory baseline, deployment contract, S3 fail-closed behavior,
-and expected task lifecycle/failure modes. Phase 6C owns CloudWatch log routing/retention,
-service/task health metrics, alarms, dashboards, and alerting.
+Phase 6C now provides structured stdout/stderr logs, ECS `awslogs` routing to
+`/howreliable/api`, 14-day retention, and four AWS-native metric alarm specifications. It
+preserves the separate execution-role log-delivery and task-role S3 responsibilities. These
+changes are locally/statically validated only; no live CloudWatch delivery or alarms are
+claimed. See [monitoring](monitoring.md).

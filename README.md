@@ -11,7 +11,7 @@ roadmap phase calls for them.
 
 ## Current status
 
-Phases 0 through 6B now provide the repository foundation, canonical vehicle and reliability
+Phases 0 through 6C now provide the repository foundation, canonical vehicle and reliability
 event models, source-faithful NHTSA ingestion, reproducible full-corpus EDA, and a
 deterministic evidence-preserving cleaning boundary, target-agnostic event and vehicle
 cohort features, NHTSA production-exposure diagnostics, and official manufacturer-
@@ -20,8 +20,8 @@ cohort integration and dataset review, a leakage-safe cohort target definition, 
 traditional baseline models on a separate as-of-cutoff feature matrix, a deterministic
 PyTorch Dataset/DataLoader pipeline, a first small validation-selected PyTorch MLP, and
 minimal reproducible/resumable training infrastructure and a local typed FastAPI boundary.
-The API now has a locally validated S3 and ECS Fargate deployment implementation, but no
-live AWS deployment, cloud training, monitoring phase, or user interface.
+The API now has a locally validated S3 and ECS Fargate deployment and monitoring
+implementation, but no live AWS deployment, cloud training, or user interface.
 
 Phase 3F evaluates the frozen forest and MLP on aligned TEST predictions with deterministic
 bootstrap uncertainty, calibration, threshold sensitivity, subgroups, errors, and agreement.
@@ -48,6 +48,10 @@ Phase 6B packages the unchanged API as a non-root container and defines a minima
 Fargate, ALB, IAM, and private-S3 deployment contract. The implementation is locally and
 statically validated; no live AWS deployment has been executed. See
 [AWS deployment](docs/aws-deployment.md).
+Phase 6C adds structured JSON container logs, request correlation, ECS-to-CloudWatch log
+routing, 14-day retention, and four provisional native infrastructure alarms. Local/static
+validation is complete; CloudWatch was not validated against a live deployment. See
+[monitoring](docs/monitoring.md).
 See the [roadmap](docs/roadmap.md), [cleaning rules](docs/cleaning-rules.md), and
 [feature definitions](docs/feature-engineering.md) for details.
 

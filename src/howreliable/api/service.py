@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import logging
+import time
 from collections.abc import Callable
 from datetime import UTC, datetime
 from pathlib import Path
@@ -96,21 +97,53 @@ class PredictionService:
         """Fail fast while loading one explicit validated inference bundle."""
         resolved_settings = settings or Settings.from_env()
         selected_bundle_id = bundle_id or resolved_settings.model_bundle_id
-        selected_store = store or artifact_store_from_settings(root, resolved_settings)
         LOGGER.info(
-            "Artifact backend selected; bundle load started",
+            "Artifact backend selected",
             extra={
+                "event": "artifact_backend_selected",
                 "artifact_backend": resolved_settings.artifact_backend,
                 "bundle_id": selected_bundle_id,
             },
         )
+        selected_store = store or artifact_store_from_settings(root, resolved_settings)
+        LOGGER.info(
+            "Inference bundle load started",
+            extra={
+                "event": "bundle_load_started",
+                "artifact_backend": resolved_settings.artifact_backend,
+                "bundle_id": selected_bundle_id,
+                "lifecycle_stage": "bundle_validation",
+            },
+        )
+        started = time.perf_counter()
         try:
             bundle = load_inference_bundle(ModelRegistry(selected_store), selected_bundle_id)
         except RegistryError as error:
+            LOGGER.exception(
+                "Inference bundle load failed",
+                extra={
+                    "event": "bundle_load_failed",
+                    "artifact_backend": resolved_settings.artifact_backend,
+                    "bundle_id": selected_bundle_id,
+                    "error_category": type(error).__name__,
+                    "lifecycle_stage": "bundle_validation",
+                },
+            )
             raise ArtifactContractError(
                 "required frozen artifact contract validation failed"
             ) from error
-        LOGGER.info("Validated inference bundle loaded", extra={"bundle_id": selected_bundle_id})
+        LOGGER.info(
+            "Validated inference bundle loaded",
+            extra={
+                "event": "bundle_load_succeeded",
+                "artifact_backend": resolved_settings.artifact_backend,
+                "bundle_id": selected_bundle_id,
+                "bundle_load_duration_ms": round((time.perf_counter() - started) * 1000, 3),
+                "registry_version": bundle.manifest.registry_contract_version,
+                "model_identifier": bundle.manifest.model_identifier,
+                "supported_cohort_count": bundle.manifest.supported_cohort_count,
+            },
+        )
         return cls(root, bundle)
 
     @property

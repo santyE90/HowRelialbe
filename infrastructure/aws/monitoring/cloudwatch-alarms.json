@@ -1,0 +1,97 @@
+{
+  "specificationVersion": "howreliable-cloudwatch-alarms-1.0",
+  "alarms": [
+    {
+      "AlarmName": "howreliable-ecs-cpu-high",
+      "AlarmDescription": "Provisional sustained ECS service CPU utilization threshold.",
+      "Namespace": "AWS/ECS",
+      "MetricName": "CPUUtilization",
+      "Statistic": "Average",
+      "Period": 300,
+      "EvaluationPeriods": 3,
+      "DatapointsToAlarm": 2,
+      "Threshold": 80.0,
+      "ComparisonOperator": "GreaterThanOrEqualToThreshold",
+      "TreatMissingData": "notBreaching",
+      "Dimensions": [
+        {
+          "Name": "ClusterName",
+          "Value": "<ECS_CLUSTER_NAME>"
+        },
+        {
+          "Name": "ServiceName",
+          "Value": "howreliable-api"
+        }
+      ]
+    },
+    {
+      "AlarmName": "howreliable-ecs-memory-high",
+      "AlarmDescription": "Provisional sustained ECS service memory utilization threshold.",
+      "Namespace": "AWS/ECS",
+      "MetricName": "MemoryUtilization",
+      "Statistic": "Average",
+      "Period": 300,
+      "EvaluationPeriods": 3,
+      "DatapointsToAlarm": 2,
+      "Threshold": 80.0,
+      "ComparisonOperator": "GreaterThanOrEqualToThreshold",
+      "TreatMissingData": "notBreaching",
+      "Dimensions": [
+        {
+          "Name": "ClusterName",
+          "Value": "<ECS_CLUSTER_NAME>"
+        },
+        {
+          "Name": "ServiceName",
+          "Value": "howreliable-api"
+        }
+      ]
+    },
+    {
+      "AlarmName": "howreliable-alb-unhealthy-target",
+      "AlarmDescription": "At least one unhealthy target makes the one-task service unavailable.",
+      "Namespace": "AWS/ApplicationELB",
+      "MetricName": "UnHealthyHostCount",
+      "Statistic": "Maximum",
+      "Period": 60,
+      "EvaluationPeriods": 2,
+      "DatapointsToAlarm": 1,
+      "Threshold": 0.0,
+      "ComparisonOperator": "GreaterThanThreshold",
+      "TreatMissingData": "breaching",
+      "Dimensions": [
+        {
+          "Name": "LoadBalancer",
+          "Value": "<ALB_FULL_NAME>"
+        },
+        {
+          "Name": "TargetGroup",
+          "Value": "<TARGET_GROUP_FULL_NAME>"
+        }
+      ]
+    },
+    {
+      "AlarmName": "howreliable-alb-target-5xx",
+      "AlarmDescription": "Five target-generated 5xx responses in five minutes.",
+      "Namespace": "AWS/ApplicationELB",
+      "MetricName": "HTTPCode_Target_5XX_Count",
+      "Statistic": "Sum",
+      "Period": 300,
+      "EvaluationPeriods": 1,
+      "DatapointsToAlarm": 1,
+      "Threshold": 5.0,
+      "ComparisonOperator": "GreaterThanOrEqualToThreshold",
+      "TreatMissingData": "notBreaching",
+      "Dimensions": [
+        {
+          "Name": "LoadBalancer",
+          "Value": "<ALB_FULL_NAME>"
+        },
+        {
+          "Name": "TargetGroup",
+          "Value": "<TARGET_GROUP_FULL_NAME>"
+        }
+      ]
+    }
+  ]
+}

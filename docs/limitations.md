@@ -156,9 +156,14 @@ work must account for at least the following constraints:
 - The initial public-network design uses public subnets and task egress rather than private
   subnets, NAT gateways, or an S3 VPC endpoint. HTTP is acceptable only for a temporary smoke;
   public use requires a real domain, ACM certificate, and HTTPS ALB listener.
-- Docker and live AWS were unavailable during Phase 6B validation. The image/task/service
-  definitions were statically validated, but no live availability or cloud behavior is
-  claimed. Monitoring, log retention, alarms, and operational validation belong to Phase 6C.
+- Docker and live AWS were unavailable during Phase 6B/6C validation. The image/task/service,
+  structured logging, retention, and alarm definitions were locally/statically validated,
+  but no live availability, CloudWatch log delivery, metric visibility, or alarm acceptance
+  is claimed.
+- Phase 6C thresholds are provisional and have no live workload history. It adds no alarm
+  notification destinations, dashboard, custom desired-versus-running task-count signal,
+  tracing/APM, Prometheus, or ML drift/quality monitoring. The last omission is deliberate:
+  there is no live ground-truth pipeline.
 
 Any future output will be decision support, not a replacement for a qualified mechanical
 inspection, diagnosis, maintenance guidance, recall information, or safety advice.

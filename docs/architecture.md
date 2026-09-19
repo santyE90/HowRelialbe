@@ -287,6 +287,20 @@ service becomes healthy, and request handling remains in-memory. Deterministic J
 define the task and service without Terraform or live resource creation. See
 [AWS deployment](aws-deployment.md).
 
+### Operational-monitoring boundary
+
+Phase 6C keeps application telemetry on stdout/stderr: local runs default to text and ECS
+selects newline-delimited JSON. Stable startup, bundle-loading, readiness, request-completion,
+and request-failure events use bounded safe context. A validated/generated `X-Request-ID`
+correlates server logs and responses without recording payloads, predictions, features,
+headers, or cohort identifiers. Successful health checks log at DEBUG.
+
+The ECS `awslogs` driver routes container streams to `/howreliable/api` with 14-day retention.
+Four deterministic alarm definitions use native ECS CPU/memory and ALB unhealthy-target/5xx
+metrics. There is no direct CloudWatch SDK logging, custom metrics stack, running-task-count
+metric, tracing, or ML-quality monitoring. The boundary is statically/local validated only;
+no live telemetry is claimed. See [monitoring](monitoring.md).
+
 ## Planned system
 
 The intended high-level flow is:
@@ -305,9 +319,10 @@ raw automotive data
 ```
 
 Implemented ingestion, cleaning, training/evaluation, registry, API, S3 storage, container,
-and Fargate deployment boundaries follow this separation. Live deployment remains a manual,
-not-yet-executed operation.
+Fargate deployment, and monitoring boundaries follow this separation. Live deployment and
+CloudWatch validation remain manual, not-yet-executed operations.
 Training, evaluation, and online inference will remain separable so they can be tested and
 operated independently. Artifact metadata and data provenance connect stages rather than
 hidden shared state. Concrete storage, service, and deployment designs will be selected in
-their respective phases; Phase 6A selected S3 and Phase 6B selected ECS Fargate.
+their respective phases; Phase 6A selected S3, Phase 6B selected ECS Fargate, and Phase 6C
+selected stdout JSON plus AWS-native infrastructure monitoring.

@@ -9,9 +9,11 @@ from typing import Final
 
 DEFAULT_ENVIRONMENT: Final = "development"
 DEFAULT_LOG_LEVEL: Final = "INFO"
+DEFAULT_LOG_FORMAT: Final = "text"
 DEFAULT_ARTIFACT_BACKEND: Final = "local"
 DEFAULT_MODEL_BUNDLE_ID: Final = "howreliable-rf-2022-cutoff-v1"
 VALID_LOG_LEVELS: Final = frozenset({"DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"})
+VALID_LOG_FORMATS: Final = frozenset({"json", "text"})
 VALID_ARTIFACT_BACKENDS: Final = frozenset({"local", "s3"})
 
 
@@ -21,6 +23,7 @@ class Settings:
 
     environment: str = DEFAULT_ENVIRONMENT
     log_level: str = DEFAULT_LOG_LEVEL
+    log_format: str = DEFAULT_LOG_FORMAT
     artifact_backend: str = DEFAULT_ARTIFACT_BACKEND
     model_bundle_id: str = DEFAULT_MODEL_BUNDLE_ID
     s3_bucket: str | None = None
@@ -33,6 +36,7 @@ class Settings:
         values = os.environ if environ is None else environ
         environment = values.get("HOWRELIABLE_ENVIRONMENT", DEFAULT_ENVIRONMENT).strip()
         log_level = values.get("HOWRELIABLE_LOG_LEVEL", DEFAULT_LOG_LEVEL).strip().upper()
+        log_format = values.get("HOWRELIABLE_LOG_FORMAT", DEFAULT_LOG_FORMAT).strip().lower()
         artifact_backend = (
             values.get("HOWRELIABLE_ARTIFACT_BACKEND", DEFAULT_ARTIFACT_BACKEND).strip().lower()
         )
@@ -46,6 +50,8 @@ class Settings:
         if log_level not in VALID_LOG_LEVELS:
             allowed = ", ".join(sorted(VALID_LOG_LEVELS))
             raise ValueError(f"HOWRELIABLE_LOG_LEVEL must be one of: {allowed}")
+        if log_format not in VALID_LOG_FORMATS:
+            raise ValueError("HOWRELIABLE_LOG_FORMAT must be json or text")
 
         if artifact_backend not in VALID_ARTIFACT_BACKENDS:
             raise ValueError("HOWRELIABLE_ARTIFACT_BACKEND must be local or s3")
@@ -63,6 +69,7 @@ class Settings:
         return cls(
             environment=environment,
             log_level=log_level,
+            log_format=log_format,
             artifact_backend=artifact_backend,
             model_bundle_id=model_bundle_id,
             s3_bucket=s3_bucket,

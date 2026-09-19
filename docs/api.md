@@ -26,6 +26,13 @@ Phase 6B runs this same factory in one non-root container on port 8000. ECS and 
 checks call the existing `/health` route only after fail-closed bundle startup; no endpoint or
 response schema changes were introduced. See [AWS deployment](aws-deployment.md).
 
+Phase 6C adds `X-Request-ID` response correlation and operational logs without changing any
+response body. A safe incoming ID (at most 64 restricted characters) is preserved; otherwise
+a UUID is generated. Logs contain method, route template, status, duration, and request ID,
+but never cohort IDs, payloads, probabilities, classifications, contributors, features,
+headers, or ground truth. Successful `/health` logging is DEBUG. See
+[monitoring](monitoring.md).
+
 Run locally from the repository root after installing the project and restoring its validated
 artifacts:
 
