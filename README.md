@@ -11,7 +11,7 @@ roadmap phase calls for them.
 
 ## Current status
 
-Phases 0 through 6C now provide the repository foundation, canonical vehicle and reliability
+Phases 0 through 7A now provide the repository foundation, canonical vehicle and reliability
 event models, source-faithful NHTSA ingestion, reproducible full-corpus EDA, and a
 deterministic evidence-preserving cleaning boundary, target-agnostic event and vehicle
 cohort features, NHTSA production-exposure diagnostics, and official manufacturer-
@@ -52,6 +52,10 @@ Phase 6C adds structured JSON container logs, request correlation, ECS-to-CloudW
 routing, 14-day retention, and four provisional native infrastructure alarms. Local/static
 validation is complete; CloudWatch was not validated against a live deployment. See
 [monitoring](docs/monitoring.md).
+Phase 7A adds a four-job GitHub Actions quality gate for Python quality, pytest, deterministic
+contracts, and a non-published production Docker build. It needs no AWS credentials and does
+not deploy. Local validation is complete; no live Actions run has been executed. See
+[continuous integration](docs/ci.md).
 See the [roadmap](docs/roadmap.md), [cleaning rules](docs/cleaning-rules.md), and
 [feature definitions](docs/feature-engineering.md) for details.
 

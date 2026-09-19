@@ -164,6 +164,13 @@ work must account for at least the following constraints:
   notification destinations, dashboard, custom desired-versus-running task-count signal,
   tracing/APM, Prometheus, or ML drift/quality monitoring. The last omission is deliberate:
   there is no live ground-truth pipeline.
+- Phase 7A has not had a live GitHub Actions or local Docker run. A clean checkout cannot
+  reconstruct the ignored canonical model and 8,416-row products, so seven explicitly marked
+  full-artifact modules are reported as skipped there and remain mandatory where the bundle
+  is provisioned. CI does not download large NHTSA data or fabricate a prediction service.
+- The CI container smoke validates image metadata, content exclusions, and imports only. It
+  cannot prove `/health`, S3 startup, or prediction behavior without the genuine bundle and
+  does not publish or deploy an image.
 
 Any future output will be decision support, not a replacement for a qualified mechanical
 inspection, diagnosis, maintenance guidance, recall information, or safety advice.

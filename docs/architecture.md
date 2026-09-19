@@ -301,6 +301,15 @@ metrics. There is no direct CloudWatch SDK logging, custom metrics stack, runnin
 metric, tracing, or ML-quality monitoring. The boundary is statically/local validated only;
 no live telemetry is claimed. See [monitoring](monitoring.md).
 
+### Continuous-integration boundary
+
+Phase 7A adds one GitHub Actions quality gate with independent Python quality, pytest,
+deterministic/static contract, and production-image build jobs. The workflow is read-only,
+secret-free, and AWS-independent; it neither publishes its CI-only SHA-tagged image nor
+deploys infrastructure. Clean runners exercise tracked/small generated fixtures and report
+explicit skips for the ignored canonical-bundle modules. Environments provisioned with that
+bundle run the exact API/model/explanation/limitation regressions. See [CI](ci.md).
+
 ## Planned system
 
 The intended high-level flow is:

@@ -83,9 +83,12 @@ implementation exists yet.
   four native-metric alarm specifications, and a deterministic monitoring contract.
   Implementation and local/static validation are complete; live CloudWatch validation was
   not executed.
-- **Current project state — MONITORING IMPLEMENTATION COMPLETE.** Phase 7A is next; there is
-  no claim that a live AWS service or CloudWatch telemetry currently exists.
-- **Phase 7A — CI: planned**
+- **Phase 7A — CI: complete** — one least-privilege GitHub Actions workflow with separate
+  quality, test, deterministic-contract, and non-publishing Docker jobs; explicit clean-runner
+  versus full-artifact test handling; and a versioned CI contract. Local implementation and
+  structural validation are complete; no live GitHub Actions run was executed.
+- **Current project state — CI IMPLEMENTATION COMPLETE.** Phase 7B is next; there is no claim
+  that Actions, Docker, AWS deployment, or CloudWatch telemetry has run live.
 - **Phase 7B — CD: planned**
 - **Phase 7C — Terraform: planned**
 - **Phase 8A — Owner Report NLP: planned**

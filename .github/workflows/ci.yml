@@ -1,0 +1,118 @@
+name: CI
+
+'on':
+  pull_request:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  quality:
+    name: Python quality
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12.11'
+          cache: pip
+          cache-dependency-path: pyproject.toml
+      - name: Install project and development tools
+        run: |
+          set -euo pipefail
+          python -m pip install --upgrade pip
+          python -m pip install -e '.[dev]'
+      - name: Ruff lint
+        run: python -m ruff check .
+      - name: Strict typing
+        run: python -m mypy
+      - name: Package and dependency checks
+        run: |
+          set -euo pipefail
+          python -m pip check
+          python -c "import howreliable; print(howreliable.__version__)"
+          python -m pip wheel --no-deps --wheel-dir dist .
+
+  tests:
+    name: Repository-contained tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12.11'
+          cache: pip
+          cache-dependency-path: pyproject.toml
+      - name: Install project and development tools
+        run: |
+          set -euo pipefail
+          python -m pip install --upgrade pip
+          python -m pip install -e '.[dev]'
+      - name: Run complete collected suite
+        run: python -m pytest
+
+  contracts:
+    name: Deterministic and static contracts
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12.11'
+          cache: pip
+          cache-dependency-path: pyproject.toml
+      - name: Install project and development tools
+        run: |
+          set -euo pipefail
+          python -m pip install --upgrade pip
+          python -m pip install -e '.[dev]'
+      - name: Validate workflow, AWS definitions, and deterministic contracts
+        run: python -m howreliable.ci.contract validate --root .
+      - name: Regenerate deterministic CI contract
+        run: >-
+          python -m howreliable.ci.contract generate
+          --output artifacts/ci/ci-contract.json
+          --generation-utc 2026-09-19T20:00:00Z
+
+  docker:
+    name: Production Docker image
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build without publishing
+        run: |
+          set -euo pipefail
+          docker build --tag "howreliable-api:ci-${GITHUB_SHA}" .
+      - name: Validate image metadata
+        run: |
+          set -euo pipefail
+          image="howreliable-api:ci-${GITHUB_SHA}"
+          docker image inspect --format '{{json .Config}}' "$image" > image-config.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          config = json.loads(Path("image-config.json").read_text())
+          assert config["User"] == "10001:10001"
+          assert "8000/tcp" in config["ExposedPorts"]
+          assert config["Healthcheck"]["Test"][0] == "CMD"
+          assert config["Cmd"][0] == "uvicorn"
+          PY
+      - name: Audit image contents and import startup path
+        run: |
+          set -euo pipefail
+          image="howreliable-api:ci-${GITHUB_SHA}"
+          docker run --rm --entrypoint python "$image" -c "import howreliable; import howreliable.api.app; print(howreliable.__version__)"
+          docker run --rm --entrypoint python "$image" -c "from pathlib import Path; forbidden=['/app/.env','/app/.git','/app/data','/app/artifacts','/root/.aws','/app/.pytest_cache']; assert not [path for path in forbidden if Path(path).exists()]"

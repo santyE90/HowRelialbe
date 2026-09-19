@@ -189,3 +189,8 @@ Phase 6C now provides structured stdout/stderr logs, ECS `awslogs` routing to
 preserves the separate execution-role log-delivery and task-role S3 responsibilities. These
 changes are locally/statically validated only; no live CloudWatch delivery or alarms are
 claimed. See [monitoring](monitoring.md).
+
+Phase 7A now builds this Dockerfile with a CI-only git-SHA tag, validates image metadata and
+prohibited content, and imports the packaged application. It does not push the image or start
+a prediction-capable container because the genuine ignored bundle is unavailable on a clean
+runner. See [continuous integration](ci.md).

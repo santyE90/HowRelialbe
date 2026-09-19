@@ -128,9 +128,9 @@ Known limitations are the absent live AWS validation, one-task availability, pro
 thresholds, no notification destinations/dashboard/task-count signal, and no distributed
 tracing, APM, Prometheus, or ML-quality monitoring.
 
-## Phase 7A handoff
+## Phase 7A implementation
 
-Phase 7A CI receives these exact checks, without requiring AWS credentials or a live service:
+Phase 7A CI now runs these checks without requiring AWS credentials or a live service:
 
 ```console
 python -m pytest
@@ -140,8 +140,8 @@ python -c "import howreliable; print(howreliable.__version__)"
 python -m pip check
 ```
 
-CI must also exercise deterministic monitoring-contract regeneration, the monitoring static
-validators, API/frozen-probability/explanation/limitation regression tests, and Docker static
-validation. Docker build/smoke is expected only on a runner with Docker. Tests must not call
-live AWS; deployment and optional CloudWatch acceptance remain separately authorized manual
-work. Phase 7A is not implemented here.
+CI also exercises deterministic monitoring-contract regeneration, monitoring static
+validators, and Docker configuration. The exact API/frozen-probability/explanation/limitation
+tests run in the full-artifact gate because ignored model/data products are unavailable in a
+clean checkout. Tests never call live AWS; deployment and CloudWatch acceptance remain
+separately authorized manual work. See [continuous integration](ci.md).
