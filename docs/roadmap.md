@@ -87,9 +87,12 @@ implementation exists yet.
   quality, test, deterministic-contract, and non-publishing Docker jobs; explicit clean-runner
   versus full-artifact test handling; and a versioned CI contract. Local implementation and
   structural validation are complete; no live GitHub Actions run was executed.
-- **Current project state — CI IMPLEMENTATION COMPLETE.** Phase 7B is next; there is no claim
-  that Actions, Docker, AWS deployment, or CloudWatch telemetry has run live.
-- **Phase 7B — CD: planned**
+- **Phase 7B — CD: complete** — manual trusted-SHA deployment workflow, GitHub OIDC,
+  least-privilege deployment-role templates, build-once immutable ECR images, validated ECS
+  task revisions, bounded stability/smoke, and failure-preserving rollback. Implementation
+  and local/static validation are complete; live CD/ECR/ECS/smoke were not executed.
+- **Current project state — CD IMPLEMENTATION COMPLETE.** Phase 7C is next; there is no claim
+  that GitHub Actions CD or a live AWS deployment has run.
 - **Phase 7C — Terraform: planned**
 - **Phase 8A — Owner Report NLP: planned**
 - **Phase 8B — Source Normalization: planned**

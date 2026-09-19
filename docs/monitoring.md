@@ -145,3 +145,7 @@ validators, and Docker configuration. The exact API/frozen-probability/explanati
 tests run in the full-artifact gate because ignored model/data products are unavailable in a
 clean checkout. Tests never call live AWS; deployment and CloudWatch acceptance remain
 separately authorized manual work. See [continuous integration](ci.md).
+
+Phase 7B preserves this monitoring configuration in every rendered task revision. CD does
+not mutate log groups or alarms. Live deployment acceptance should confirm startup and smoke
+events in `/howreliable/api`; this remains unexecuted. See [continuous deployment](cd.md).

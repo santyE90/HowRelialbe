@@ -194,3 +194,16 @@ Phase 7A now builds this Dockerfile with a CI-only git-SHA tag, validates image 
 prohibited content, and imports the packaged application. It does not push the image or start
 a prediction-capable container because the genuine ignored bundle is unavailable on a clean
 runner. See [continuous integration](ci.md).
+
+Phase 7B automates deployment of this existing architecture from a trusted merged SHA. It
+uses GitHub OIDC, pushes one immutable ECR image, registers a validated task revision, updates
+the configured service, waits for stability, validates health/model/cohort metadata, and
+rolls back the application task definition on failure. It creates no infrastructure and does
+not publish the S3 bundle. See [continuous deployment](cd.md).
+
+Docker became available during Phase 7B validation. The production image subsequently built
+and passed its content/import audit plus a read-only canonical-bundle container smoke covering
+health, model metadata, all 8,416 cohorts, a representative frozen prediction, and explanation
+reconstruction. The image was about 11.56 GB because the existing runtime dependency set
+installs Linux PyTorch and CUDA-related transitive packages; optimization is deferred. No real
+S3-backed container smoke or live AWS deployment has run.

@@ -11,7 +11,7 @@ roadmap phase calls for them.
 
 ## Current status
 
-Phases 0 through 7A now provide the repository foundation, canonical vehicle and reliability
+Phases 0 through 7B now provide the repository foundation, canonical vehicle and reliability
 event models, source-faithful NHTSA ingestion, reproducible full-corpus EDA, and a
 deterministic evidence-preserving cleaning boundary, target-agnostic event and vehicle
 cohort features, NHTSA production-exposure diagnostics, and official manufacturer-
@@ -56,6 +56,11 @@ Phase 7A adds a four-job GitHub Actions quality gate for Python quality, pytest,
 contracts, and a non-published production Docker build. It needs no AWS credentials and does
 not deploy. Local validation is complete; no live Actions run has been executed. See
 [continuous integration](docs/ci.md).
+Phase 7B adds a manual, OIDC-authenticated, rollback-capable GitHub Actions deployment
+workflow for an immutable SHA-tagged ECR image and the existing ECS Fargate service. It does
+not publish the model bundle or create infrastructure. Local/static validation is complete;
+the 11.56 GB production image and genuine canonical-bundle container smoke passed locally,
+but no live CD or AWS deployment has run. See [continuous deployment](docs/cd.md).
 See the [roadmap](docs/roadmap.md), [cleaning rules](docs/cleaning-rules.md), and
 [feature definitions](docs/feature-engineering.md) for details.
 

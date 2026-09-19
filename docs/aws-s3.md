@@ -130,3 +130,7 @@ Phase 6B received `S3ArtifactStore`, `howreliable-s3-1.0`, the private bucket/pr
 explicit bundle ID, IAM reader boundary, startup fail-closed/load-once behavior, the S3
 contract artifact/checksum, and equivalence evidence. It selected ECS Fargate without
 changing this storage contract; see [AWS deployment](aws-deployment.md).
+
+Phase 7B application CD consumes the already published explicit bundle but has no S3 write or
+delete permission and never invokes bundle publication. Image deployment and scientific-
+artifact publication remain separate operations; see [continuous deployment](cd.md).

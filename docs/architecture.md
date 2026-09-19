@@ -310,6 +310,16 @@ deploys infrastructure. Clean runners exercise tracked/small generated fixtures 
 explicit skips for the ignored canonical-bundle modules. Environments provisioned with that
 bundle run the exact API/model/explanation/limitation regressions. See [CI](ci.md).
 
+### Continuous-deployment boundary
+
+Phase 7B separates deployment into a manual production workflow. A full SHA already in
+`main` passes the deployment-critical CI gate, obtains short-lived AWS credentials through a
+repository/environment-scoped OIDC role, builds one SHA-tagged image, pushes it to existing
+ECR, registers a validated task revision, and updates the existing ECS service. Stability and
+API metadata/cohort-count smoke are bounded; a post-update failure restores the prior task
+definition while retaining failure status. CD never publishes the S3 bundle or creates cloud
+resources. See [CD](cd.md).
+
 ## Planned system
 
 The intended high-level flow is:

@@ -97,16 +97,20 @@ reconstructed without the frozen model and 8,416-row inputs.
 
 ## Docker and container-smoke scope
 
-The Docker job is the intended first GitHub-hosted production-image build. The image-content
-audit verifies there is no `/app/.env`, `.git`, `data`, `artifacts`, pytest cache, or root AWS
-directory. The smoke imports `howreliable` and the FastAPI factory module inside the image,
-validating packaging and the process import path without loading a bundle.
+The Docker job is the intended GitHub-hosted production-image build. The image-content
+audit verifies there is no `/app/.env`, `.git`, `data`, `artifacts`, pytest cache, or
+application-user AWS directory. The smoke imports `howreliable` and the FastAPI factory
+module inside the image, validating packaging and the process import path without loading a
+bundle.
 
-It deliberately does not start a prediction-capable service or claim `/health` success: the
-production task expects S3, and the ignored real bundle is unavailable in a clean checkout.
-Faking S3 or fabricating a model would make that claim misleading. The Dockerfile
-HEALTHCHECK is structurally inspected; its live success remains part of a future authorized
-container smoke with a genuine bundle.
+On a clean GitHub runner it deliberately does not start a prediction-capable service or claim
+`/health` success: the production task expects S3, and the ignored real bundle is unavailable
+in a clean checkout. Faking S3 or fabricating a model would make that claim misleading. The
+Dockerfile HEALTHCHECK is structurally inspected there. A separate local Phase 7B validation
+mounted the genuine ignored bundle read-only and confirmed a healthy container, the required
+model metadata, all 8,416 cohorts, one representative frozen prediction, and explanation
+reconstruction error of approximately 5.6e-17. That local result is not a substitute for the
+post-deployment S3-backed smoke.
 
 ## Regressions and cloud boundary
 
@@ -121,11 +125,15 @@ parsing is not deployment.
 
 ## Known limitations and Phase 7B handoff
 
-No live GitHub Actions run or local Docker build has yet validated Linux installation/image
-execution. Clean GitHub runners explicitly skip the full-artifact modules until a secure,
-immutable source for the canonical bundle exists. The container smoke is import/static only.
+No live GitHub Actions run has yet validated the hosted-runner path. A local Docker Engine
+build produced and audited the production image, imported the package, and served the genuine
+canonical bundle successfully. The resulting image was about 11.56 GB, reflecting the
+existing runtime dependency set, including the Linux PyTorch wheel and CUDA-related transitive
+packages. Image-size optimization is deferred. Clean GitHub runners explicitly skip the full-artifact
+modules until a secure, immutable source for the canonical bundle exists; their CI container
+smoke remains import/static only.
 
-Phase 7B receives one passing, non-deploying quality gate; the immutable CI-tagged image
-build contract; exact contract checksums; and the explicit full-artifact gap. CD must define
-authorized artifact/image publication, credentials/identity, environments, approvals,
-deployment, rollback, and post-deployment smoke checks. Phase 7A implements none of those.
+Phase 7B now consumes this non-deploying quality gate in its separate manual workflow. It
+reruns deployment-critical validation before OIDC authentication, then handles image
+publication, ECS revision/update, rollback, and smoke without weakening `ci.yml`. Model-bundle
+publication remains separate. See [continuous deployment](cd.md).

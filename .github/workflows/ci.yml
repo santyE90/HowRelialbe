@@ -115,4 +115,4 @@ jobs:
           set -euo pipefail
           image="howreliable-api:ci-${GITHUB_SHA}"
           docker run --rm --entrypoint python "$image" -c "import howreliable; import howreliable.api.app; print(howreliable.__version__)"
-          docker run --rm --entrypoint python "$image" -c "from pathlib import Path; forbidden=['/app/.env','/app/.git','/app/data','/app/artifacts','/root/.aws','/app/.pytest_cache']; assert not [path for path in forbidden if Path(path).exists()]"
+          docker run --rm --entrypoint python "$image" -c "from pathlib import Path; forbidden=['/app/.env','/app/.git','/app/data','/app/artifacts','/home/howreliable/.aws','/app/.pytest_cache']; assert not [path for path in forbidden if Path(path).exists()]"

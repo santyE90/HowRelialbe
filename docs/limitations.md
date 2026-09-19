@@ -164,13 +164,24 @@ work must account for at least the following constraints:
   notification destinations, dashboard, custom desired-versus-running task-count signal,
   tracing/APM, Prometheus, or ML drift/quality monitoring. The last omission is deliberate:
   there is no live ground-truth pipeline.
-- Phase 7A has not had a live GitHub Actions or local Docker run. A clean checkout cannot
-  reconstruct the ignored canonical model and 8,416-row products, so seven explicitly marked
-  full-artifact modules are reported as skipped there and remain mandatory where the bundle
-  is provisioned. CI does not download large NHTSA data or fabricate a prediction service.
-- The CI container smoke validates image metadata, content exclusions, and imports only. It
-  cannot prove `/health`, S3 startup, or prediction behavior without the genuine bundle and
-  does not publish or deploy an image.
+- Phase 7A has not had a live GitHub Actions run. A local Phase 7B Docker validation built and
+  audited the production image, imported the package, and served the genuine canonical bundle,
+  including a representative prediction. The image was about 11.56 GB because of the existing
+  runtime dependency set, specifically the Linux PyTorch wheel and CUDA-related transitive
+  packages. Dependency/image optimization is deferred beyond Phase 7B. A clean checkout still
+  cannot reconstruct the ignored canonical
+  model and 8,416-row products, so seven explicitly marked full-artifact modules are reported
+  as skipped there and remain mandatory where the bundle is provisioned. CI does not download
+  large NHTSA data or fabricate a prediction service.
+- The CI container smoke validates image metadata, content exclusions, and imports only. The
+  local genuine-bundle smoke proved local-backend health and prediction behavior, but neither
+  check proves S3 startup. CI does not publish or deploy an image.
+- Phase 7B deployment automation is locally/static validated only. No live GitHub OIDC
+  exchange, ECR push, ECS update/stability, rollback, or external smoke has run. GitHub
+  production-environment reviewer/branch protections must be configured outside this repo.
+- CD rollback restores only the previous ECS application task definition. It does not revert
+  S3 model artifacts or infrastructure. CD deliberately has no S3-write or infrastructure-
+  creation authority and performs no representative prediction smoke from ignored fixtures.
 
 Any future output will be decision support, not a replacement for a qualified mechanical
 inspection, diagnosis, maintenance guidance, recall information, or safety advice.
