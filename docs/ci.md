@@ -137,3 +137,8 @@ Phase 7B now consumes this non-deploying quality gate in its separate manual wor
 reruns deployment-critical validation before OIDC authentication, then handles image
 publication, ECS revision/update, rollback, and smoke without weakening `ci.yml`. Model-bundle
 publication remains separate. See [continuous deployment](cd.md).
+
+Phase 7C adds its offline Terraform ownership/security validator to the existing `contracts`
+job. CI does not install Terraform, contact AWS, plan, apply, or create infrastructure. Real
+Terraform CLI and live-cloud validation remain explicit operator steps; see
+[Terraform](terraform.md).

@@ -182,6 +182,16 @@ work must account for at least the following constraints:
 - CD rollback restores only the previous ECS application task definition. It does not revert
   S3 model artifacts or infrastructure. CD deliberately has no S3-write or infrastructure-
   creation authority and performs no representative prediction smoke from ignored fixtures.
+- Phase 7C Terraform has only offline/static validation because no local Terraform CLI or
+  live AWS operation was available. Local state is initially selected and must be protected;
+  a locked/encrypted remote backend remains future operational work. No live plan or apply is
+  claimed.
+- The Terraform architecture has one Fargate task, public-IP task egress, no NAT Gateway,
+  autoscaling, WAF, DNS, managed certificate issuance, alarm notifications, or multi-task
+  availability. The task security group allows port 8000 only from the ALB; temporary HTTP
+  remains unsuitable for public production use.
+- The approximately 11.56 GB image increases ECR storage, pull time, and deployment startup
+  time. PyTorch/CUDA dependency optimization remains deliberately outside Phase 7C.
 
 Any future output will be decision support, not a replacement for a qualified mechanical
 inspection, diagnosis, maintenance guidance, recall information, or safety advice.

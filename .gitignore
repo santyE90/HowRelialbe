@@ -15,6 +15,17 @@ build/
 dist/
 *.egg-info/
 
+# Terraform local state, working data, and environment-specific values
+**/.terraform/
+*.tfstate
+*.tfstate.*
+*.tfplan
+crash.log
+crash.*.log
+infrastructure/terraform/terraform.tfvars
+infrastructure/terraform/*.auto.tfvars
+infrastructure/terraform/*.auto.tfvars.json
+
 # Test, lint, and type-check caches
 .pytest_cache/
 .ruff_cache/

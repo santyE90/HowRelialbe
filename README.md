@@ -11,7 +11,7 @@ roadmap phase calls for them.
 
 ## Current status
 
-Phases 0 through 7B now provide the repository foundation, canonical vehicle and reliability
+Phases 0 through 7C now provide the repository foundation, canonical vehicle and reliability
 event models, source-faithful NHTSA ingestion, reproducible full-corpus EDA, and a
 deterministic evidence-preserving cleaning boundary, target-agnostic event and vehicle
 cohort features, NHTSA production-exposure diagnostics, and official manufacturer-
@@ -61,6 +61,10 @@ workflow for an immutable SHA-tagged ECR image and the existing ECS Fargate serv
 not publish the model bundle or create infrastructure. Local/static validation is complete;
 the 11.56 GB production image and genuine canonical-bundle container smoke passed locally,
 but no live CD or AWS deployment has run. See [continuous deployment](docs/cd.md).
+Phase 7C codifies the existing AWS design as a small Terraform root: public-ALB/two-subnet
+networking, protected S3, immutable ECR, ECS Fargate foundation, three distinct IAM roles,
+GitHub OIDC, and the four CloudWatch alarms. Static validation is complete; the Terraform CLI,
+live plan, and apply were not executed. See [Terraform](docs/terraform.md).
 See the [roadmap](docs/roadmap.md), [cleaning rules](docs/cleaning-rules.md), and
 [feature definitions](docs/feature-engineering.md) for details.
 

@@ -136,7 +136,9 @@ model architecture. The local read-only canonical-bundle container smoke passed 
 8,416 cohorts, one representative frozen prediction, and explanation reconstruction error of
 approximately 5.6e-17. It does not validate the production S3 backend or AWS network path.
 
-Phase 7C receives the exact assumed resources: ECR repository, private S3 bucket/prefix, ECS
-cluster/service/task-definition family, task role, execution role, ALB, target group,
+Phase 7C now codifies the exact assumed resources: ECR repository, private S3 bucket/prefix,
+ECS cluster/service/task-definition family, task role, execution role, ALB, target group,
 subnets/security groups, CloudWatch log group/alarms, and GitHub OIDC provider/deployment
-role. Phase 7C may codify those with Terraform; no Terraform is implemented here.
+role. Its outputs map directly to every Phase 7B production variable. Terraform owns the
+foundation while this workflow remains the sole application-revision owner; see
+[Terraform](terraform.md). Neither layer has run against live AWS.

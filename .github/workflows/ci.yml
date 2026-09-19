@@ -78,7 +78,9 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install -e '.[dev]'
       - name: Validate workflow, AWS definitions, and deterministic contracts
-        run: python -m howreliable.ci.contract validate --root .
+        run: |
+          python -m howreliable.ci.contract validate --root .
+          python -m howreliable.infrastructure.terraform_contract validate --root .
       - name: Regenerate deterministic CI contract
         run: >-
           python -m howreliable.ci.contract generate

@@ -334,4 +334,4 @@ def test_monitoring_adds_no_training_terraform_or_live_aws_dependency() -> None:
     source = (ROOT / "src/howreliable/cloud/monitoring.py").read_text().casefold()
     assert ".fit(" not in source and "torch" not in source
     assert "boto3" not in source and "webhook" not in source
-    assert not list(ROOT.glob("**/*.tf"))
+    assert "terraform" not in source

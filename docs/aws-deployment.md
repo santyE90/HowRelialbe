@@ -207,3 +207,10 @@ health, model metadata, all 8,416 cohorts, a representative frozen prediction, a
 reconstruction. The image was about 11.56 GB because the existing runtime dependency set
 installs Linux PyTorch and CUDA-related transitive packages; optimization is deferred. No real
 S3-backed container smoke or live AWS deployment has run.
+
+Phase 7C Terraform now provisions the described VPC, two public subnets, ALB/target group,
+ALB-only task ingress, immutable ECR, ECS cluster/service foundation, distinct roles, and a
+healthy digest-pinned bootstrap revision. The ECS service ignores only `task_definition` so
+Phase 7B owns later application revisions. Fargate public-IP egress avoids NAT Gateway cost;
+it does not expose task port 8000 publicly. No plan, apply, or live AWS validation has run.
+See [Terraform](terraform.md).

@@ -320,6 +320,16 @@ API metadata/cohort-count smoke are bounded; a post-update failure restores the 
 definition while retaining failure status. CD never publishes the S3 bundle or creates cloud
 resources. See [CD](cd.md).
 
+### Terraform infrastructure boundary
+
+Phase 7C makes the existing cloud prerequisites reproducible without competing with CD. One
+Terraform root owns a two-public-subnet VPC, internet routing, ALB and ALB-only task ingress,
+protected private S3, immutable private ECR, ECS cluster/bootstrap/service foundation,
+distinct task/execution/deployment roles, optional-or-reused GitHub OIDC provider, and the
+established CloudWatch log group/alarms. The service ignores only task-definition drift so
+Phase 7B remains authoritative for application revisions. Terraform does not build images,
+publish the model bundle, or train. See [Terraform](terraform.md).
+
 ## Planned system
 
 The intended high-level flow is:

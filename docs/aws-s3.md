@@ -134,3 +134,8 @@ changing this storage contract; see [AWS deployment](aws-deployment.md).
 Phase 7B application CD consumes the already published explicit bundle but has no S3 write or
 delete permission and never invokes bundle publication. Image deployment and scientific-
 artifact publication remain separate operations; see [continuous deployment](cd.md).
+
+Phase 7C Terraform creates the private bucket with all public access blocked, bucket-owner-
+enforced ownership, SSE-S3, versioning, `force_destroy=false`, and production
+`prevent_destroy`. It grants the application task only prefix-scoped reads. Terraform uploads
+no bundle; Phase 6A publication remains separately authorized. See [Terraform](terraform.md).

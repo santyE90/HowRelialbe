@@ -161,7 +161,7 @@ def test_deployment_definitions_contain_no_credentials_or_personal_paths() -> No
     assert "-----begin" not in folded
 
 
-def test_deployment_adds_no_terraform_or_forbidden_compute_platform() -> None:
+def test_deployment_code_invokes_no_terraform_or_forbidden_compute_platform() -> None:
     deployment_files = [
         ROOT / "Dockerfile",
         ROOT / "src/howreliable/cloud/deployment.py",
@@ -169,7 +169,7 @@ def test_deployment_adds_no_terraform_or_forbidden_compute_platform() -> None:
         SERVICE_DEFINITION,
     ]
     values = "\n".join(path.read_text().casefold() for path in deployment_files)
-    assert not list(ROOT.glob("**/*.tf"))
+    assert "terraform" not in values
     assert "terraform" not in values
     assert "eks" not in values
     assert "aws_lambda" not in values and "lambda_function" not in values

@@ -1,0 +1,21 @@
+aws_region          = "ca-central-1"
+project_name        = "howreliable"
+environment         = "production"
+artifact_bucket_name = "replace-with-a-globally-unique-private-bucket-name"
+artifact_prefix      = "howreliable"
+
+# Must contain Python and be pinned by digest. Terraform uses it only to serve a bootstrap
+# /health response until Phase 7B registers the first real application task revision.
+bootstrap_image_uri = "public.ecr.aws/docker/library/python@sha256:replace-with-a-real-64-character-digest"
+
+github_owner      = "replace-with-github-owner"
+github_repository = "HowReliable"
+
+# Leave null for temporary HTTP first-smoke operation. Supply an existing regional ACM ARN
+# to enable HTTPS; HTTP redirects by default once the certificate is configured.
+certificate_arn        = null
+redirect_http_to_https = true
+
+# Set false and provide the ARN when the AWS account already has GitHub's account-wide IdP.
+create_github_oidc_provider       = true
+existing_github_oidc_provider_arn = null

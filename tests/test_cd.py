@@ -225,7 +225,7 @@ def test_rollback_and_stability_failure_semantics_are_explicit() -> None:
     assert "timeout 20m" in source
 
 
-def test_no_infrastructure_creation_terraform_or_phase_7c() -> None:
+def test_cd_performs_no_infrastructure_creation_or_terraform_execution() -> None:
     source = WORKFLOW.read_text().casefold()
     forbidden = (
         "create-service",
@@ -236,7 +236,6 @@ def test_no_infrastructure_creation_terraform_or_phase_7c() -> None:
         "terraform",
     )
     assert not [term for term in forbidden if term in source]
-    assert not list(ROOT.glob("**/*.tf"))
 
 
 def test_complete_offline_cd_validation() -> None:

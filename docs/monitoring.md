@@ -149,3 +149,8 @@ separately authorized manual work. See [continuous integration](ci.md).
 Phase 7B preserves this monitoring configuration in every rendered task revision. CD does
 not mutate log groups or alarms. Live deployment acceptance should confirm startup and smoke
 events in `/howreliable/api`; this remains unexecuted. See [continuous deployment](cd.md).
+
+Phase 7C Terraform now declares the exact `/howreliable/api` group with 14-day retention and
+all four Phase 6C alarms using live ECS/ALB dimensions. It deliberately configures no alarm
+actions because no notification destination has been chosen. Terraform was not applied, so
+CloudWatch delivery, metrics, and alarms remain unexecuted. See [Terraform](terraform.md).

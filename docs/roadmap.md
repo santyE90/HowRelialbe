@@ -91,9 +91,12 @@ implementation exists yet.
   least-privilege deployment-role templates, build-once immutable ECR images, validated ECS
   task revisions, bounded stability/smoke, and failure-preserving rollback. Implementation
   and local/static validation are complete; live CD/ECR/ECS/smoke were not executed.
-- **Current project state — CD IMPLEMENTATION COMPLETE.** Phase 7C is next; there is no claim
-  that GitHub Actions CD or a live AWS deployment has run.
-- **Phase 7C — Terraform: planned**
+- **Phase 7C — Terraform: complete** — one production-oriented Terraform root for the
+  established network, protected S3, immutable ECR, ECS/ALB foundation, distinct IAM roles,
+  GitHub OIDC identity, logs, and four alarms. Static implementation validation is complete;
+  Terraform CLI validation, live plan, apply, and all AWS acceptance remain unexecuted.
+- **Current project state — TERRAFORM IMPLEMENTATION COMPLETE.** Phase 8A is next; there is no
+  claim that Terraform planned/applied against AWS or that GitHub Actions deployed live.
 - **Phase 8A — Owner Report NLP: planned**
 - **Phase 8B — Source Normalization: planned**
 - **Phase 8C — NLP Integration: planned**
