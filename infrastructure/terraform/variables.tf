@@ -105,7 +105,27 @@ variable "github_owner" {
   type        = string
 }
 
+variable "github_owner_id" {
+  description = "Immutable numeric GitHub repository owner ID trusted for production deployment."
+  type        = string
+
+  validation {
+    condition     = can(regex("^[0-9]+$", var.github_owner_id))
+    error_message = "GitHub owner ID must contain only decimal digits."
+  }
+}
+
 variable "github_repository" {
   description = "Exact GitHub repository name trusted for production deployment."
   type        = string
+}
+
+variable "github_repository_id" {
+  description = "Immutable numeric GitHub repository ID trusted for production deployment."
+  type        = string
+
+  validation {
+    condition     = can(regex("^[0-9]+$", var.github_repository_id))
+    error_message = "GitHub repository ID must contain only decimal digits."
+  }
 }

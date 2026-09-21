@@ -234,11 +234,21 @@ def validate_oidc_trust_policy(path: Path) -> dict[str, Any]:
     _require(statement.get("Action") == "sts:AssumeRoleWithWebIdentity", "OIDC action")
     principal = cast(dict[str, str], statement.get("Principal"))
     _require("token.actions.githubusercontent.com" in principal.get("Federated", ""), "OIDC")
-    conditions = json.dumps(statement.get("Condition", {}))
+    conditions = cast(dict[str, dict[str, str]], statement.get("Condition"))
+    string_equals = conditions.get("StringEquals", {})
     _require(
-        "repo:<GITHUB_OWNER>/<GITHUB_REPOSITORY>:environment:production" in conditions, "repo scope"
+        string_equals.get("token.actions.githubusercontent.com:aud") == "sts.amazonaws.com",
+        "OIDC audience",
     )
-    _require("repo:*" not in conditions, "wildcard repositories are forbidden")
+    _require(
+        string_equals.get("token.actions.githubusercontent.com:sub")
+        == (
+            "repo:<GITHUB_OWNER>@<GITHUB_OWNER_ID>/"
+            "<GITHUB_REPOSITORY>@<GITHUB_REPOSITORY_ID>:environment:production"
+        ),
+        "immutable repo scope",
+    )
+    _require("*" not in json.dumps(conditions), "wildcard trust conditions are forbidden")
     return value
 
 

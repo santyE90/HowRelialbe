@@ -89,8 +89,12 @@ def test_oidc_trust_is_repository_and_environment_scoped() -> None:
     policy = validate_oidc_trust_policy(TRUST_POLICY)
     text = json.dumps(policy)
     assert "sts:AssumeRoleWithWebIdentity" in text
-    assert "repo:<GITHUB_OWNER>/<GITHUB_REPOSITORY>:environment:production" in text
-    assert "repo:*" not in text
+    assert (
+        "repo:<GITHUB_OWNER>@<GITHUB_OWNER_ID>/"
+        "<GITHUB_REPOSITORY>@<GITHUB_REPOSITORY_ID>:environment:production"
+    ) in text
+    assert "repo:<GITHUB_OWNER>/<GITHUB_REPOSITORY>:environment:production" not in text
+    assert "*" not in text
     assert "<AWS_ACCOUNT_ID>" in text
 
 

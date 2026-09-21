@@ -127,7 +127,8 @@ def terraform_contract(*, generation_utc: datetime) -> TerraformContract:
         log_group=LOG_GROUP,
         monitoring_alarms=tuple(EXPECTED_ALARMS),
         oidc_trust_model=(
-            "exact GitHub repository and production environment subject; sts.amazonaws.com audience"
+            "immutable GitHub owner and repository IDs with exact production environment subject; "
+            "sts.amazonaws.com audience"
         ),
         state_backend_mode="local",
         application_deployment_owner="Phase 7B continuous delivery",
@@ -281,8 +282,17 @@ def validate_terraform_repository(root: Path) -> dict[str, str]:
         "PassRole service",
     )
     _require(
-        "repo:${var.github_owner}/${var.github_repository}:environment:production" in oidc,
-        "OIDC subject",
+        (
+            "repo:${var.github_owner}@${var.github_owner_id}/"
+            "${var.github_repository}@${var.github_repository_id}:environment:production"
+        )
+        in oidc,
+        "immutable OIDC subject",
+    )
+    _require("variable \"github_owner_id\"" in sources["variables.tf"], "GitHub owner ID input")
+    _require(
+        "variable \"github_repository_id\"" in sources["variables.tf"],
+        "GitHub repository ID input",
     )
     _require('values   = ["sts.amazonaws.com"]' in oidc, "OIDC audience")
     _require("existing_github_oidc_provider_arn" in joined, "existing OIDC reuse")

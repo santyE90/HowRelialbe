@@ -31,8 +31,9 @@ Only the deployment job has `contents: read` plus `id-token: write`. It uses the
 short-lived AWS role session. There are no long-lived access-key secrets.
 
 `infrastructure/iam/github-deploy-trust-policy.json` restricts assumption to the exact
-repository placeholder and `production` environment subject. Substitute the AWS account ID,
-GitHub owner, and repository without widening the subject to arbitrary repositories.
+immutable repository and `production` environment subject. Substitute the AWS account ID,
+GitHub owner and numeric owner ID, and repository and numeric repository ID without widening
+the subject to arbitrary repositories.
 
 `infrastructure/iam/github-deploy-policy.json` permits ECR authentication and upload only to
 the configured repository, task-definition describe/register operations, service describe/

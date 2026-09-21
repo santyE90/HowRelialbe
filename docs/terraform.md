@@ -136,7 +136,11 @@ The GitHub deployment role trusts only:
 
 - issuer `https://token.actions.githubusercontent.com`;
 - audience `sts.amazonaws.com`;
-- subject `repo:<owner>/<repository>:environment:production`.
+- subject `repo:<owner>@<owner-id>/<repository>@<repository-id>:environment:production`.
+
+The numeric owner and repository IDs are GitHub's immutable identifiers. Keeping both names
+and IDs in the subject prevents a renamed or transferred namespace from silently retaining
+deployment access.
 
 By default Terraform creates the account-level GitHub OIDC provider. If one already exists,
 set `create_github_oidc_provider=false` and supply its exact ARN. This avoids duplicate
@@ -164,9 +168,9 @@ has been selected. There is no ML drift/quality alarm.
 ## Variables and outputs
 
 Copy `terraform.tfvars.example` to ignored `terraform.tfvars` and set at least the globally
-unique bucket, digest-pinned bootstrap image, GitHub owner, and GitHub repository. Region,
-project/environment names, CIDRs, prefix, certificate behavior, and OIDC creation/reuse are
-explicit variables.
+unique bucket, digest-pinned bootstrap image, GitHub owner and immutable owner ID, and GitHub
+repository and immutable repository ID. Region, project/environment names, CIDRs, prefix,
+certificate behavior, and OIDC creation/reuse are explicit variables.
 
 The `github_environment_variables` output maps directly to Phase 7B:
 

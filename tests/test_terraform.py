@@ -19,7 +19,7 @@ from howreliable.infrastructure.terraform_contract import (
 ROOT = Path(".")
 TERRAFORM = ROOT / "infrastructure/terraform"
 FIXED_TIME = datetime(2026, 9, 19, 23, 0, tzinfo=UTC)
-TERRAFORM_CONTRACT_SHA256 = "62399c7b3fc6a2bcdd286fe5665937273056efb1eeace4de187f31599a481dba"
+TERRAFORM_CONTRACT_SHA256 = "922646b6efcd5c241411720952b6aca8b5c82d25d9e0660bcda222b1b3bb0f2e"
 
 
 def source(name: str) -> str:
@@ -151,9 +151,16 @@ def test_three_roles_are_distinct_and_task_role_is_s3_read_only() -> None:
 
 def test_deploy_role_oidc_and_passrole_are_exact() -> None:
     oidc = source("github_oidc.tf")
+    variables = source("variables.tf")
     assert 'url            = "https://token.actions.githubusercontent.com"' in oidc
     assert 'client_id_list = ["sts.amazonaws.com"]' in oidc
-    assert "repo:${var.github_owner}/${var.github_repository}:environment:production" in oidc
+    assert (
+        "repo:${var.github_owner}@${var.github_owner_id}/"
+        "${var.github_repository}@${var.github_repository_id}:environment:production"
+    ) in oidc
+    assert "repo:${var.github_owner}/${var.github_repository}:environment:production" not in oidc
+    assert 'variable "github_owner_id"' in variables
+    assert 'variable "github_repository_id"' in variables
     assert "existing_github_oidc_provider_arn" in source("locals.tf")
     assert "resources = [aws_iam_role.task.arn, aws_iam_role.execution.arn]" in oidc
     assert 'variable = "iam:PassedToService"' in oidc
