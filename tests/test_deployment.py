@@ -115,7 +115,13 @@ def test_runtime_task_policy_is_exact_least_privilege_s3_reader() -> None:
 
 def test_dockerfile_is_pinned_non_root_factory_image_without_bundle_copy() -> None:
     dockerfile = (ROOT / "Dockerfile").read_text()
-    assert dockerfile.count("FROM python:3.12.11-slim-bookworm") == 2
+    expected_base = (
+        "python:3.12-slim-bookworm@"
+        "sha256:1aaa65a85fda306ffb8b910824d4e93bdce61e212c7e87168123ea3073b41a1a"
+    )
+    assert f"ARG PYTHON_BASE={expected_base}" in dockerfile
+    assert dockerfile.count("FROM ${PYTHON_BASE}") == 2
+    assert dockerfile.count("@sha256:") == 1
     assert "USER 10001:10001" in dockerfile
     assert "EXPOSE 8000" in dockerfile
     assert "howreliable.api.app:create_app" in dockerfile

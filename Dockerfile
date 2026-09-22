@@ -1,4 +1,6 @@
-FROM python:3.12.11-slim-bookworm AS builder
+ARG PYTHON_BASE=python:3.12-slim-bookworm@sha256:1aaa65a85fda306ffb8b910824d4e93bdce61e212c7e87168123ea3073b41a1a
+
+FROM ${PYTHON_BASE} AS builder
 
 ENV PIP_DISABLE_PIP_VERSION_CHECK=1 \
     PIP_NO_CACHE_DIR=1
@@ -9,7 +11,7 @@ COPY src ./src
 RUN python -m venv /opt/howreliable \
     && /opt/howreliable/bin/python -m pip install .
 
-FROM python:3.12.11-slim-bookworm AS runtime
+FROM ${PYTHON_BASE} AS runtime
 
 ENV PATH="/opt/howreliable/bin:${PATH}" \
     PYTHONDONTWRITEBYTECODE=1 \
